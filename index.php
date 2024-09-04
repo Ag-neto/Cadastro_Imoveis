@@ -94,28 +94,37 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
             }
         }
 
+        $nivelDeAcesso = $_SESSION["idnivel_acesso"];
+
         // Consulta para obter notificações não lidas
         $sqlNotificacoes = "SELECT id, acao, descricao, data, id_usuario, nivel_acesso 
-                    FROM logs 
-                    WHERE (id_usuario = ? OR nivel_acesso <= ?) AND lida = 0 
-                    ORDER BY data DESC 
-                    LIMIT 5";
+        FROM logs 
+        WHERE ($nivelDeAcesso = 1 OR id_usuario = ?) AND lida = 0 
+        ORDER BY data DESC 
+        LIMIT 5";
 
         if ($stmt = $conn->prepare($sqlNotificacoes)) {
-            $stmt->bind_param("ii", $_SESSION['idusuario'], $_SESSION['idnivel_acesso']);
+            // Bind para o id do usuário logado e nivel_acesso da sessão
+            $stmt->bind_param("i", $_SESSION['idusuario']);
+
             if ($stmt->execute()) {
                 $result1 = $stmt->get_result();
-                // Exibir notificações
-                while ($log = $result1->fetch_assoc()) {
-                    echo '<div class="notificacao-item">';
-                    echo '<p><strong>Ação:</strong> ' . htmlspecialchars($log['acao']) . '</p>';
-                    echo '<p><strong>Descrição:</strong> ' . htmlspecialchars($log['descricao']) . '</p>';
-                    echo '<p><strong>Data:</strong> ' . date('d/m/Y H:i:s', strtotime($log['data'])) . '</p>';
-                    echo '<form method="POST">';
-                    echo '<input type="hidden" name="notificacao_id" value="' . $log['id'] . '">';
-                    echo '<button type="submit" name="marcar_como_lida">Marcar como lida</button>';
-                    echo '</form>';
-                    echo '</div>';
+
+                if ($result1->num_rows > 0) {
+                    // Exibir notificações
+                    while ($log = $result1->fetch_assoc()) {
+                        echo '<div class="notificacao-item">';
+                        echo '<p><strong>Ação:</strong> ' . htmlspecialchars($log['acao']) . '</p>';
+                        echo '<p><strong>Descrição:</strong> ' . htmlspecialchars($log['descricao']) . '</p>';
+                        echo '<p><strong>Data:</strong> ' . date('d/m/Y H:i:s', strtotime($log['data'])) . '</p>';
+                        echo '<form method="POST">';
+                        echo '<input type="hidden" name="notificacao_id" value="' . $log['id'] . '">';
+                        echo '<button class = "teste" type="submit" name="marcar_como_lida">Marcar como lida</button>';
+                        echo '</form>';
+                        echo '</div>';
+                    }
+                } else {
+                    echo "<p>Não há notificações não lidas.</p>";
                 }
             } else {
                 echo "<p>Erro na consulta de notificações: " . $stmt->error . "</p>";
@@ -304,52 +313,52 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                     </div>
 
                     <?php if (hasAccessLevel([2])): ?>
-    <div class="propriedades-container">
-        <!-- Código anterior para exibir propriedades -->
-    </div>
+                        <div class="propriedades-container">
+                            <!-- Código anterior para exibir propriedades -->
+                        </div>
 
-    <div class="calendario-container">
-        <h3>Calendário - Mês Atual</h3>
-        <div id="calendario">
-            <div class="calendario-header">
-                <div>Dom</div>
-                <div>Seg</div>
-                <div>Ter</div>
-                <div>Qua</div>
-                <div>Qui</div>
-                <div>Sex</div>
-                <div>Sab</div>
-            </div>
-            <div class="calendario-body">
-                <?php
-                // Obter o mês e o ano atual
-                $mes = date('m');
-                $ano = date('Y');
+                        <div class="calendario-container">
+                            <h3>Calendário - Mês Atual</h3>
+                            <div id="calendario">
+                                <div class="calendario-header">
+                                    <div>Dom</div>
+                                    <div>Seg</div>
+                                    <div>Ter</div>
+                                    <div>Qua</div>
+                                    <div>Qui</div>
+                                    <div>Sex</div>
+                                    <div>Sab</div>
+                                </div>
+                                <div class="calendario-body">
+                                    <?php
+                                    // Obter o mês e o ano atual
+                                    $mes = date('m');
+                                    $ano = date('Y');
 
-                // Calcular o primeiro dia do mês e o número total de dias
-                $primeiroDia = strtotime("first day of $ano-$mes");
-                $numDias = date('t', $primeiroDia);
-                $diaInicio = date('w', $primeiroDia);
+                                    // Calcular o primeiro dia do mês e o número total de dias
+                                    $primeiroDia = strtotime("first day of $ano-$mes");
+                                    $numDias = date('t', $primeiroDia);
+                                    $diaInicio = date('w', $primeiroDia);
 
-                // Obter o dia atual
-                $diaAtual = date('j');
+                                    // Obter o dia atual
+                                    $diaAtual = date('j');
 
-                // Adicionar espaços vazios para os dias antes do primeiro dia do mês
-                for ($i = 0; $i < $diaInicio; $i++) {
-                    echo '<div class="calendario-dia vazio"></div>';
-                }
+                                    // Adicionar espaços vazios para os dias antes do primeiro dia do mês
+                                    for ($i = 0; $i < $diaInicio; $i++) {
+                                        echo '<div class="calendario-dia vazio"></div>';
+                                    }
 
-                // Exibir os dias do mês
-                for ($dia = 1; $dia <= $numDias; $dia++) {
-                    // Verifica se o dia é o dia atual
-                    $classeDia = ($dia == $diaAtual) ? 'calendario-dia ativo' : 'calendario-dia';
-                    echo '<div class="' . $classeDia . '">' . $dia . '</div>';
-                }
-                ?>
-            </div>
-        </div>
-    </div>
-<?php endif; ?>
+                                    // Exibir os dias do mês
+                                    for ($dia = 1; $dia <= $numDias; $dia++) {
+                                        // Verifica se o dia é o dia atual
+                                        $classeDia = ($dia == $diaAtual) ? 'calendario-dia ativo' : 'calendario-dia';
+                                        echo '<div class="' . $classeDia . '">' . $dia . '</div>';
+                                    }
+                                    ?>
+                                </div>
+                            </div>
+                        </div>
+                    <?php endif; ?>
 
                 <?php endif; ?>
 

@@ -76,9 +76,9 @@ function registrarLogVencimento($acao, $descricao = null, $urlDestino = null, $i
 
     // Verifica se já existe um log para o mesmo pagamento e ação hoje
     $sqlVerificarLog = "SELECT COUNT(*) AS total FROM logs 
-                        WHERE id_usuario = ? AND acao = ? AND id_pagamento = ?"; // Supondo que você tenha uma coluna 'data_registro' no formato DATE ou DATETIME
+                        WHERE acao = ? AND id_pagamento = ?"; // Supondo que você tenha uma coluna 'data_registro' no formato DATE ou DATETIME
     $stmtVerificarLog = $conn->prepare($sqlVerificarLog);
-    $stmtVerificarLog->bind_param("isi", $usuarioId, $acao, $idpagamento);
+    $stmtVerificarLog->bind_param("si", $acao, $idpagamento);
     $stmtVerificarLog->execute();
     $resultado = $stmtVerificarLog->get_result();
     $logExistente = $resultado->fetch_assoc()['total'];
@@ -92,7 +92,7 @@ function registrarLogVencimento($acao, $descricao = null, $urlDestino = null, $i
 
         if ($stmt = $conn->prepare($sql)) {
             // Associando os parâmetros
-            $stmt->bind_param("issssi", $usuarioId, $nivelAcesso, $acao, $descricao, $urlDestino, $idpagamento);
+            $stmt->bind_param("sssi", $acao, $descricao, $urlDestino, $idpagamento);
 
             // Executando a consulta
             if (!$stmt->execute()) {

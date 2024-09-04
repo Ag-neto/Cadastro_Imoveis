@@ -149,18 +149,18 @@ $result = $stmt->get_result();
                             }
 
                             // Verifica se já existe uma notificação para este pagamento
-                            //$sqlVerificarLog = "SELECT COUNT(*) AS total FROM logs WHERE id_usuario = ? AND acao = 'Notificação de Vencimento' AND descricao = 'Pagamento vencido para confirmação' AND id_pagamento = ?";
-                            //$stmtVerificarLog = $conn->prepare($sqlVerificarLog);
-                            //$stmtVerificarLog->bind_param("ii", $_SESSION['idusuario'], $pagamento['id_pagamento']);
-                            //$stmtVerificarLog->execute();
-                            //$resultadoVerificacao = $stmtVerificarLog->get_result();
-                            //$logExistente = $resultadoVerificacao->fetch_assoc()['total'];
-                            //$stmtVerificarLog->close(); 
+                            $sqlVerificarLog = "SELECT COUNT(*) AS total FROM logs WHERE acao = 'Notificação de Vencimento' AND descricao = 'Pagamento vencido para confirmação' AND id_pagamento = ?";
+                            $stmtVerificarLog = $conn->prepare($sqlVerificarLog);
+                            $stmtVerificarLog->bind_param("i", $pagamento['id_pagamento']);
+                            $stmtVerificarLog->execute();
+                            $resultadoVerificacao = $stmtVerificarLog->get_result();
+                            $logExistente = $resultadoVerificacao->fetch_assoc()['total'];
+                            $stmtVerificarLog->close(); 
 
-                            // Se não houver uma notificação de vencimento existente, insere a nova notificação
-                            //if ($logExistente == 0) {
-                                //registrarLogVencimento('Notificação de Vencimento', 'Propriedade: ' . " " . $pagamento['nome_propriedade'] . " "  . 'Pagamento vencido para confirmação', 'pag_cliente.php', $pagamento['id_pagamento']);
-                            //}
+                             //Se não houver uma notificação de vencimento existente, insere a nova notificação
+                            if ($logExistente == 0) {
+                                registrarLogVencimento('Notificação de Vencimento', 'Propriedade: ' . " " . $pagamento['nome_propriedade'] . " "  . 'Pagamento vencido para confirmação', 'controle_financas.php', $pagamento['id_pagamento']);
+                            }
 
                             $stmt->close();
                         } elseif ($timestampServidor < $timestampVencimento && $pagamento['status'] === 'vencido') {

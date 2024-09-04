@@ -243,6 +243,33 @@ h3 {
     background-color: #0056b3; /* Azul mais escuro ao passar o mouse */
 }
 
+/* Estilo para o botão com classe 'teste' */
+button.teste {
+    background-color: #4CAF50;
+    color: white; 
+    border: none;   
+    padding: 10px 20px;
+    text-align: center; 
+    text-decoration: none; 
+    display: inline-block; 
+    font-size: 16px;
+    margin: 10px 0; 
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s;
+}
+
+/* Efeito ao passar o mouse por cima */
+button.teste:hover {
+    background-color: #45a049; /* Um verde mais escuro */
+}
+
+/* Efeito de clique (pressionado) */
+button.teste:active {
+    transform: scale(0.98);     /* Leve redução do tamanho ao clicar */
+}
+
+
 /* Estilo para a mensagem de feedback */
 .notification-popup p {
     margin: 5px 0;
