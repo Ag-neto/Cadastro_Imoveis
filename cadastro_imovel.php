@@ -20,6 +20,13 @@
             <label for="endereco">Endereço:</label>
             <input type="text" id="endereco" name="endereco" placeholder="Ex: Rua ABC, 123" required>
 
+            <label for="estado">Estado:</label>
+            <select id="tipo" name="tipo" required>
+                <option value="Paraiba">Paraiba</option>
+                <option value="Pernambuco">Pernambuco</option>
+                <option value="Bahia">Bahia</option>
+            </select>
+
             <label for="preco">Preço (R$):</label>
             <input type="number" id="preco" name="preco" placeholder="Ex: 250000" required>
 
@@ -41,6 +48,7 @@
                 <tr>
                     <th>Nome</th>
                     <th>Endereço</th>
+                    <th>Estado</th>
                     <th>Preço (R$)</th>
                     <th>Tipo</th>
                 </tr>
