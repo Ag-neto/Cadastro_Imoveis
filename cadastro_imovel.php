@@ -8,14 +8,12 @@
 </head>
 <body>
     <header>
-        <h1>Controle de Imóveis</h1>
+        <h1>Controle de Propriedade</h1>
     </header>
 
     <section class="form-section">
-        <h2>Adicionar Imóvel</h2>
+        <h2>Adicionar Propriedade</h2>
         <form id="imovel-form">
-            <label for="nome">Nome do Imóvel:</label>
-            <input type="text" id="nome" name="nome" placeholder="Ex: Apartamento Central" required>
 
             <label for="endereco">Endereço:</label>
             <input type="text" id="endereco" name="endereco" placeholder="Ex: Rua ABC, 123" required>
@@ -28,8 +26,24 @@
                 <option value="Bahia">Bahia</option>
             </select>
 
-            <label for="preco">Preço - Adquirido (R$):</label>
+            <label for="preco">Valor - Adquirido (R$):</label>
             <input type="number" id="preco" name="preco" placeholder="Ex: 250000" required>
+
+            <label for="tamanho">Tamanho: (m²)</label>
+            <input type="number" id="tamanho" name="tamanho" required>
+
+            <label for="situacao">Situação:</label>
+            <select id="situacao" name="situacao" required>
+                <option value=""></option>
+                <option value="Paraiba">Disponível para venda</option>
+                <option value="Pernambuco">Disponível para aluguel</option>
+            </select>
+
+            <label for="preco">Data de Registro:</label>
+            <input type="date" name="" id="">
+
+            <label for="documentos">Documentação</label>
+            <input type="file" name="documento" id="documento">
 
             <label for="tipo">Tipo de Imóvel:</label>
             <select id="tipo" name="tipo" required>
