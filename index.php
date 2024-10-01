@@ -21,16 +21,39 @@
         </ul>
     </nav>
 
-    <main>
-        <section>
-            <h2>Bem-vindo ao Sistema de Gestão de Imóveis</h2>
-            <p>Escolha uma das opções no menu acima para gerenciar seus imóveis e locações.</p>
-        </section>
-    </main>
+            <label for="endereco">Endereço:</label>
+            <input type="text" id="endereco" name="endereco" placeholder="Ex: Rua ABC, 123" required>
 
-    <footer>
-        <p>&copy; 2024 - Sistema de Gestão de Imóveis</p>
-    </footer>
+            <label for="preco">Preço (R$):</label>
+            <input type="number" id="preco" name="preco" placeholder="Ex: 250000" required>
+
+            <label for="tipo">Tipo de Imóvel:</label>
+            <select id="tipo" name="tipo" required>
+                <option value="apartamento">Apartamento</option>
+                <option value="casa">Casa</option>
+                <option value="comercial">Comercial</option>
+            </select>
+
+            <button type="submit">Adicionar Imóvel</button>
+        </form>
+    </section>
+
+    <section class="list-section">
+        <h2>Lista de Imóveis</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>Endereço</th>
+                    <th>Preço (R$)</th>
+                    <th>Tipo</th>
+                </tr>
+            </thead>
+            <tbody id="imovel-list">
+                <!-- Os imóveis serão adicionados aqui -->
+            </tbody>
+        </table>
+    </section>
 
     <script src="script.js"></script>
 </body>
