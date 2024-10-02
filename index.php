@@ -31,7 +31,5 @@
     <footer>
         <p>&copy; 2024 - Sistema de Gestão de Propriedade</p>
     </footer>
-
-    <script src="script.js"></script>
 </body>
 </html>
