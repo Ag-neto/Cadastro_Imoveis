@@ -53,7 +53,14 @@
             <li class="item-menu">
                 <a href="#">
                     <span class="icon"><i class="bi bi-file-earmark-break-fill"></i></span>
-                    <span class="txt-link">Contrato</span>
+                    <span class="txt-link">Gerar.Contrato</span>
+                </a>
+            </li>
+
+            <li class="item-menu">
+                <a href="#">
+                    <span class="icon"><i class="bi bi-archive-fill"></i></span>
+                    <span class="txt-link">Contratos</span>
                 </a>
             </li>
 

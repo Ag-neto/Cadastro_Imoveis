@@ -66,7 +66,7 @@
                 </div>
 
                 <div class="form-item">
-                    <label for="tipo">Tipo de Imóvel:</label>
+                    <label for="tipo">Tipo de Propriedade:</label>
                     <select id="tipo" name="tipo" required>
                         <option value=""></option>
                         <option value="apartamento">Apartamento</option>
