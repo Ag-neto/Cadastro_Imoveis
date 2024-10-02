@@ -8,6 +8,7 @@ body {
     font-family: Arial, sans-serif;
     background-color: #f0f0f0;
     padding: 20px;
+    height: 100vh;
 }
 
 header {
@@ -19,6 +20,7 @@ header {
     padding: 15px;
     border-radius: 8px;
     margin-bottom: 20px;
+    margin-left: 60px; /* Ajuste para evitar que o header fique sob o menu lateral */
 }
 
 header h1 {
@@ -37,36 +39,63 @@ header h1 {
     color: #ffc107;
 }
 
-nav {
-    margin-bottom: 40px;
-}
-
-nav ul {
-    list-style: none;
-    display: flex;
-    justify-content: space-around;
+nav.menu-lateral{
+    width: 60px;
+    height: 100%;
     background-color: #343a40;
-    padding: 10px;
-    border-radius: 8px;
+    padding: 40px 0px 40x 1%;
+
+    position: fixed;
+    top: 0;
+    left: 0;
+
+    overflow: hidden;
 }
 
-nav ul li {
-    margin: 0 10px;
+nav.menu-lateral:hover{
+    width: 300px;
+    transition: .3s;
 }
 
-nav ul li a {
+.btn-expandir{
+    padding-top: 10px;
+    width: 100%;
+    padding-left: 10px;
+}
+
+.btn-expandir > i{
+    color: white;
+    font-size: 35px;
+    cursor: pointer;
+}
+
+ul{
+    height: 100%;
+    list-style-type: none;
+}
+
+ul li.item-menu a{
     color: white;
     text-decoration: none;
-    font-size: 1.2rem;
-    font-weight: bold;
-    padding: 10px 20px;
-    background-color: #28a745;
-    border-radius: 4px;
-    transition: background-color 0.3s ease;
+    font-size: 25px;
+    padding: 20px 4px;
+    display: flex;
+    line-height: 40px;
+    margin-bottom: 20px;
 }
 
-nav ul li a:hover {
-    background-color: #218838;
+ul li.item-menu a .txt-link{
+    margin-left: 20px;
+}
+
+ul li.item-menu a .icon >i{
+    padding-left: 10px;
+    font-size: 30px;
+}
+
+ul li.item-menu a:hover{
+    background-color: #28a745;
+    transition: .2s;
 }
 
 main {
@@ -74,7 +103,11 @@ main {
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+<<<<<<< Updated upstream
     margin-bottom: 20px;
+=======
+    margin-left: 60px; /* Ajuste para evitar que o main fique sob o menu lateral */
+>>>>>>> Stashed changes
 }
 
 main section h2 {
