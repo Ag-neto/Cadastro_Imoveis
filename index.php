@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Painel de Controle - Gestão de Imóveis</title>
+    <title>Painel de Controle - Gestão de Propriedades</title>
     <link rel="stylesheet" href="style/style_index.css">
 </head>
 <body>
@@ -25,6 +25,12 @@
         <section>
             <h2>Bem-vindo ao Sistema de Gestão de Imóveis</h2>
             <p>Escolha uma das opções no menu acima para gerenciar seus imóveis e locações.</p>
+        </section>
+    </main>
+    <main>
+        <section>
+            <h2>Suas Propriedades</h2>
+            <p>Escolha uma das propriedades para realizar alguma operação</p>
         </section>
     </main>
 
