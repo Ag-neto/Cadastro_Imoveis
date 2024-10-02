@@ -103,11 +103,8 @@ main {
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-<<<<<<< Updated upstream
     margin-bottom: 20px;
-=======
     margin-left: 60px; /* Ajuste para evitar que o main fique sob o menu lateral */
->>>>>>> Stashed changes
 }
 
 main section h2 {
