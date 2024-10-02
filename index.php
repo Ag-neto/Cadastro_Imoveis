@@ -51,7 +51,7 @@
             </li>
 
             <li class="item-menu">
-                <a href="#">
+                <a href="aluguel/criar_contrato.php">
                     <span class="icon"><i class="bi bi-file-earmark-break-fill"></i></span>
                     <span class="txt-link">Gerar.Contrato</span>
                 </a>

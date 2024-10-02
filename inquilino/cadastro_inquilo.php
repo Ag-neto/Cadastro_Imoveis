@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Controle de Propriedade</title>
-    <link rel="stylesheet" href="../style/cadastro_propriedade_style.css">
+    <link rel="stylesheet" href="../style/cadastro_inquilino.css">
 </head>
 <body>
     <header>
@@ -67,5 +67,8 @@
             <a href="../index.php">Voltar para o menu</a>
         </form>
     </section>
+    <footer>
+        <p>&copy; 2024 - Sistema de Gestão de Propriedade</p>
+    </footer>
 </body>
 </html>

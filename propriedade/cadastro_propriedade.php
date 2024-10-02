@@ -81,5 +81,8 @@
             <a href="../index.php">Voltar para o menu</a>
         </form>
     </section>
+    <footer>
+        <p>&copy; 2024 - Sistema de Gestão de Propriedade</p>
+    </footer>
 </body>
 </html>
