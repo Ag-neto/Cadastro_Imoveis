@@ -77,11 +77,10 @@ ul{
 ul li.item-menu a{
     color: white;
     text-decoration: none;
-    font-size: 25px;
+    font-size: 20px;
     padding: 20px 4px;
     display: flex;
     line-height: 40px;
-    margin-bottom: 20px;
 }
 
 ul li.item-menu a .txt-link{
@@ -90,7 +89,7 @@ ul li.item-menu a .txt-link{
 
 ul li.item-menu a .icon >i{
     padding-left: 10px;
-    font-size: 30px;
+    font-size: 25px;
 }
 
 ul li.item-menu a:hover{

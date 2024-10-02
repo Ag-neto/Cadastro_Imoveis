@@ -37,6 +37,13 @@
             </li>
 
             <li class="item-menu">
+                <a href="inquilino/cadastro_inquilo.php">
+                    <span class="icon"><i class="bi bi-person-vcard-fill"></i></span>
+                    <span class="txt-link">Add.Inquilino</span>
+                </a>
+            </li>
+
+            <li class="item-menu">
                 <a href="#">
                     <span class="icon"><i class="bi bi-wallet2"></i></span>
                     <span class="txt-link">Pagamentos</span>
