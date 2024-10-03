@@ -17,6 +17,15 @@
     <section class="form-section">
         <h2>Informações do Contrato</h2>
         <form id="contrato-form">
+            <!-- Escolha o tipo de contrato -->
+            <div class="form-group">
+                <input type="checkbox" name="opcao" id="checkbox1" value="venda">
+                <label for="checkbox1">Venda</label><br>
+
+                <input type="checkbox" name="opcao" id="checkbox2" value="aluguel">
+                <label for="checkbox1">Aluguel</label><br>
+            </div>
+
             <!-- Escolha da propriedade -->
             <div class="form-group">
                 <div class="form-item">
