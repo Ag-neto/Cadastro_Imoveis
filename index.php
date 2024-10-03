@@ -44,14 +44,14 @@
             </li>
 
             <li class="item-menu">
-                <a href="#">
+                <a href="pagamentos/pag_cliente.php">
                     <span class="icon"><i class="bi bi-wallet2"></i></span>
                     <span class="txt-link">Pagamentos</span>
                 </a>
             </li>
 
             <li class="item-menu">
-                <a href="aluguel/criar_contrato.php">
+                <a href="contrato/tipo_contrato.php">
                     <span class="icon"><i class="bi bi-file-earmark-break-fill"></i></span>
                     <span class="txt-link">Gerar.Contrato</span>
                 </a>
@@ -73,10 +73,57 @@
             <p>Escolha uma das opções no menu acima para gerenciar seus imóveis e locações.</p>
         </section>
     </main>
+
     <main>
         <section>
             <h2>Suas Propriedades</h2>
             <p>Escolha uma das propriedades para realizar alguma operação</p>
+
+            <!-- Mostrar propriedades para administrador -->
+            <h3>Propriedades Disponíveis</h3>
+            
+            <!-- Contêiner de propriedades -->
+            <div class="propriedades-container">
+                <!-- Propriedade 1 -->
+                <div class="propriedade-item">
+                    <h4>Apartamento Central</h4>
+                    <p>Localização: Centro</p>
+                    <p>Valor: R$ 500.000</p>
+                </div>
+
+                <!-- Propriedade 2 -->
+                <div class="propriedade-item">
+                    <h4>Casa Verde</h4>
+                    <p>Localização: Bairro Verde</p>
+                    <p>Valor: R$ 300.000</p>
+                </div>
+
+                <!-- Propriedade 3 -->
+                <div class="propriedade-item">
+                    <h4>Loja Comercial</h4>
+                    <p>Localização: Av. Principal</p>
+                    <p>Valor: R$ 800.000</p>
+                </div>
+                <div class="propriedade-item">
+                    <h4>Apartamento Central</h4>
+                    <p>Localização: Centro</p>
+                    <p>Valor: R$ 500.000</p>
+                </div>
+
+                <!-- Propriedade 2 -->
+                <div class="propriedade-item">
+                    <h4>Casa Verde</h4>
+                    <p>Localização: Bairro Verde</p>
+                    <p>Valor: R$ 300.000</p>
+                </div>
+
+                <!-- Propriedade 3 -->
+                <div class="propriedade-item">
+                    <h4>Loja Comercial</h4>
+                    <p>Localização: Av. Principal</p>
+                    <p>Valor: R$ 800.000</p>
+                </div>
+            </div>
         </section>
     </main>
 

@@ -116,3 +116,49 @@ footer {
     text-align: center;
     color: #555;
 }
+
+/* Estilização do contêiner de propriedades */
+.propriedades-container {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-top: 20px;
+}
+
+/* Estilização de cada item de propriedade */
+.propriedade-item {
+    background-color: #f8f9fa;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    flex: 1 1 calc(33% - 40px); /* Flex-grow, flex-shrink, e tamanho base */
+    max-width: calc(33% - 40px); /* Limitar largura máxima */
+    min-width: 200px; /* Limitar largura mínima */
+    transition: transform 0.2s ease;
+}
+
+/* Efeito de hover nas propriedades */
+.propriedade-item:hover {
+    transform: scale(1.05);
+}
+
+/* Títulos das propriedades */
+.propriedade-item h4 {
+    font-size: 1.4rem;
+    margin-bottom: 10px;
+}
+
+/* Parágrafos dentro da propriedade */
+.propriedade-item p {
+    font-size: 1rem;
+    margin: 5px 0;
+}
+
+/* Responsividade - ajustar para telas menores */
+@media (max-width: 768px) {
+    .propriedade-item {
+        flex: 1 1 100%;
+        max-width: 100%;
+    }
+}
