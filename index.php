@@ -82,7 +82,7 @@
             <!-- Mostrar propriedades para administrador -->
             <h3>Propriedades Disponíveis</h3>
             
-            <!-- Contêiner de propriedades -->
+            <!-- Contêiner de propriedades  (Quando for usar a linguagem de programação, coloca apenas uma div de propriedade-item e joga ela dentro de um while)-->
             <div class="propriedades-container">
                 <!-- Propriedade 1 -->
                 <div class="propriedade-item">
