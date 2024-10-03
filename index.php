@@ -58,7 +58,7 @@
             </li>
 
             <li class="item-menu">
-                <a href="#">
+                <a href="contrato/listar_contratos.php">
                     <span class="icon"><i class="bi bi-archive-fill"></i></span>
                     <span class="txt-link">Contratos</span>
                 </a>
