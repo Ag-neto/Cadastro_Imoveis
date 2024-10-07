@@ -1,10 +1,10 @@
 <!-- deletar usuário -->
 
-<form action="delete_user.php" method="post">
+<form action="caminho_deletar_usuario.php" method="post">
     <h2>Delete User</h2>
 
-    <label for="username">Username:</label>
-    <input type="text" id="username" name="username"><br><br>
+    <label for="usuario">usuario:</label>
+    <input type="text" id="usuario" name="usuario"><br><br>
 
-    <input type="submit" value="Delete User">
+    <input type="submit" value="Deletar Usuario">
 </form>

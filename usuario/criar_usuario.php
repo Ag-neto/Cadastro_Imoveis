@@ -1,7 +1,7 @@
 <!-- criar usuário -->
 
 <form>
-<form action="criar_usuario.php" method="post">
+<form action="caminho_criar_usuario.php" method="post">
     <h2>Adicionar Novo Usuário</h2>
 
     <label for="usuario">Usuário:</label>
