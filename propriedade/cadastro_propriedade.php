@@ -13,7 +13,7 @@
 
     <section class="form-section">
         <h2>Adicionar Propriedade</h2>
-        <form id="imovel-form">
+        <form action="propriedade_script.php" method="POST">
             <div class="form-group">
                 <div class="form-item">
                     <label for="nome">Nome da Propriedade:</label>
@@ -28,7 +28,7 @@
                 <div class="form-item">
                     <label for="localidade">Localidade:</label>
                     <select name="localidade" id="localidade">
-                        <option value=""></option>
+                        <option value=""disabled selected>Selecione uma cidade</option>
                         <option value="bahia">Bahia</option>
                         <option value="joao_pessoa">João Pessoa</option>
                         <option value="pernambuco">Pernambuco</option>
@@ -49,7 +49,7 @@
                 <div class="form-item">
                     <label for="situacao">Situação:</label>
                     <select id="situacao" name="situacao" required>
-                        <option value=""></option>
+                        <option value=""disabled selected>Selecione uma opção</option>
                         <option value="disponivel_venda">Disponível para venda</option>
                         <option value="disponivel_aluguel">Disponível para aluguel</option>
                     </select>
@@ -68,7 +68,7 @@
                 <div class="form-item">
                     <label for="tipo">Tipo de Propriedade:</label>
                     <select id="tipo" name="tipo" required>
-                        <option value=""></option>
+                        <option value="" disabled selected>Selecione uma opção</option>
                         <option value="apartamento">Apartamento</option>
                         <option value="casa">Casa</option>
                         <option value="comercial">Comercial</option>

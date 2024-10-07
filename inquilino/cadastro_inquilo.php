@@ -13,7 +13,7 @@
 
     <section class="form-section">
         <h2>Adicionar Inquilino</h2>
-        <form id="imovel-form">
+        <form action="inquilino_script.php" method="POST">
             <div class="form-group">
                 <div class="form-item">
                     <label for="nome">Nome do Inquilino:</label>
@@ -28,7 +28,7 @@
                 <div class="form-item">
                     <label for="localidade">Localidade:</label>
                     <select name="localidade" id="localidade">
-                        <option value=""></option>
+                        <option value="" disabled selected>Selecione uma cidade</option>
                         <option value="bahia">Bahia</option>
                         <option value="joao_pessoa">João Pessoa</option>
                         <option value="pernambuco">Pernambuco</option>

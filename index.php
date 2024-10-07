@@ -64,6 +64,13 @@
                 </a>
             </li>
 
+            <li class="item-menu">
+                <a href="localidade/cadastro_cidade.php">
+                    <span class="icon"><i class="bi bi-geo-alt-fill"></i></span>
+                    <span class="txt-link">Localidades</span>
+                </a>
+            </li>
+
         </ul>
     </nav>
 
