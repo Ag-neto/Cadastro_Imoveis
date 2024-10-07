@@ -30,6 +30,13 @@
             </li>
 
             <li class="item-menu">
+                <a href="#">
+                    <span class="icon"><i class="bi bi-person-add"></i></span>
+                    <span class="txt-link">Del.Usuário</span>
+                </a>
+            </li>
+
+            <li class="item-menu">
                 <a href="propriedade/cadastro_propriedade.php">
                     <span class="icon"><i class="bi bi-shop"></i></span>
                     <span class="txt-link">Add.Propriedade</span>

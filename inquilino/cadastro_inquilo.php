@@ -45,6 +45,11 @@
                     <label for="rg_numero">Registro Geral (RG):</label>
                     <input type="text" id="rg_numero" name="rg_numero" required>
                 </div>
+                
+                <div class="form-item">
+                    <label for="telefone">Celular:</label>
+                    <input type="number" id="telefone" name="telefone" required>
+                </div>
 
                 <div class="form-item">
                     <label for="rg_pdf">Registro Geral - PDF (RG):</label>
