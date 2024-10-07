@@ -1,0 +1,164 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    padding: 20px;
+    height: 100vh;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #343a40;
+    color: white;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    margin-left: 60px; /* Ajuste para evitar que o header fique sob o menu lateral */
+}
+
+header h1 {
+    font-size: 1.8rem;
+}
+
+#notification-btn {
+    font-size: 1.5rem;
+    background-color: transparent;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+#notification-btn:hover {
+    color: #ffc107;
+}
+
+nav.menu-lateral{
+    width: 58px;
+    height: 100%;
+    background-color: #343a40;
+    padding: 40px 0px 40x 1%;
+
+    position: fixed;
+    top: 0;
+    left: 0;
+
+    overflow: hidden;
+}
+
+nav.menu-lateral:hover{
+    width: 300px;
+    transition: .3s;
+}
+
+.btn-expandir{
+    padding-top: 10px;
+    width: 100%;
+    padding-left: 10px;
+}
+
+.btn-expandir > i{
+    color: white;
+    font-size: 35px;
+    cursor: pointer;
+}
+
+ul{
+    height: 100%;
+    list-style-type: none;
+}
+
+ul li.item-menu a{
+    color: white;
+    text-decoration: none;
+    font-size: 20px;
+    padding: 20px 4px;
+    display: flex;
+    line-height: 40px;
+}
+
+ul li.item-menu a .txt-link{
+    margin-left: 20px;
+}
+
+ul li.item-menu a .icon >i{
+    padding-left: 10px;
+    font-size: 25px;
+}
+
+ul li.item-menu a:hover{
+    background-color: #28a745;
+    transition: .2s;
+}
+
+main {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    margin-left: 60px; /* Ajuste para evitar que o main fique sob o menu lateral */
+}
+
+main section h2 {
+    margin-bottom: 20px;
+    font-size: 1.5rem;
+}
+
+footer {
+    margin-top: 40px;
+    text-align: center;
+    color: #555;
+}
+
+/* Estilização do contêiner de propriedades */
+.propriedades-container {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-top: 20px;
+}
+
+/* Estilização de cada item de propriedade */
+.propriedade-item {
+    background-color: #f8f9fa;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    flex: 1 1 calc(33% - 40px); /* Flex-grow, flex-shrink, e tamanho base */
+    max-width: calc(33% - 40px); /* Limitar largura máxima */
+    min-width: 200px; /* Limitar largura mínima */
+    transition: transform 0.2s ease;
+}
+
+/* Efeito de hover nas propriedades */
+.propriedade-item:hover {
+    transform: scale(1.05);
+}
+
+/* Títulos das propriedades */
+.propriedade-item h4 {
+    font-size: 1.4rem;
+    margin-bottom: 10px;
+}
+
+/* Parágrafos dentro da propriedade */
+.propriedade-item p {
+    font-size: 1rem;
+    margin: 5px 0;
+}
+
+/* Responsividade - ajustar para telas menores */
+@media (max-width: 768px) {
+    .propriedade-item {
+        flex: 1 1 100%;
+        max-width: 100%;
+    }
+}

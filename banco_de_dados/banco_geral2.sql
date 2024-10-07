@@ -2,7 +2,7 @@ CREATE DATABASE  IF NOT EXISTS `controledepropriedade` /*!40100 DEFAULT CHARACTE
 USE `controledepropriedade`;
 -- MySQL dump 10.13  Distrib 8.0.38, for Win64 (x86_64)
 --
--- Host: localhost    Database: controledepropriedade
+-- Host: 127.0.0.1    Database: controledepropriedade
 -- ------------------------------------------------------
 -- Server version	8.0.39
 
@@ -30,6 +30,9 @@ CREATE TABLE `aluguel` (
   `id_inquilino` int DEFAULT NULL,
   `valor_aluguel` float DEFAULT NULL,
   `cobranca` datetime DEFAULT NULL,
+  `data_inicio_residencia` datetime DEFAULT NULL,
+  `data_final_residencia` datetime DEFAULT NULL,
+  `periodo_residencia` int DEFAULT NULL,
   PRIMARY KEY (`idaluguel`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -101,11 +104,13 @@ DROP TABLE IF EXISTS `inquilino`;
 CREATE TABLE `inquilino` (
   `idinquilino` int NOT NULL,
   `nome_inquilino` varchar(45) DEFAULT NULL,
-  `rg` varchar(15) DEFAULT NULL,
-  `cpf` varchar(15) DEFAULT NULL,
-  `data_inicio_residencia` datetime DEFAULT NULL,
-  `data_final_residencia` datetime DEFAULT NULL,
-  `periodo_residencia` int DEFAULT NULL,
+  `rg_pdf` varchar(15) DEFAULT NULL,
+  `cpf_pdf` varchar(15) DEFAULT NULL,
+  `rg_numero` varchar(45) DEFAULT NULL,
+  `cpf_numero` varchar(45) DEFAULT NULL,
+  `endereco` varchar(45) DEFAULT NULL,
+  `id_localizacao` int DEFAULT NULL,
+  `data_nascimento` date DEFAULT NULL,
   PRIMARY KEY (`idinquilino`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -298,4 +303,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-09-26 16:43:04
+-- Dump completed on 2024-10-02 18:43:22
