@@ -38,24 +38,27 @@
                     <th>CPF</th>
                     <th>Endereco</th>
                     <th>Data Nascimento</th>
+                    <th>Ações</th>
                 </tr>
             </thead>
             <tbody>
                 <!-- Exemplo de dados estáticos -->
                 <tr>
                     <td>1</td>
-                    <td>Marcleo</td>
-                    <td>Apartamento</td>
-                    <td>São Paulo</td>
-                    <td>450.000,00</td>
+                    <td>Marcelo</td>
+                    <td>33.475.579-7</td>
+                    <td>533.403.840-02</td>
+                    <td>Rua Arlindo Nogueira, Centro, Teresina</td>
+                    <td>28/03/1990</td>
                     <td><a href="detalhes_inquilino.php?id=1">Ver Detalhes</a></td>
                 </tr>
                 <tr>
                     <td>2</td>
-                    <td>Casa Verde</td>
-                    <td>Casa</td>
-                    <td>Rio de Janeiro</td>
-                    <td>650.000,00</td>
+                    <td>Lucas</td>
+                    <td>33.475.579-7</td>
+                    <td>533.403.840-02</td>
+                    <td>Rua Arlindo Nogueira, Centro, Teresina</td>
+                    <td>21/06/2000</td>
                     <td><a href="detalhes_inquilino.php?id=2">Ver Detalhes</a></td>
                 </tr>
                 <!-- Aqui vamos fazer um loop para listar as inquilinos dinâmicas -->

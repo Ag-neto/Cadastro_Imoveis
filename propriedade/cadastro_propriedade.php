@@ -16,8 +16,8 @@
         <form action="propriedade_script.php" method="POST">
             <div class="form-group">
                 <div class="form-item">
-                    <label for="nome">Nome da Propriedade:</label>
-                    <input type="text" id="nome" name="nome" placeholder="Ex: Apartamento Central" required>
+                    <label for="nome_propriedade">Nome da Propriedade:</label>
+                    <input type="text" id="nome_propriedade" name="nome_propriedade" placeholder="Ex: Apartamento Central" required>
                 </div>
 
                 <div class="form-item">
@@ -27,18 +27,27 @@
 
                 <div class="form-item">
                     <label for="localidade">Localidade:</label>
-                    <select name="localidade" id="localidade">
-                        <option value=""disabled selected>Selecione uma cidade</option>
-                        <option value="bahia">Bahia</option>
-                        <option value="joao_pessoa">João Pessoa</option>
-                        <option value="pernambuco">Pernambuco</option>
-                        <option value="Natal">Natal</option>
-                    </select>
+                    <select name="id_localizacao" id="id_localizacao" required>
+                        <option value="" disabled selected>Selecione</option>
+                            <?php
+                            require_once "../conexao/conexao.php";
+
+                            $sql = "SELECT * FROM localizacao";
+                            $result = $conn->query($sql);
+
+                            if ($result->num_rows > 0) {
+                                while ($row = $result->fetch_assoc()) {
+                                    echo '<option value="' . $row['id_localizacao'] . '">' . $row['nome_cidade'] . '</option>';
+                                }
+                            }
+
+                            ?>
+                        </select><br>
                 </div>
 
                 <div class="form-item">
-                    <label for="preco">Valor - Adquirido (R$):</label>
-                    <input type="number" id="preco" name="preco" placeholder="Ex: 250000" required>
+                    <label for="valor_adquirido">Valor - Adquirido (R$):</label>
+                    <input type="number" id="valor_adquirido" name="valor_adquirido" placeholder="Ex: 250000" required>
                 </div>
 
                 <div class="form-item">
