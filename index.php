@@ -25,21 +25,21 @@
             <li class="item-menu">
                 <a href="#">
                     <span class="icon"><i class="bi bi-person-add"></i></span>
-                    <span class="txt-link">Add.Usuário</span>
+                    <span class="txt-link">Usuários</span>
                 </a>
             </li>
 
             <li class="item-menu">
-                <a href="propriedade/cadastro_propriedade.php">
+                <a href="propriedade/listar_propriedades.php">
                     <span class="icon"><i class="bi bi-shop"></i></span>
-                    <span class="txt-link">Add.Propriedade</span>
+                    <span class="txt-link">Propriedades</span>
                 </a>
             </li>
 
             <li class="item-menu">
-                <a href="inquilino/cadastro_inquilo.php">
+                <a href="inquilino/listar_inquilinos.php">
                     <span class="icon"><i class="bi bi-person-vcard-fill"></i></span>
-                    <span class="txt-link">Add.Inquilino</span>
+                    <span class="txt-link">Inquilinos</span>
                 </a>
             </li>
 
@@ -47,13 +47,6 @@
                 <a href="pagamentos/pag_cliente.php">
                     <span class="icon"><i class="bi bi-wallet2"></i></span>
                     <span class="txt-link">Pagamentos</span>
-                </a>
-            </li>
-
-            <li class="item-menu">
-                <a href="contrato/tipo_contrato.php">
-                    <span class="icon"><i class="bi bi-file-earmark-break-fill"></i></span>
-                    <span class="txt-link">Gerar.Contrato</span>
                 </a>
             </li>
 

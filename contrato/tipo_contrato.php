@@ -24,7 +24,7 @@
             </a>
         </div>
     </section>
-    <a href="../index.php">Voltar para o menu</a>   
+    <a href="listar_contratos.php">Voltar para o menu</a>   
 
     <footer>
         <p>&copy; 2024 - Sistema de Gestão de Propriedade</p>

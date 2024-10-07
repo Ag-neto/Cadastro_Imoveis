@@ -77,8 +77,8 @@
                 </div>
             </div>
 
-            <button type="submit">Cadastrar Propriedade</button>
-            <a href="../index.php">Voltar para o menu</a>
+            <button type="submit">Salvar Propriedade</button>
+            <a href="listar_propriedades.php">Voltar</a>
         </form>
     </section>
     <footer>

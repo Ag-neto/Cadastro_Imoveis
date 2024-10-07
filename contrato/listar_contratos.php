@@ -31,6 +31,8 @@
             </div>
 
             <button type="submit">Buscar</button>
+            <a href="../index.php" class="btn-voltar">Voltar</a>
+            <a href="tipo_contrato.php" class="btn-criar_contrato">Gerar Contrato</a>
         </form>
     </section>
 
