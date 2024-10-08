@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Controle de Propriedade</title>
     <link rel="stylesheet" href="../style/cadastro_propriedade_style.css">
 </head>
+
 <body>
     <header>
         <h1>Cadastro de Propriedade</h1>
@@ -26,23 +28,23 @@
                 </div>
 
                 <div class="form-item">
-                    <label for="localidade">Localidade:</label>
+                    <label for="localizacao">Localidade:</label>
                     <select name="id_localizacao" id="id_localizacao" required>
                         <option value="" disabled selected>Selecione</option>
-                            <?php
-                            require_once "../conexao/conexao.php";
+                        <?php
+                        require_once "../conexao/conexao.php";
 
-                            $sql = "SELECT * FROM localizacao";
-                            $result = $conn->query($sql);
+                        $sql = "SELECT * FROM localizacao";
+                        $result = $conn->query($sql);
 
-                            if ($result->num_rows > 0) {
-                                while ($row = $result->fetch_assoc()) {
-                                    echo '<option value="' . $row['id_localizacao'] . '">' . $row['nome_cidade'] . '</option>';
-                                }
+                        if ($result->num_rows > 0) {
+                            while ($row = $result->fetch_assoc()) {
+                                echo '<option value="' . $row['idlocalizacao'] . '">' . $row['nome_cidade'] . '</option>';
                             }
+                        }
 
-                            ?>
-                        </select><br>
+                        ?>
+                    </select>
                 </div>
 
                 <div class="form-item">
@@ -56,33 +58,49 @@
                 </div>
 
                 <div class="form-item">
-                    <label for="situacao">Situação:</label>
-                    <select id="situacao" name="situacao" required>
-                        <option value=""disabled selected>Selecione uma opção</option>
-                        <option value="disponivel_venda">Disponível para venda</option>
-                        <option value="disponivel_aluguel">Disponível para aluguel</option>
-                    </select>
+                    <label for="id_situacao">Situação da propriedade:</label>
+                    <select name="id_situacao" id="id_situacao" required>
+                        <option value="" disabled selected>Selecione</option>
+                        <?php
+                        $sql = "SELECT * FROM situacao";
+                        $result = $conn->query($sql);
+
+                        if ($result->num_rows > 0) {
+                            while ($row = $result->fetch_assoc()) {
+                                echo '<option value="' . $row['id_situacao'] . '">' . $row['nome_situacao'] . '</option>';
+                            }
+                        }
+
+                        ?>
+                    </select><br>
                 </div>
 
                 <div class="form-item">
                     <label for="data">Data de Registro:</label>
-                    <input type="date" id="data">
+                    <input type="date" name="data" id="data">
                 </div>
 
-                <div class="form-item">
+                <!--<div class="form-item">
                     <label for="documentos">Documentação</label>
                     <input type="file" name="documento" id="documento">
-                </div>
+                </div> -->
 
                 <div class="form-item">
-                    <label for="tipo">Tipo de Propriedade:</label>
-                    <select id="tipo" name="tipo" required>
-                        <option value="" disabled selected>Selecione uma opção</option>
-                        <option value="apartamento">Apartamento</option>
-                        <option value="casa">Casa</option>
-                        <option value="comercial">Comercial</option>
-                        <option value="fazenda">Fazenda</option>
-                    </select>
+                    <label for="id_tipo_prop">Tipo da propriedade:</label>
+                    <select name="id_tipo_prop" id="id_tipo_prop" required>
+                        <option value="" disabled selected>Selecione</option>
+                        <?php
+                        $sql = "SELECT * FROM tipo_prop";
+                        $result = $conn->query($sql);
+
+                        if ($result->num_rows > 0) {
+                            while ($row = $result->fetch_assoc()) {
+                                echo '<option value="' . $row['id_tipo_prop'] . '">' . $row['nome_tipo'] . '</option>';
+                            }
+                        }
+
+                        ?>
+                    </select><br>
                 </div>
             </div>
 
@@ -94,4 +112,5 @@
         <p>&copy; 2024 - Sistema de Gestão de Propriedade</p>
     </footer>
 </body>
+
 </html>

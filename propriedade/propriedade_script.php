@@ -20,21 +20,20 @@ require_once "../conexao/conexao.php";
     <main>
         <section class="form-section">
             <?php
+
             // Verifica se o método é POST para evitar execução desnecessária
             if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $nome = $_POST['nome_propriedade'];
-                $endereco = $_POST['endereco'];
-                $localidade = $_POST['localidade'];
-                $valor_adquirido = $_POST['valor_adquirido'];
+                $localidade = $_POST['id_localizacao'];
+                $tipo = $_POST['id_tipo_prop'];
                 $tamanho = $_POST['tamanho'];
-                $situacao = $_POST['situacao'];
+                //$documento = $_POST['documento'];
+                $valor_adquirido = $_POST['valor_adquirido'];
+                $endereco = $_POST['endereco'];
+                $situacao = $_POST['id_situacao'];
                 $data = $_POST['data'];
-                $documento = $_POST['documento'];
-                $tipo = $_POST['tipo'];
-                
-                
 
-                $sql = "INSERT INTO propriedade (nome_propriedade, estado_cidade) VALUES ('$nome', '$estado')";
+                $sql = "INSERT INTO propriedade (nome_propriedade, id_localizacao, id_tipo_prop, tamanho, valor_adquirido, endereco, id_situacao, data_registro) VALUES ('$nome', '$localidade', '$tipo', '$tamanho', '$valor_adquirido', '$endereco', '$situacao', '$data')";
 
                 if (mysqli_query($conn, $sql)) {
                     echo "<p class='success'>$nome cadastrado(a) com sucesso!</p>";

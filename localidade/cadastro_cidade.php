@@ -28,13 +28,21 @@
             <div class="form-group">
                 <div class="form-item">
                     <label for="estado">Estado:</label>
-                    <select id="estado" name="estado" required>
-                        <option value="" disabled selected>Selecione o Estado</option>
-                        <option value="PB">Paraíba</option>
-                        <option value="PE">Pernambuco</option>
-                        <option value="RN">Rio Grande do Norte</option>
-                        <option value="CE">Ceará</option>
-                        <!-- Adicione outros estados conforme necessário -->
+                    <select name="id_estado" id="id_estado" required>
+                        <option value="" disabled selected>Selecione</option>
+                        <?php
+                        require_once "../conexao/conexao.php";
+
+                        $sql = "SELECT * FROM estados";
+                        $result = $conn->query($sql);
+
+                        if ($result->num_rows > 0) {
+                            while ($row = $result->fetch_assoc()) {
+                                echo '<option value="' . $row['id_estado'] . '">' . $row['nome_estado'] . ' - ' . $row['sigla'] . '</option>';
+                            }
+                        }
+
+                        ?>
                     </select>
                 </div>
             </div>

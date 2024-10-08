@@ -23,9 +23,9 @@ require_once "../conexao/conexao.php";
             // Verifica se o método é POST para evitar execução desnecessária
             if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $nome = $_POST['nome_cidade'];
-                $estado = $_POST['estado'];
+                $estado = $_POST['id_estado'];
 
-                $sql = "INSERT INTO localizacao (nome_cidade, estado_cidade) VALUES ('$nome', '$estado')";
+                $sql = "INSERT INTO localizacao (nome_cidade, id_estado) VALUES ('$nome', '$estado')";
 
                 if (mysqli_query($conn, $sql)) {
                     echo "<p class='success'>$nome cadastrado(a) com sucesso!</p>";
