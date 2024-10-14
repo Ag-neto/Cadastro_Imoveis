@@ -78,11 +78,15 @@ DROP TABLE IF EXISTS `documentacao_propriedade`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `documentacao_propriedade` (
-  `iddocumentacao_propriedade` int NOT NULL,
-  `documento` varchar(250) DEFAULT NULL,
+  `iddocumentacao_propriedade` int NOT NULL AUTO_INCREMENT,
+  `nome_doc` varchar(250) NOT NULL,
+  `path` varchar(250) NOT NULL,
+  `data_upload` date NOT NULL,
   `id_propriedade` int DEFAULT NULL,
-  PRIMARY KEY (`iddocumentacao_propriedade`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  PRIMARY KEY (`iddocumentacao_propriedade`),
+  KEY `fk_propriedade` (`id_propriedade`),
+  CONSTRAINT `fk_propriedade` FOREIGN KEY (`id_propriedade`) REFERENCES `propriedade` (`idpropriedade`)
+) ENGINE=InnoDB AUTO_INCREMENT=108 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -91,6 +95,7 @@ CREATE TABLE `documentacao_propriedade` (
 
 LOCK TABLES `documentacao_propriedade` WRITE;
 /*!40000 ALTER TABLE `documentacao_propriedade` DISABLE KEYS */;
+INSERT INTO `documentacao_propriedade` VALUES (102,'Contrato 01-24.pdf','arquivos/670da98bb7e61.pdf','2024-10-14',11),(103,'Currículo.pdf','arquivos/670da98bb96b1.pdf','2024-10-14',11),(104,'Contrato 01-24.pdf','arquivos/670daa20d87cd.pdf','2024-10-14',12),(105,'Currículo.pdf','arquivos/670daa20da2ba.pdf','2024-10-14',12),(106,'ProfileLinkedin(Curriculo).pdf','arquivos/670daa20dbc0e.pdf','2024-10-14',12),(107,'Requerimento de correção de nota.pdf','arquivos/670daa20dc912.pdf','2024-10-14',12);
 /*!40000 ALTER TABLE `documentacao_propriedade` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -231,23 +236,16 @@ DROP TABLE IF EXISTS `propriedade`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `propriedade` (
   `idpropriedade` int NOT NULL AUTO_INCREMENT,
-  `nome_propriedade` varchar(45) DEFAULT NULL,
+  `nome_propriedade` varchar(45) NOT NULL,
   `id_localizacao` int DEFAULT NULL,
   `id_tipo_prop` int DEFAULT NULL,
   `tamanho` float DEFAULT NULL,
-  `id_documentacao` int DEFAULT NULL,
   `valor_adquirido` float DEFAULT NULL,
   `endereco` varchar(100) DEFAULT NULL,
   `id_situacao` int DEFAULT NULL,
   `data_registro` datetime DEFAULT NULL,
-  PRIMARY KEY (`idpropriedade`),
-  KEY `id_tipo_prop_idx` (`id_tipo_prop`),
-  KEY `id_localizacao_idx` (`id_localizacao`),
-  KEY `id_documentacao_idx` (`id_documentacao`),
-  CONSTRAINT `id_documentacao` FOREIGN KEY (`id_documentacao`) REFERENCES `documentacao_propriedade` (`iddocumentacao_propriedade`),
-  CONSTRAINT `id_localizacao` FOREIGN KEY (`id_localizacao`) REFERENCES `localizacao` (`idlocalizacao`),
-  CONSTRAINT `id_tipo_prop` FOREIGN KEY (`id_tipo_prop`) REFERENCES `tipo_prop` (`id_tipo_prop`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  PRIMARY KEY (`idpropriedade`)
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -256,7 +254,7 @@ CREATE TABLE `propriedade` (
 
 LOCK TABLES `propriedade` WRITE;
 /*!40000 ALTER TABLE `propriedade` DISABLE KEYS */;
-INSERT INTO `propriedade` VALUES (1,'Loja ali da esquina',2,7,150,NULL,80000,'Centro, S/N',2,'2024-10-08 00:00:00'),(2,'Casa de teste',1,1,200,NULL,200000,'Rua Nova, Mata Redonda, SN',1,'2024-10-10 00:00:00');
+INSERT INTO `propriedade` VALUES (8,'Minha loja',2,7,100,123456,'Fazenda da Boa Esperança ',1,'2024-10-14 00:00:00'),(11,'Propriedade Completa',2,2,500,100000,'Fazenda da Boa Esperança ',1,'2024-10-14 00:00:00'),(12,'Loja ali da esquina',1,2,123,123123,'Fazenda da Boa Esperança ',2,'2024-10-14 00:00:00');
 /*!40000 ALTER TABLE `propriedade` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -342,4 +340,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-10-11 22:22:25
+-- Dump completed on 2024-10-14 20:45:08
