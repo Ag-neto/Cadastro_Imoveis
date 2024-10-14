@@ -15,7 +15,7 @@
 
     <section class="form-section">
         <h2>Adicionar Propriedade</h2>
-        <form action="propriedade_script.php" method="POST">
+        <form enctype="multipart/form-data" action="propriedade_script.php" method="POST">
             <div class="form-group">
                 <div class="form-item">
                     <label for="nome_propriedade">Nome da Propriedade:</label>
@@ -80,10 +80,10 @@
                     <input type="date" name="data" id="data">
                 </div>
 
-                <!--<div class="form-item">
+                <div class="form-item">
                     <label for="documentos">Documentação</label>
-                    <input type="file" name="documento" id="documento">
-                </div> -->
+                    <input type="file" name="documentos" id="documentos">
+                </div> 
 
                 <div class="form-item">
                     <label for="id_tipo_prop">Tipo da propriedade:</label>

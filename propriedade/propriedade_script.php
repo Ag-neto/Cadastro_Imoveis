@@ -21,17 +21,22 @@ require_once "../conexao/conexao.php";
         <section class="form-section">
             <?php
 
-            // Verifica se o método é POST para evitar execução desnecessária
+            if (isset($_FILES['documentos'])) {
+                var_dump($_FILES['documentos']);
+            }
+
             if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $nome = $_POST['nome_propriedade'];
                 $localidade = $_POST['id_localizacao'];
                 $tipo = $_POST['id_tipo_prop'];
                 $tamanho = $_POST['tamanho'];
-                //$documento = $_POST['documento'];
                 $valor_adquirido = $_POST['valor_adquirido'];
                 $endereco = $_POST['endereco'];
                 $situacao = $_POST['id_situacao'];
                 $data = $_POST['data'];
+
+
+
 
                 $sql = "INSERT INTO propriedade (nome_propriedade, id_localizacao, id_tipo_prop, tamanho, valor_adquirido, endereco, id_situacao, data_registro) VALUES ('$nome', '$localidade', '$tipo', '$tamanho', '$valor_adquirido', '$endereco', '$situacao', '$data')";
 
