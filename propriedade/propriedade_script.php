@@ -21,10 +21,6 @@ require_once "../conexao/conexao.php";
         <section class="form-section">
             <?php
 
-            if (isset($_FILES['documentos'])) {
-                var_dump($_FILES['documentos']);
-            }
-
             if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $nome = $_POST['nome_propriedade'];
                 $localidade = $_POST['id_localizacao'];
@@ -35,13 +31,11 @@ require_once "../conexao/conexao.php";
                 $situacao = $_POST['id_situacao'];
                 $data = $_POST['data'];
 
-
-
-
                 $sql = "INSERT INTO propriedade (nome_propriedade, id_localizacao, id_tipo_prop, tamanho, valor_adquirido, endereco, id_situacao, data_registro) VALUES ('$nome', '$localidade', '$tipo', '$tamanho', '$valor_adquirido', '$endereco', '$situacao', '$data')";
 
                 if (mysqli_query($conn, $sql)) {
                     echo "<p class='success'>$nome cadastrado(a) com sucesso!</p>";
+                    header('Location: add_documento.php');
                 } else {
                     echo "<p class='error'>$nome não foi cadastrado(a)!</p>";
                 }

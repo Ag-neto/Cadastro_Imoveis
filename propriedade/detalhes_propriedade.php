@@ -85,21 +85,62 @@ if (isset($_GET['id'])) {
             </div>
         </div>
 
-        <div class="acoes">
-            <button onclick="window.history.back();">Voltar</button>
-            <button onclick="editarPropriedade(<?php echo $propriedade['idpropriedade']; ?>);">Editar Propriedade</button>
+        <h2>Documentos Associados</h2>
+        <div class="documentos-info">
+            <?php
+            // Obtém os documentos associados à propriedade
+            $sql_document = "SELECT * FROM documentacao_propriedade WHERE id_propriedade = $id_propriedade";
+            $dados_document = mysqli_query($conn, $sql_document);
+
+            // Armazena todos os documentos em um array
+            $documentos = [];
+            while ($documento = mysqli_fetch_assoc($dados_document)) {
+                $documentos[] = $documento; // Armazena cada documento no array
+            }
+
+            // Contar documentos
+            $total_documentos = count($documentos);
+            echo "Total de documentos encontrados: $total_documentos<br>";
+
+            // Exibir documentos
+            if ($total_documentos > 0): ?>
+                <ul>
+                    <?php foreach ($documentos as $documento): ?>
+                        <li>
+                            <a href="<?php echo $documento['path']; ?>" target="_blank">
+                                <?php echo htmlspecialchars($documento['nome_doc']); ?>
+                            </a>
+                            - Enviado em: <?php echo date('d/m/Y', strtotime($documento['data_upload'])); ?>
+                            <a href="editar_documento.php?id=<?php echo $documento['iddocumentacao_propriedade']; ?>">Editar</a> |
+                            <a href="deletar_documento.php?id=<?php echo $documento['iddocumentacao_propriedade']; ?>&id_propriedade=<?php echo $propriedade['idpropriedade']; ?>" onclick="return confirmarDeletar();">Deletar</a>
+                        </li>
+                    <?php endforeach; ?>
+                </ul>
+            <?php else: ?>
+                <p>Nenhum documento encontrado para esta propriedade.</p>
+            <?php endif; ?>
+
+
         </div>
+
+        <div class="acoes">
+            <a href="listar_propriedades.php">Voltar</a>
+            <a href="editar_propriedade.php?id=<?php echo $propriedade['idpropriedade']; ?>">Editar Propriedade</a>
+            <a id="deletar" href="deletar_propriedade.php?id=<?php echo $propriedade['idpropriedade']; ?>" onclick="return confirmarDeletar();">Deletar Propriedade</a>
+        </div>
+
+        <script>
+            function confirmarDeletar() {
+                return confirm("Você tem certeza que deseja deletar esta propriedade? Esta ação não pode ser desfeita.");
+            }
+        </script>
+
+
     </section>
 
     <footer>
         <p>&copy; 2024 - Sistema de Gestão de Propriedades</p>
     </footer>
-
-    <script>
-        function editarPropriedade(id) {
-            window.location.href = `editar_propriedade.php?id=${id}`;
-        }
-    </script>
 </body>
 
 </html>

@@ -38,7 +38,7 @@
                     <th>Cidade</th>
                     <th>Valor (R$)</th>
                     <th>Situação</th>
-                    <th>Ações</th>
+                    <th>Detalhes</th>
                 </tr>
             </thead>
             <tbody>

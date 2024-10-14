@@ -81,11 +81,6 @@
                 </div>
 
                 <div class="form-item">
-                    <label for="documentos">Documentação</label>
-                    <input type="file" name="documentos" id="documentos">
-                </div> 
-
-                <div class="form-item">
                     <label for="id_tipo_prop">Tipo da propriedade:</label>
                     <select name="id_tipo_prop" id="id_tipo_prop" required>
                         <option value="" disabled selected>Selecione</option>
@@ -104,7 +99,7 @@
                 </div>
             </div>
 
-            <button type="submit">Salvar Propriedade</button>
+            <button type="submit">Vincular Documentos</button>
             <a href="listar_propriedades.php">Voltar</a>
         </form>
     </section>

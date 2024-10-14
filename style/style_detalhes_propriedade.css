@@ -38,9 +38,18 @@ header {
 
 .acoes {
     margin-top: 20px;
+    margin-bottom: 20px;
     display: flex;
     gap: 10px; /* Espaçamento entre os botões */
     justify-content: center; /* Centraliza os botões */
+}
+
+#deletar{
+    background-color: red;
+}
+
+#deletar:hover{
+    background-color: rgb(185, 0, 0);
 }
 
 button {
@@ -53,7 +62,21 @@ button {
 }
 
 button:hover {
-    background-color: #28a745; /* Efeito hover */
+    background-color: #1e7c34; /* Efeito hover */
+}
+
+.acoes a{
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.acoes a:hover{
+    background-color: #1e7c34; /* Efeito hover */
 }
 
 footer {
@@ -63,4 +86,37 @@ footer {
     position: relative;
     bottom: 0;
     width: 100%;
+}
+
+.documentos-info {
+    max-height: 300px; /* Ajuste a altura conforme necessário */
+    overflow-y: auto;  /* Adiciona rolagem vertical */
+    border: 1px solid #ccc; /* Adiciona uma borda para destacar a área */
+    padding: 10px; /* Espaçamento interno */
+    background-color: #f9f9f9; /* Cor de fundo */
+}
+
+
+.documentos-info ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.documentos-info li {
+    margin-bottom: 10px;
+}
+
+.documentos-info a {
+    text-decoration: none;
+    color: #007bff;
+    font-weight: bold;
+}
+
+.documentos-info a:hover {
+    text-decoration: underline;
+}
+
+.documentos-info p {
+    color: #666;
+    font-style: italic;
 }

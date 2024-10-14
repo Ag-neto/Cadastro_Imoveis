@@ -44,6 +44,7 @@ nav.menu-lateral{
     height: 100%;
     background-color: #343a40;
     padding: 40px 0px 40x 1%;
+    transition: .3s;
 
     position: fixed;
     top: 0;
