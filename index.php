@@ -22,8 +22,9 @@
         </div>
 
         <ul>
+            <!-- Link para a listagem de usuários -->
             <li class="item-menu">
-                <a href="#">
+                <a href="usuario/listar_usuarios.php">  
                     <span class="icon"><i class="bi bi-person-add"></i></span>
                     <span class="txt-link">Usuários</span>
                 </a>
@@ -63,7 +64,6 @@
                     <span class="txt-link">Localidades</span>
                 </a>
             </li>
-
         </ul>
     </nav>
 
@@ -79,45 +79,38 @@
             <h2>Suas Propriedades</h2>
             <p>Escolha uma das propriedades para realizar alguma operação</p>
 
-            <!-- Mostrar propriedades para administrador -->
             <h3>Propriedades Disponíveis</h3>
-            
-            <!-- Contêiner de propriedades  (Quando for usar a linguagem de programação, coloca apenas uma div de propriedade-item e joga ela dentro de um while)-->
             <div class="propriedades-container">
-                <!-- Propriedade 1 -->
                 <div class="propriedade-item">
                     <h4>Apartamento Central</h4>
                     <p>Localização: Centro</p>
                     <p>Valor: R$ 500.000</p>
                 </div>
 
-                <!-- Propriedade 2 -->
                 <div class="propriedade-item">
                     <h4>Casa Verde</h4>
                     <p>Localização: Bairro Verde</p>
                     <p>Valor: R$ 300.000</p>
                 </div>
 
-                <!-- Propriedade 3 -->
                 <div class="propriedade-item">
                     <h4>Loja Comercial</h4>
                     <p>Localização: Av. Principal</p>
                     <p>Valor: R$ 800.000</p>
                 </div>
+
                 <div class="propriedade-item">
                     <h4>Apartamento Central</h4>
                     <p>Localização: Centro</p>
                     <p>Valor: R$ 500.000</p>
                 </div>
 
-                <!-- Propriedade 2 -->
                 <div class="propriedade-item">
                     <h4>Casa Verde</h4>
                     <p>Localização: Bairro Verde</p>
                     <p>Valor: R$ 300.000</p>
                 </div>
 
-                <!-- Propriedade 3 -->
                 <div class="propriedade-item">
                     <h4>Loja Comercial</h4>
                     <p>Localização: Av. Principal</p>
