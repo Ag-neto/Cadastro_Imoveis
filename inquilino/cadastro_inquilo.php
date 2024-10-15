@@ -16,8 +16,8 @@
         <form action="inquilino_script.php" method="POST">
             <div class="form-group">
                 <div class="form-item">
-                    <label for="nome">Nome do Inquilino:</label>
-                    <input type="text" id="nome" name="nome" placeholder="Ex: Apartamento Central" required>
+                    <label for="nome_inquilino">Nome do Inquilino:</label>
+                    <input type="text" id="nome_inquilino" name="nome_inquilino" placeholder="Ex: Rodrigo Carvalho" required>
                 </div>
 
                 <div class="form-item">
@@ -26,13 +26,30 @@
                 </div>
 
                 <div class="form-item">
-                    <label for="localidade">Localidade:</label>
-                    <select name="localidade" id="localidade">
-                        <option value="" disabled selected>Selecione uma cidade</option>
-                        <option value="bahia">Bahia</option>
-                        <option value="joao_pessoa">João Pessoa</option>
-                        <option value="pernambuco">Pernambuco</option>
-                        <option value="Natal">Natal</option>
+                    <label for="telefone">Telefone:</label>
+                    <input type="text" id="telefone" name="telefone" placeholder="Ex: (xx) x xxxx-xxxx" required>
+                </div>
+
+                <div class="form-item">
+                    <label for="localizacao">Localidade:</label>
+                    <select name="id_localizacao" id="id_localizacao" required>
+                        <option value="" disabled selected>Selecione</option>
+                        <?php
+                        require_once "../conexao/conexao.php";
+
+                        $sql = "SELECT l.*, e.nome_estado, e.sigla 
+                        FROM localizacao l 
+                        JOIN estados e ON l.id_estado = e.id_estado";
+
+                        $result = $conn->query($sql);
+
+                        if ($result->num_rows > 0) {
+                            while ($row = $result->fetch_assoc()) {
+                                echo '<option value="' . $row['idlocalizacao'] . '">' . $row['nome_cidade'] . " - " . $row['sigla'] . '</option>';
+                            }
+                        }
+
+                        ?>
                     </select>
                 </div>
 
@@ -47,24 +64,13 @@
                 </div>
 
                 <div class="form-item">
-                    <label for="rg_pdf">Registro Geral - PDF (RG):</label>
-                    <input type="file" name="rg_pdf" id="rg_pdf">
-                </div>
-
-                <div class="form-item">
                     <label for="cpf_numero">Cadastro de pessoa física (CPF):</label>
                     <input type="text" id="cpf_numero" name="cpf_numero" required>
                 </div>
-
-                <div class="form-item">
-                    <label for="cpf_pdf">Cadastro de pessoa física (CPF):</label>
-                    <input type="file" name="cpf_pdf" id="cpf_pdf">
-                </div>
-
             </div>
 
-            <button type="submit">Cadastrar Inquilino</button>
-            <a href="../index.php">Voltar para o menu</a>
+            <button type="submit">Vincular Documentos</button>
+            <a href="listar_inquilinos.php">Voltar</a>
         </form>
     </section>
     <footer>
