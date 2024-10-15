@@ -114,11 +114,11 @@ if (isset($_GET['id'])) {
                             <a href="deletar_documento.php?id=<?php echo $documento['iddocumentacao_propriedade']; ?>&id_propriedade=<?php echo $propriedade['idpropriedade']; ?>" onclick="return confirmarDeletar();">Deletar</a>
                         </li>
                     <?php endforeach; ?>
-                    <a href="add_documento.php?idpropriedade=<?php echo $propriedade['idpropriedade']; ?>">Adicionar Documento</a>
+                    <a href="add_documento_prop_existente.php?idpropriedade=<?php echo $propriedade['idpropriedade']?>">Adicionar Documento (PDF)</a>
                     </ul>
             <?php else: ?>
                 <p>Nenhum documento encontrado para esta propriedade.</p>
-                <p>Para vincular um documento à uma propriedade clique <a href="add_documento_prop_existente.php?idpropriedade=<?php echo $propriedade['idpropriedade']?>">Aqui</a>
+                <p>Para vincular um documento à propriedade clique <a href="add_documento_prop_existente.php?idpropriedade=<?php echo $propriedade['idpropriedade']?>">Aqui (PDF)</a>
             <?php endif; ?>
 
 

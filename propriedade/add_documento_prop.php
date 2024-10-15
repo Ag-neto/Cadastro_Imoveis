@@ -87,7 +87,7 @@ require_once "../conexao/conexao.php";
                     echo "<p>Todos os arquivos foram enviados!</p>";
                     header('Location: detalhes_propriedade.php?id=' . $id_ultima_propriedade);
                 } else {
-                    echo "<p>Falha ao enviar 1 ou mais arquivos!</p>";
+                    echo "<p>Falha ao enviar 1 ou mais arquivos! Verifique o formato e tamanho (Max: 2MB)</p>";
                 }
             }
             ?>

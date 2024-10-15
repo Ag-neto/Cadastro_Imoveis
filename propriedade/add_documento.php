@@ -20,7 +20,7 @@ require_once "../conexao/conexao.php";
     <section class="form-section">
     <h2>Adicionar Documentação da Propriedade</h2>
     <form enctype="multipart/form-data" method="POST" action="add_documento_prop.php">
-        <label for="documentos">Insira as documentações da propriedade aqui:</label>
+        <label for="documentos">Insira as documentações da propriedade aqui: (PDF)</label>
         <p><input multiple type="file" name="documentos[]" id="documentos"></p>
         <button type="submit">Salvar</button>
     </form>
