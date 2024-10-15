@@ -1,3 +1,43 @@
+<?php
+require_once "../conexao/conexao.php"; // Conexão com o banco de dados
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Coletando dados do formulário
+    $nome_usuario = $_POST['nome_usuario'];
+    $email = $_POST['email'];
+    $senha = $_POST['senha'];
+    $nivel_acesso = $_POST['nivel_acesso'];
+    $inquilino = $_POST['inquilino'];
+
+    // Verificar se o e-mail já está cadastrado
+    $email = $conn->real_escape_string($email);
+    $checkEmailQuery = "SELECT * FROM usuarios WHERE email='$email'";
+    $checkResult = $conn->query($checkEmailQuery);
+
+    if ($checkResult->num_rows > 0) {
+        echo '<script>alert("E-mail já cadastrado!");</script>';
+    } else {
+        // Se o inquilino não foi selecionado, definimos como NULL
+        if (empty($inquilino)) {
+            $inquilino = "NULL";
+        } else {
+            $inquilino = $conn->real_escape_string($inquilino);
+        }
+
+        // Inserir dados no banco
+        $senha_hash = password_hash($senha, PASSWORD_DEFAULT); // Hash da senha
+        $sql = "INSERT INTO usuarios (nome_usuario, email, senha, idnivel_acesso, id_inquilino) 
+                VALUES ('$nome_usuario', '$email', '$senha_hash', '$nivel_acesso', $inquilino)";
+
+        if ($conn->query($sql) === TRUE) {
+            echo '<script>alert("Usuário cadastrado com sucesso!"); window.location.href="listar_usuarios.php";</script>';
+        } else {
+            echo '<script>alert("Erro ao cadastrar usuário: ' . $conn->error . '");</script>';
+        }
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -43,8 +83,6 @@
                 <select id="inquilino" name="inquilino">
                     <option value="">Nenhum</option>
                     <?php
-                    require_once "../conexao/conexao.php";
-
                     // Consulta para listar inquilinos
                     $sql = "SELECT idinquilino, nome_inquilino FROM inquilino";
                     $result = $conn->query($sql);
@@ -69,34 +107,3 @@
 </body>
 
 </html>
-
-<?php
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Coletando dados do formulário
-    $nome_usuario = $_POST['nome_usuario'];
-    $email = $_POST['email'];
-    $senha = $_POST['senha'];
-    $nivel_acesso = $_POST['nivel_acesso'];
-    $inquilino = $_POST['inquilino'];
-
-    // Verificar se o e-mail já está cadastrado
-    $email = $conn->real_escape_string($email);
-    $checkEmailQuery = "SELECT * FROM usuarios WHERE email='$email'";
-    $checkResult = $conn->query($checkEmailQuery);
-
-    if ($checkResult->num_rows > 0) {
-        echo '<script>alert("E-mail já cadastrado!");</script>';
-    } else {
-        // Inserir dados no banco
-        $senha_hash = password_hash($senha, PASSWORD_DEFAULT); // Hash da senha
-        $sql = "INSERT INTO usuarios (nome_usuario, email, senha, idnivel_acesso, id_inquilino) 
-                VALUES ('$nome_usuario', '$email', '$senha_hash', '$nivel_acesso', '$inquilino')";
-
-        if ($conn->query($sql) === TRUE) {
-            echo '<script>alert("Usuário cadastrado com sucesso!");</script>';
-        } else {
-            echo '<script>alert("Erro ao cadastrar usuário: ' . $conn->error . '");</script>';
-        }
-    }
-}
-?>
