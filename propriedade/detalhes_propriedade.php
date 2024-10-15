@@ -6,12 +6,14 @@ if (isset($_GET['id'])) {
     $id_propriedade = intval($_GET['id']); // Converte para inteiro para evitar SQL Injection
 
     // Prepara a consulta SQL
-    $sql = "SELECT p.*, t.nome_tipo, l.nome_cidade, s.nome_situacao 
-            FROM propriedade p 
-            JOIN tipo_prop t ON p.id_tipo_prop = t.id_tipo_prop
-            JOIN localizacao l ON p.id_localizacao = l.idlocalizacao
-            JOIN situacao s ON p.id_situacao = s.id_situacao
-            WHERE p.idpropriedade = $id_propriedade";
+    $sql = "SELECT p.*, t.nome_tipo, l.nome_cidade, s.nome_situacao, e.sigla 
+    FROM propriedade p 
+    JOIN tipo_prop t ON p.id_tipo_prop = t.id_tipo_prop
+    JOIN localizacao l ON p.id_localizacao = l.idlocalizacao
+    JOIN situacao s ON p.id_situacao = s.id_situacao
+    JOIN estados e ON l.id_estado = e.id_estado
+    WHERE p.idpropriedade = $id_propriedade";
+
 
     $result = $conn->query($sql);
 
@@ -61,7 +63,7 @@ if (isset($_GET['id'])) {
             </div>
             <div class="info-item">
                 <strong>Cidade:</strong>
-                <span><?php echo $propriedade['nome_cidade']; ?></span>
+                <span><?php echo $propriedade['nome_cidade'] . " - " . $propriedade['sigla']; ?></span>
             </div>
             <div class="info-item">
                 <strong>Endereço:</strong>

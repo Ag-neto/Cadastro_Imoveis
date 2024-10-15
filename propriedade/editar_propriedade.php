@@ -57,12 +57,16 @@ $data_registro = isset($linha['data_registro']) ? date('Y-m-d', strtotime($linha
                         <select name="id_localizacao" id="id_localizacao" required>
                             <option value="" disabled selected>Selecione</option>
                             <?php
-                            $sql = "SELECT * FROM localizacao";
+
+                            $sql = "SELECT l.*, e.nome_estado, e.sigla 
+                            FROM localizacao l 
+                            JOIN estados e ON l.id_estado = e.id_estado";
+                            
                             $result = $conn->query($sql);
                             while ($row = $result->fetch_assoc()) {
                                 // Verifica se o id_localizacao corresponde ao da propriedade
                                 $selected = $row['idlocalizacao'] == $linha['id_localizacao'] ? 'selected' : '';
-                                echo '<option value="' . $row['idlocalizacao'] . '" ' . $selected . '>' . htmlspecialchars($row['nome_cidade']) . '</option>';
+                                echo '<option value="' . $row['idlocalizacao'] . '" ' . $selected . '>' . htmlspecialchars($row['nome_cidade']) . " - " . $row['sigla'] . '</option>';
                             }
 
                             ?>

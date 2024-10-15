@@ -34,12 +34,15 @@
                         <?php
                         require_once "../conexao/conexao.php";
 
-                        $sql = "SELECT * FROM localizacao";
+                        $sql = "SELECT l.*, e.nome_estado, e.sigla 
+                        FROM localizacao l 
+                        JOIN estados e ON l.id_estado = e.id_estado";
+
                         $result = $conn->query($sql);
 
                         if ($result->num_rows > 0) {
                             while ($row = $result->fetch_assoc()) {
-                                echo '<option value="' . $row['idlocalizacao'] . '">' . $row['nome_cidade'] . '</option>';
+                                echo '<option value="' . $row['idlocalizacao'] . '">' . $row['nome_cidade'] . " - " . $row['sigla'] . '</option>';
                             }
                         }
 
