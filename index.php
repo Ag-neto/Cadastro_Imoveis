@@ -128,7 +128,7 @@
     </main>
 
     <footer>
-        <p>&copy; 2024 - Sistema de Gestão de Imóveis</p>
+        <p>&copy; 2024 - Sistema de Gestão de Propriedades</p>
     </footer>
 
     <script src="script.js"></script>
