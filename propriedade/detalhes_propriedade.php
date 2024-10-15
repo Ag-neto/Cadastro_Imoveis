@@ -111,13 +111,14 @@ if (isset($_GET['id'])) {
                                 <?php echo htmlspecialchars($documento['nome_doc']); ?>
                             </a>
                             - Enviado em: <?php echo date('d/m/Y', strtotime($documento['data_upload'])); ?>
-                            <a href="editar_documento.php?id=<?php echo $documento['iddocumentacao_propriedade']; ?>">Editar</a> |
                             <a href="deletar_documento.php?id=<?php echo $documento['iddocumentacao_propriedade']; ?>&id_propriedade=<?php echo $propriedade['idpropriedade']; ?>" onclick="return confirmarDeletar();">Deletar</a>
                         </li>
                     <?php endforeach; ?>
-                </ul>
+                    <a href="add_documento.php?idpropriedade=<?php echo $propriedade['idpropriedade']; ?>">Adicionar Documento</a>
+                    </ul>
             <?php else: ?>
                 <p>Nenhum documento encontrado para esta propriedade.</p>
+                <p>Para vincular um documento à uma propriedade clique <a href="add_documento_prop_existente.php?idpropriedade=<?php echo $propriedade['idpropriedade']?>">Aqui</a>
             <?php endif; ?>
 
 
