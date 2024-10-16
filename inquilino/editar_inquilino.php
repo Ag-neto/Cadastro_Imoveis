@@ -30,7 +30,7 @@ $data_nascimento = isset($linha['data_nascimento']) ? date('Y-m-d', strtotime($l
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Controle de Propriedade</title>
-        <link rel="stylesheet" href="../style/cadastro_propriedade_style.css">
+        <link rel="stylesheet" href="../style/cadastro_inquilino.css">
     </head>
 
     <body>

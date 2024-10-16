@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lista de Propriedades</title>
-    <link rel="stylesheet" href="../style/listar_propriedade.css">
+    <link rel="stylesheet" href="../style/listar_inquilino.css">
 </head>
 
 <body>

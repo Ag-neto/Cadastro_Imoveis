@@ -34,7 +34,7 @@ if (isset($_GET['id'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Detalhes do Inquilino</title>
-    <link rel="stylesheet" href="../style/style_detalhes_propriedade.css">
+    <link rel="stylesheet" href="../style/style_detalhes_inquilino.css">
 </head>
 
 <body>
