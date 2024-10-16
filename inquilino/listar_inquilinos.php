@@ -67,7 +67,7 @@
                         echo '<td>' . $row['idinquilino'] . '</td>'; // Supondo que o ID da propriedade seja 'id_propriedade'
                         echo '<td>' . $row['nome_inquilino'] . '</td>';
                         echo '<td>' . $row['telefone'] . '</td>';
-                        echo '<td>' . $row['cpf_numero'] . " - " .'</td>';
+                        echo '<td>' . $row['cpf_numero'] .'</td>';
                         echo '<td>' . $row['endereco'] . '</td>';
                         echo '<td>' . date('d/m/Y', strtotime($row['data_nascimento'])) . '</td>';
                         echo '<td><a href="detalhes_inquilino.php?id=' . $row['idinquilino'] . '">Ver Detalhes</a></td>';
