@@ -69,7 +69,7 @@
                         echo '<td>' . $row['telefone'] . '</td>';
                         echo '<td>' . $row['cpf_numero'] . " - " .'</td>';
                         echo '<td>' . $row['endereco'] . '</td>';
-                        echo '<td>' . $row['data_nascimento'] . '</td>';
+                        echo '<td>' . date('d/m/Y', strtotime($row['data_nascimento'])) . '</td>';
                         echo '<td><a href="detalhes_inquilino.php?id=' . $row['idinquilino'] . '">Ver Detalhes</a></td>';
                         echo '</tr>';
                     }
