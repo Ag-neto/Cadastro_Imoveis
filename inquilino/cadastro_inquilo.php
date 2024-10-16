@@ -20,12 +20,12 @@
             <div class="form-group">
                 <div class="form-item">
                     <label for="nome_inquilino">Nome do Inquilino:</label>
-                    <input type="text" id="nome_inquilino" name="nome_inquilino" placeholder="Ex: Rodrigo Carvalho" required>
+                    <input type="text" id="nome_inquilino" name="nome_inquilino" placeholder="Ex: Rodrigo Carvalho" required oninput="this.value = this.value.toUpperCase()">
                 </div>
 
                 <div class="form-item">
                     <label for="endereco">Endereço:</label>
-                    <input type="text" id="endereco" name="endereco" placeholder="Ex: Rua ABC, 123" required>
+                    <input type="text" id="endereco" name="endereco" placeholder="Ex: Rua ABC, 123" required oninput="this.value = this.value.toUpperCase()">
                 </div>
 
                 <div class="form-item">

@@ -44,12 +44,12 @@ $data_registro = isset($linha['data_registro']) ? date('Y-m-d', strtotime($linha
                 <div class="form-group">
                     <div class="form-item">
                         <label for="nome_propriedade">Nome da Propriedade:</label>
-                        <input type="text" id="nome_propriedade" name="nome_propriedade" value="<?php echo $linha['nome_propriedade']; ?>" required>
+                        <input type="text" id="nome_propriedade" name="nome_propriedade" value="<?php echo $linha['nome_propriedade']; ?>" required oninput="this.value = this.value.toUpperCase()">
                     </div>
 
                     <div class="form-item">
                         <label for="endereco">Endereço:</label>
-                        <input type="text" id="endereco" name="endereco" value="<?php echo $linha['endereco']; ?>" required>
+                        <input type="text" id="endereco" name="endereco" value="<?php echo $linha['endereco']; ?>" required oninput="this.value = this.value.toUpperCase()">
                     </div>
 
                     <div class="form-item">
