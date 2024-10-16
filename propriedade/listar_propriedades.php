@@ -20,6 +20,30 @@
                 <label for="busca">Buscar por nome da propriedade ou cidade:</label>
                 <input type="text" id="busca" name="busca" placeholder="Digite o nome da propriedade ou cidade">
             </div>
+            <div class="checkbox-group">
+                <label for="tipo">Filtros de pesquisa:</label>
+                <div>
+                    <input type="checkbox" name="nome_propriedade" id="nome_propriedade">
+                    <label for="nome_propriedade">Nome da Propriedade</label>
+                </div>
+                <div>
+                    <input type="checkbox" name="cidade" id="cidade">
+                    <label for="cidade">Cidade</label>
+                </div>
+                <div>
+                    <input type="checkbox" name="estado" id="estado">
+                    <label for="estado">Estado</label>
+                </div>
+                <div>
+                    <input type="checkbox" name="situacao" id="situacao">
+                    <label for="situacao">Situação</label>
+                </div>
+                <div>
+                    <input type="checkbox" name="tipo_propriedade" id="tipo_propriedade">
+                    <label for="tipo_propriedade">Tipo de Propriedade</label>
+                </div>
+            </div>
+
 
             <button type="submit">Buscar</button>
             <a href="../index.php" class="btn-voltar">Voltar</a>
@@ -47,7 +71,7 @@
 
                 // Verifica se há uma busca
                 $busca = isset($_GET['busca']) ? $_GET['busca'] : '';
-                $busca = $conn->real_escape_string($busca); // Evita SQL Injection
+                $busca = $conn->real_escape_string($busca); // Evita SQL Injection      
 
                 // Prepara a consulta SQL
                 $sql = "SELECT p.*, t.nome_tipo, l.nome_cidade, s.nome_situacao, e.sigla 
@@ -72,7 +96,7 @@
                         echo '<td>' . $row['idpropriedade'] . '</td>'; // Supondo que o ID da propriedade seja 'id_propriedade'
                         echo '<td>' . $row['nome_propriedade'] . '</td>';
                         echo '<td>' . $row['nome_tipo'] . '</td>';
-                        echo '<td>' . $row['nome_cidade'] . " - " . $row['sigla'] .'</td>';
+                        echo '<td>' . $row['nome_cidade'] . " - " . $row['sigla'] . '</td>';
                         echo '<td>' . number_format($row['valor_adquirido'], 2, ',', '.') . '</td>'; // Formata o valor
                         echo '<td>' . $row['nome_situacao'] . '</td>';
                         echo '<td><a href="detalhes_propriedade.php?id=' . $row['idpropriedade'] . '">Ver Detalhes</a></td>';

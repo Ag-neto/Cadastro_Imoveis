@@ -1,3 +1,20 @@
+<?php
+require_once "conexao/conexao.php";
+
+// Número de propriedades a serem exibidas
+$limite = 6;
+
+// Consulta para obter as últimas propriedades cadastradas
+$sql = "SELECT p.*, t.nome_tipo, l.nome_cidade, s.nome_situacao, e.sigla 
+    FROM propriedade p 
+    JOIN tipo_prop t ON p.id_tipo_prop = t.id_tipo_prop
+    JOIN localizacao l ON p.id_localizacao = l.idlocalizacao
+    JOIN situacao s ON p.id_situacao = s.id_situacao
+    JOIN estados e ON l.id_estado = e.id_estado ORDER BY idpropriedade DESC LIMIT $limite";
+
+$result = $conn->query($sql);
+?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -24,7 +41,7 @@
         <ul>
             <!-- Link para a listagem de usuários -->
             <li class="item-menu">
-                <a href="usuario/listar_usuarios.php">  
+                <a href="usuario/listar_usuarios.php">
                     <span class="icon"><i class="bi bi-person-add"></i></span>
                     <span class="txt-link">Usuários</span>
                 </a>
@@ -70,7 +87,7 @@
     <main>
         <section>
             <h2>Bem-vindo ao Sistema de Gestão de Imóveis</h2>
-            <p>Escolha uma das opções no menu acima para gerenciar seus imóveis e locações.</p>
+            <p>Escolha uma das opções no menu lateral para gerenciar suas propriedades e locações.</p>
         </section>
     </main>
 
@@ -81,41 +98,26 @@
 
             <h3>Propriedades Disponíveis</h3>
             <div class="propriedades-container">
-                <div class="propriedade-item">
-                    <h4>Apartamento Central</h4>
-                    <p>Localização: Centro</p>
-                    <p>Valor: R$ 500.000</p>
-                </div>
+                <?php
+                // Verifica se há resultados
+                if ($result && $result->num_rows > 0) {
+                    // Loop para exibir cada propriedade
+                    while ($row = $result->fetch_assoc()) {
+                        // Gera o link para a página de detalhes da propriedade
+                        $detalhesUrl = 'propriedade/detalhes_propriedade.php?id=' . $row['idpropriedade'];
 
-                <div class="propriedade-item">
-                    <h4>Casa Verde</h4>
-                    <p>Localização: Bairro Verde</p>
-                    <p>Valor: R$ 300.000</p>
-                </div>
-
-                <div class="propriedade-item">
-                    <h4>Loja Comercial</h4>
-                    <p>Localização: Av. Principal</p>
-                    <p>Valor: R$ 800.000</p>
-                </div>
-
-                <div class="propriedade-item">
-                    <h4>Apartamento Central</h4>
-                    <p>Localização: Centro</p>
-                    <p>Valor: R$ 500.000</p>
-                </div>
-
-                <div class="propriedade-item">
-                    <h4>Casa Verde</h4>
-                    <p>Localização: Bairro Verde</p>
-                    <p>Valor: R$ 300.000</p>
-                </div>
-
-                <div class="propriedade-item">
-                    <h4>Loja Comercial</h4>
-                    <p>Localização: Av. Principal</p>
-                    <p>Valor: R$ 800.000</p>
-                </div>
+                        echo '<a href="' . $detalhesUrl . '" class="propriedade-link">';
+                        echo '<div class="propriedade-item">';
+                        echo '<h4>' . htmlspecialchars($row['nome_propriedade']) . '</h4>';
+                        echo '<p>Localização: ' . htmlspecialchars($row['nome_cidade']) . '</p>';
+                        echo '<p>Valor: R$ ' . number_format($row['valor_adquirido'], 2, ',', '.') . '</p>';
+                        echo '</div>';
+                        echo '</a>';
+                    }
+                } else {
+                    echo '<p>Nenhuma propriedade encontrada.</p>';
+                }
+                ?>
             </div>
         </section>
     </main>

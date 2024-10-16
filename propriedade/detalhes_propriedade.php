@@ -128,6 +128,7 @@ if (isset($_GET['id'])) {
 
         <div class="acoes">
             <a href="listar_propriedades.php">Voltar</a>
+            <a href="../index.php">Menu Principal</a>
             <a href="editar_propriedade.php?id=<?php echo $propriedade['idpropriedade']; ?>">Editar Propriedade</a>
             <a id="deletar" href="deletar_propriedade.php?id=<?php echo $propriedade['idpropriedade']; ?>" onclick="return confirmarDeletar();">Deletar Propriedade</a>
         </div>

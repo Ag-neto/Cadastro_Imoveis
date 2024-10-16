@@ -64,6 +64,27 @@ form {
     margin-bottom: 15px;
 }
 
+input[type="checkbox"]{
+    margin-right: 5px;
+}
+
+.checkbox-group {
+    display: flex;            /* Alinha os elementos em uma linha */
+    flex-wrap: wrap;        /* Permite que os elementos se movam para a próxima linha se não houver espaço suficiente */
+    gap: 15px;              /* Espaço entre os checkboxes */
+    margin-bottom: 10px;
+}
+
+.checkbox-group div {
+    display: flex;          /* Permite que o texto e a checkbox fiquem alinhados verticalmente */
+    align-items: center;    /* Centraliza verticalmente os itens dentro de cada div */
+}
+
+.checkbox-group label {
+    font-weight: normal;    /* Remove o negrito do texto do label */
+}
+
+
 label {
     font-weight: bold;
 }
