@@ -33,6 +33,16 @@ $result = $conn->query($sql);
         <button id="notification-btn">🔔 Notificações</button>
     </header>
 
+    <!-- Popup de notificações -->
+    <div class="notification-popup" id="notification-popup">
+        <span class="close-btn" id="close-btn">&times;</span>
+        <h3>Notificações</h3>
+        <p>Você tem 3 novas notificações.</p>
+        <p>Propriedade "Casa no Centro" foi atualizada.</p>
+        <p>Pagamento pendente para "Apartamento Vista Mar".</p>
+        <p>Contrato de "Sala Comercial" expirando em breve.</p>
+    </div>
+
     <nav class="menu-lateral">
         <div class="btn-expandir">
             <i class="bi bi-list"></i>
@@ -64,7 +74,7 @@ $result = $conn->query($sql);
             <li class="item-menu">
                 <a href="pagamentos/pag_cliente.php">
                     <span class="icon"><i class="bi bi-wallet2"></i></span>
-                    <span class="txt-link">Pagamentos</span>
+                    <span class="txt-link">Financeiro</span>
                 </a>
             </li>
 
@@ -126,7 +136,29 @@ $result = $conn->query($sql);
         <p>&copy; 2024 - Sistema de Gestão de Propriedades</p>
     </footer>
 
-    <script src="script.js"></script>
+    <script>
+        // JavaScript para abrir e fechar o popup de notificações
+        const notificationBtn = document.getElementById('notification-btn');
+        const notificationPopup = document.getElementById('notification-popup');
+        const closeBtn = document.getElementById('close-btn');
+
+        notificationBtn.addEventListener('click', () => {
+            // Alterna a exibição do popup
+            notificationPopup.style.display = notificationPopup.style.display === 'block' ? 'none' : 'block';
+        });
+
+        closeBtn.addEventListener('click', () => {
+            // Oculta o popup
+            notificationPopup.style.display = 'none';
+        });
+
+        // Fechar o popup ao clicar fora dele
+        window.addEventListener('click', (event) => {
+            if (event.target !== notificationBtn && !notificationPopup.contains(event.target)) {
+                notificationPopup.style.display = 'none';
+            }
+        });
+    </script>
 </body>
 
 </html>
