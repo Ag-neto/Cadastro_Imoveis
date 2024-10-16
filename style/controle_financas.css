@@ -1,0 +1,89 @@
+/* Estilos básicos para a tela de gestão de aluguéis */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+    margin: 0;
+    padding: 20px;
+}
+
+.btn-largura{
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.back-button {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    display: block;
+    margin: auto;
+}
+
+.back-button:hover {
+    background-color: #1d7531;
+}
+
+header {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.header-container {
+    background-color: #343a40;
+    color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.totals {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.total-item {
+    font-size: 18px;
+    background-color: #e3e3e3;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.rental-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.rental-table th, .rental-table td {
+    border: 1px solid #ddd;
+    padding: 12px;
+    text-align: left;
+}
+
+.rental-table th {
+    background-color: #f2f2f2;
+}
+
+.overdue {
+    color: red;
+    font-weight: bold;
+}
+
+.paid {
+    color: green;
+    font-weight: bold;
+}

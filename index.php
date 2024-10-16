@@ -79,6 +79,13 @@ $result = $conn->query($sql);
             </li>
 
             <li class="item-menu">
+                <a href="pagamentos/controle_financas.php">
+                    <span class="icon"><i class="bi bi-currency-dollar"></i></span>
+                    <span class="txt-link">Finanças </span>
+                </a>
+            </li>
+
+            <li class="item-menu">
                 <a href="contrato/listar_contratos.php">
                     <span class="icon"><i class="bi bi-archive-fill"></i></span>
                     <span class="txt-link">Contratos</span>
