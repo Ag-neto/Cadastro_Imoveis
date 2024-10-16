@@ -121,8 +121,8 @@ if (isset($_GET['id'])) {
 
         <div class="acoes">
             <a href="listar_inquilinos.php">Voltar</a>
-            <a href="editar_inquilino.php?id=<?php echo $propriedade['idinquilino']; ?>">Editar Inquilino</a>
-            <a id="deletar" href="deletar_inquilino.php?id=<?php echo $propriedade['idinquilino']; ?>" onclick="return confirmarDeletar();">Deletar Inquilino</a>
+            <a href="editar_inquilino.php?id=<?php echo $inquilino['idinquilino']; ?>">Editar Inquilino</a>
+            <a id="deletar" href="deletar_inquilino.php?id=<?php echo $inquilino['idinquilino']; ?>" onclick="return confirmarDeletar();">Deletar Inquilino</a>
         </div>
 
         <script>

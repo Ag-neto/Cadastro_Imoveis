@@ -1,12 +1,15 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Controle de Propriedade</title>
     <link rel="stylesheet" href="../style/cadastro_inquilino.css">
 </head>
+
 <body>
+
     <header>
         <h1>Cadastro de Inquilino</h1>
     </header>
@@ -31,7 +34,7 @@
                 </div>
 
                 <div class="form-item">
-                    <label for="localizacao">Localidade:</label>
+                    <label for="localizacao">Cidade:</label>
                     <select name="id_localizacao" id="id_localizacao" required>
                         <option value="" disabled selected>Selecione</option>
                         <?php
@@ -56,7 +59,7 @@
                 <div class="form-item">
                     <label for="data_nascimento">Data de nascimento:</label>
                     <input type="date" name="data_nascimento" id="data_nascimento">
-                </div> 
+                </div>
 
                 <div class="form-item">
                     <label for="rg_numero">Registro Geral (RG):</label>
@@ -76,5 +79,36 @@
     <footer>
         <p>&copy; 2024 - Sistema de Gestão de Propriedade</p>
     </footer>
+
+    <script>
+        document.getElementById('telefone').addEventListener('input', function(e) {
+            let value = e.target.value.replace(/\D/g, ''); // Remove caracteres não numéricos
+            value = value.replace(/^(\d{2})(\d)/g, '($1) $2'); // Adiciona parênteses ao DDD
+            value = value.replace(/(\d{5})(\d)/, '$1-$2'); // Adiciona o hífen após o quinto dígito
+            e.target.value = value.substring(0, 15); // Limita o tamanho máximo a 15 caracteres
+        });
+    </script>
+
+    <script>
+        // Máscara para o campo RG
+        document.getElementById('rg_numero').addEventListener('input', function(e) {
+            let value = e.target.value.replace(/\D/g, ''); // Remove caracteres não numéricos
+            value = value.replace(/(\d{2})(\d)/, '$1.$2'); // Adiciona ponto após os dois primeiros dígitos
+            value = value.replace(/(\d{3})(\d)/, '$1.$2'); // Adiciona ponto após o quinto dígito
+            value = value.replace(/(\d{3})(\d)/, '$1-$2'); // Adiciona hífen após o oitavo dígito
+            e.target.value = value.substring(0, 12); // Limita o tamanho máximo a 12 caracteres
+        });
+
+        // Máscara para o campo CPF
+        document.getElementById('cpf_numero').addEventListener('input', function(e) {
+            let value = e.target.value.replace(/\D/g, ''); // Remove caracteres não numéricos
+            value = value.replace(/(\d{3})(\d)/, '$1.$2'); // Adiciona ponto após os três primeiros dígitos
+            value = value.replace(/(\d{3})(\d)/, '$1.$2'); // Adiciona ponto após o sexto dígito
+            value = value.replace(/(\d{3})(\d{1,2})$/, '$1-$2'); // Adiciona hífen antes dos dois últimos dígitos
+            e.target.value = value.substring(0, 14); // Limita o tamanho máximo a 14 caracteres
+        });
+    </script>
+
 </body>
+
 </html>

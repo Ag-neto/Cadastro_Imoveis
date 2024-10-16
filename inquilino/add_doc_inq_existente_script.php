@@ -41,9 +41,9 @@ require_once "../conexao/conexao.php";
                 $caminho_completo = $pasta . $novo_nome_arquivo . "." . $extensao;
                 $deu_certo = move_uploaded_file($tmp_name, $caminho_completo);
 
-                // Obtém o ID da propriedade selecionada para redirecionar página para detalhes
+                // Obtém o ID do inquilino selecionada para redirecionar página para detalhes
                 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-                    $id_inquilino = $_POST['idpropriedade'];
+                    $id_inquilino = $_POST['idinquilino'];
                 }
 
                 if ($deu_certo) {
@@ -76,9 +76,9 @@ require_once "../conexao/conexao.php";
                     }
                 }
 
-                // Obtém o ID da propriedade selecionada para redirecionar página para detalhes
+                // Obtém o ID do inquilino selecionada para redirecionar página para detalhes
                 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-                    $id_inquilino = $_POST['idpropriedade'];
+                    $id_inquilino = $_POST['idinquilino'];
                 }
 
                 if ($tudo_certo) {

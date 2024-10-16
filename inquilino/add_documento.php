@@ -19,9 +19,9 @@ require_once "../conexao/conexao.php";
     </header>
     <section class="form-section">
         <h2>Adicionar Documentação do inquilino</h2>
-        <form enctype="multipart/form-data" method="POST" action="add_documento_prop.php">
+        <form enctype="multipart/form-data" method="POST" action="add_documento_inq.php">
             <label for="documentos">Anexe os documentos (CPF e RG) em formato PDF:</label>
-            <p><input type="file" name="documentos[]" id="documentos"></p>
+            <p><input multiple type="file" name="documentos[]" id="documentos"></p>
             <button type="submit">Salvar</button>
         </form>
     </section>
