@@ -1,7 +1,6 @@
 <?php
 require_once "conexao/conexao.php";
 
-// Número de propriedades a serem exibidas
 $limite = 6;
 
 // Consulta para obter as últimas propriedades cadastradas
