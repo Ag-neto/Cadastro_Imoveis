@@ -47,6 +47,36 @@ LOCK TABLES `aluguel` WRITE;
 UNLOCK TABLES;
 
 --
+-- Table structure for table `conta_corrente_propriedade`
+--
+
+DROP TABLE IF EXISTS `conta_corrente_propriedade`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `conta_corrente_propriedade` (
+  `id_movimento` int NOT NULL AUTO_INCREMENT,
+  `id_propriedade` int DEFAULT NULL,
+  `descricao` varchar(255) DEFAULT NULL,
+  `valor` decimal(10,2) DEFAULT NULL,
+  `data_movimento` date DEFAULT NULL,
+  `tipo_movimento` enum('receita','despesa') DEFAULT NULL,
+  `saldo_acumulado` decimal(10,2) DEFAULT NULL,
+  PRIMARY KEY (`id_movimento`),
+  KEY `id_propriedade` (`id_propriedade`),
+  CONSTRAINT `conta_corrente_propriedade_ibfk_1` FOREIGN KEY (`id_propriedade`) REFERENCES `propriedade` (`idpropriedade`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `conta_corrente_propriedade`
+--
+
+LOCK TABLES `conta_corrente_propriedade` WRITE;
+/*!40000 ALTER TABLE `conta_corrente_propriedade` DISABLE KEYS */;
+/*!40000 ALTER TABLE `conta_corrente_propriedade` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `documentacao_inquilino`
 --
 
@@ -91,7 +121,7 @@ CREATE TABLE `documentacao_propriedade` (
   PRIMARY KEY (`iddocumentacao_propriedade`),
   KEY `fk_propriedade` (`id_propriedade`),
   CONSTRAINT `fk_propriedade` FOREIGN KEY (`id_propriedade`) REFERENCES `propriedade` (`idpropriedade`)
-) ENGINE=InnoDB AUTO_INCREMENT=117 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=119 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -100,7 +130,7 @@ CREATE TABLE `documentacao_propriedade` (
 
 LOCK TABLES `documentacao_propriedade` WRITE;
 /*!40000 ALTER TABLE `documentacao_propriedade` DISABLE KEYS */;
-INSERT INTO `documentacao_propriedade` VALUES (102,'Contrato 01-24.pdf','arquivos/670da98bb7e61.pdf','2024-10-14',11),(103,'Currículo.pdf','arquivos/670da98bb96b1.pdf','2024-10-14',11),(104,'Contrato 01-24.pdf','arquivos/670daa20d87cd.pdf','2024-10-14',12),(105,'Currículo.pdf','arquivos/670daa20da2ba.pdf','2024-10-14',12),(108,'teste.pdf','arquivos/670e56e193a92.pdf','2024-10-15',8),(109,'teste.pdf','arquivos/670e570444a63.pdf','2024-10-15',12),(114,'teste.pdf','arquivos/670e887da1dcd.pdf','2024-10-15',15),(115,'235_pt_manual_1705497285.pdf','arquivos/670e887da3da7.pdf','2024-10-15',15);
+INSERT INTO `documentacao_propriedade` VALUES (102,'Contrato 01-24.pdf','arquivos/670da98bb7e61.pdf','2024-10-14',11),(103,'Currículo.pdf','arquivos/670da98bb96b1.pdf','2024-10-14',11),(104,'Contrato 01-24.pdf','arquivos/670daa20d87cd.pdf','2024-10-14',12),(105,'Currículo.pdf','arquivos/670daa20da2ba.pdf','2024-10-14',12),(108,'teste.pdf','arquivos/670e56e193a92.pdf','2024-10-15',8),(109,'teste.pdf','arquivos/670e570444a63.pdf','2024-10-15',12),(114,'teste.pdf','arquivos/670e887da1dcd.pdf','2024-10-15',15),(115,'235_pt_manual_1705497285.pdf','arquivos/670e887da3da7.pdf','2024-10-15',15),(118,'teste.pdf','arquivos/671695fa4acf7.pdf','2024-10-21',18);
 /*!40000 ALTER TABLE `documentacao_propriedade` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -182,7 +212,7 @@ CREATE TABLE `localizacao` (
 
 LOCK TABLES `localizacao` WRITE;
 /*!40000 ALTER TABLE `localizacao` DISABLE KEYS */;
-INSERT INTO `localizacao` VALUES (1,'Alhandra',15),(2,'João Pessoa',15),(3,'Recife',17);
+INSERT INTO `localizacao` VALUES (1,'ALHANDRA',15),(2,'JOÃO PESSOA',15),(3,'RECIFE',17);
 /*!40000 ALTER TABLE `localizacao` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -250,8 +280,11 @@ CREATE TABLE `propriedade` (
   `endereco` varchar(100) DEFAULT NULL,
   `id_situacao` int DEFAULT NULL,
   `data_registro` datetime DEFAULT NULL,
+  `tipo_imposto` varchar(45) DEFAULT NULL,
+  `valor_imposto` float DEFAULT NULL,
+  `periodo_imposto` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`idpropriedade`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -260,7 +293,7 @@ CREATE TABLE `propriedade` (
 
 LOCK TABLES `propriedade` WRITE;
 /*!40000 ALTER TABLE `propriedade` DISABLE KEYS */;
-INSERT INTO `propriedade` VALUES (8,'MINHA LOJA',2,7,100,123456,'FAZENDA DA BOA ESPERANÇA ',1,'2024-10-14 00:00:00'),(11,'PROPRIEDADE COMPLETA',2,2,500,100000,'FAZENDA DA BOA ESPERANÇA',1,'2024-10-14 00:00:00'),(12,'LOJA ALI DA ESQUINA',3,2,123,123123,'FAZENDA DA BOA ESPERANÇA ',2,'2024-10-14 00:00:00'),(15,'POLIMASSA ARGAMASSA LTDA',1,2,2000,10000000,'BR 101 - KM 106',8,'2024-10-15 00:00:00');
+INSERT INTO `propriedade` VALUES (8,'MINHA LOJA',2,7,100,123456,'FAZENDA DA BOA ESPERANÇA ',1,'2024-10-14 00:00:00',NULL,NULL,NULL),(11,'PROPRIEDADE COMPLETA',2,2,500,100000,'FAZENDA DA BOA ESPERANÇA',1,'2024-10-14 00:00:00',NULL,NULL,NULL),(12,'LOJA ALI DA ESQUINA',3,2,123,123123,'FAZENDA DA BOA ESPERANÇA ',2,'2024-10-14 00:00:00',NULL,NULL,NULL),(15,'POLIMASSA ARGAMASSA LTDA',1,2,2000,10000000,'BR 101 - KM 106',8,'2024-10-15 00:00:00',NULL,NULL,NULL),(18,'PROPRIEDADE COM IMPOSTO',2,1,22,100000,'CENTRO',8,'2024-10-21 00:00:00','IPTU',1000,'Anual');
 /*!40000 ALTER TABLE `propriedade` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -349,4 +382,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-10-21 10:24:01
+-- Dump completed on 2024-10-21 18:49:05
