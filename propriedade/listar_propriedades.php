@@ -6,6 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lista de Propriedades</title>
     <link rel="stylesheet" href="../style/listar_propriedade.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+
     <script>
         // Função para mostrar ou esconder os campos de seleção baseados nos checkboxes marcados
         function toggleSelectField(checkbox, selectId) {
@@ -95,6 +98,7 @@
                     <th>Valor (R$)</th>
                     <th>Situação</th>
                     <th>Detalhes</th>
+                    <th><i class="bi bi-bank"></i></th>
                 </tr>
             </thead>
             <tbody>
@@ -149,6 +153,7 @@
                         echo '<td>' . number_format($row['valor_adquirido'], 2, ',', '.') . '</td>';
                         echo '<td>' . $row['nome_situacao'] . '</td>';
                         echo '<td><a href="detalhes_propriedade.php?id=' . $row['idpropriedade'] . '">Ver Detalhes</a></td>';
+                        echo '<td><a href="contas_correntes.php"><i class="bi bi-bank"></i></a></td>';
                         echo '</tr>';
                     }
                 } else {
