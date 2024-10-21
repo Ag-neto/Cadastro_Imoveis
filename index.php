@@ -83,7 +83,7 @@ $result = $conn->query($sql);
                     <span class="txt-link">Finanças </span>
                 </a>
             </li>
-
+            
             <li class="item-menu">
                 <a href="contrato/listar_contratos.php">
                     <span class="icon"><i class="bi bi-archive-fill"></i></span>
