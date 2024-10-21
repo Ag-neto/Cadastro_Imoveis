@@ -20,7 +20,7 @@
             <div class="form-group">
                 <div class="form-item">
                     <label for="nome">Nome da Cidade:</label>
-                    <input type="text" id="nome_cidade" name="nome_cidade" placeholder="Ex: João Pessoa" required>
+                    <input type="text" id="nome_cidade" name="nome_cidade" placeholder="Ex: JOÃO PESSOA" required oninput="this.value = this.value.toUpperCase()">
                 </div>
             </div>
 
