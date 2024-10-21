@@ -56,13 +56,13 @@ DROP TABLE IF EXISTS `documentacao_inquilino`;
 CREATE TABLE `documentacao_inquilino` (
   `iddocumentacao_inquilino` int NOT NULL AUTO_INCREMENT,
   `nome_doc` varchar(45) DEFAULT NULL,
-  `path` int DEFAULT NULL,
+  `path` varchar(100) DEFAULT NULL,
   `data_upload` date DEFAULT NULL,
   `id_inquilino` int DEFAULT NULL,
   PRIMARY KEY (`iddocumentacao_inquilino`),
   KEY `id_inquilino_idx` (`id_inquilino`),
   CONSTRAINT `id_inquilino` FOREIGN KEY (`id_inquilino`) REFERENCES `inquilino` (`idinquilino`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -71,6 +71,7 @@ CREATE TABLE `documentacao_inquilino` (
 
 LOCK TABLES `documentacao_inquilino` WRITE;
 /*!40000 ALTER TABLE `documentacao_inquilino` DISABLE KEYS */;
+INSERT INTO `documentacao_inquilino` VALUES (3,'Contrato 01-24.pdf','arquivos/670feefe73505.pdf','2024-10-16',3),(4,'Currículo.pdf','arquivos/670feefe74ffc.pdf','2024-10-16',3);
 /*!40000 ALTER TABLE `documentacao_inquilino` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -90,7 +91,7 @@ CREATE TABLE `documentacao_propriedade` (
   PRIMARY KEY (`iddocumentacao_propriedade`),
   KEY `fk_propriedade` (`id_propriedade`),
   CONSTRAINT `fk_propriedade` FOREIGN KEY (`id_propriedade`) REFERENCES `propriedade` (`idpropriedade`)
-) ENGINE=InnoDB AUTO_INCREMENT=116 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=117 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -99,7 +100,7 @@ CREATE TABLE `documentacao_propriedade` (
 
 LOCK TABLES `documentacao_propriedade` WRITE;
 /*!40000 ALTER TABLE `documentacao_propriedade` DISABLE KEYS */;
-INSERT INTO `documentacao_propriedade` VALUES (102,'Contrato 01-24.pdf','arquivos/670da98bb7e61.pdf','2024-10-14',11),(103,'Currículo.pdf','arquivos/670da98bb96b1.pdf','2024-10-14',11),(104,'Contrato 01-24.pdf','arquivos/670daa20d87cd.pdf','2024-10-14',12),(105,'Currículo.pdf','arquivos/670daa20da2ba.pdf','2024-10-14',12),(108,'teste.pdf','arquivos/670e56e193a92.pdf','2024-10-15',8),(109,'teste.pdf','arquivos/670e570444a63.pdf','2024-10-15',12),(110,'teste.pdf','arquivos/670e6c0d37cb3.pdf','2024-10-15',13),(112,'teste.pdf','arquivos/670e6c257c94e.pdf','2024-10-15',13),(114,'teste.pdf','arquivos/670e887da1dcd.pdf','2024-10-15',15),(115,'235_pt_manual_1705497285.pdf','arquivos/670e887da3da7.pdf','2024-10-15',15);
+INSERT INTO `documentacao_propriedade` VALUES (102,'Contrato 01-24.pdf','arquivos/670da98bb7e61.pdf','2024-10-14',11),(103,'Currículo.pdf','arquivos/670da98bb96b1.pdf','2024-10-14',11),(104,'Contrato 01-24.pdf','arquivos/670daa20d87cd.pdf','2024-10-14',12),(105,'Currículo.pdf','arquivos/670daa20da2ba.pdf','2024-10-14',12),(108,'teste.pdf','arquivos/670e56e193a92.pdf','2024-10-15',8),(109,'teste.pdf','arquivos/670e570444a63.pdf','2024-10-15',12),(114,'teste.pdf','arquivos/670e887da1dcd.pdf','2024-10-15',15),(115,'235_pt_manual_1705497285.pdf','arquivos/670e887da3da7.pdf','2024-10-15',15);
 /*!40000 ALTER TABLE `documentacao_propriedade` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -145,7 +146,7 @@ CREATE TABLE `inquilino` (
   `data_nascimento` date DEFAULT NULL,
   `telefone` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`idinquilino`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -154,7 +155,7 @@ CREATE TABLE `inquilino` (
 
 LOCK TABLES `inquilino` WRITE;
 /*!40000 ALTER TABLE `inquilino` DISABLE KEYS */;
-INSERT INTO `inquilino` VALUES (1,'Micael Lucas Dias Tavares','12.345.678-9','123.456.789-09','Rua Projetada, Mata Redonda, Alhandra - PB',1,'2005-01-20','(83) 9 8521-3214');
+INSERT INTO `inquilino` VALUES (3,'MICAEL LUCAS DIAS TAVARES','12.345.678-9','123.456.789-09','RUA NOVA, MATA REDONDA',1,'2005-01-20','(83) 98179-7415');
 /*!40000 ALTER TABLE `inquilino` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -216,10 +217,10 @@ DROP TABLE IF EXISTS `nivel_de_acesso`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `nivel_de_acesso` (
-  `id_nivel` int NOT NULL,
+  `id_nivel` int NOT NULL AUTO_INCREMENT,
   `nome_nivel` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id_nivel`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -228,6 +229,7 @@ CREATE TABLE `nivel_de_acesso` (
 
 LOCK TABLES `nivel_de_acesso` WRITE;
 /*!40000 ALTER TABLE `nivel_de_acesso` DISABLE KEYS */;
+INSERT INTO `nivel_de_acesso` VALUES (1,'administrador'),(2,'usuario');
 /*!40000 ALTER TABLE `nivel_de_acesso` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -249,7 +251,7 @@ CREATE TABLE `propriedade` (
   `id_situacao` int DEFAULT NULL,
   `data_registro` datetime DEFAULT NULL,
   PRIMARY KEY (`idpropriedade`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -258,7 +260,7 @@ CREATE TABLE `propriedade` (
 
 LOCK TABLES `propriedade` WRITE;
 /*!40000 ALTER TABLE `propriedade` DISABLE KEYS */;
-INSERT INTO `propriedade` VALUES (8,'Minha loja',2,7,100,123456,'Fazenda da Boa Esperança ',1,'2024-10-14 00:00:00'),(11,'Propriedade Completa',2,2,500,100000,'Fazenda da Boa Esperança ',1,'2024-10-14 00:00:00'),(12,'Loja ali da esquina',3,2,123,123123,'Fazenda da Boa Esperança ',2,'2024-10-14 00:00:00'),(13,'Polimassa Argamassa LTDA',1,2,2000,10000000,'Fazenda Riacho Doce',1,'2024-10-15 00:00:00'),(15,'Polimassa',1,2,2000,10000000,'BR 101 - km106',1,'2024-10-15 00:00:00');
+INSERT INTO `propriedade` VALUES (8,'MINHA LOJA',2,7,100,123456,'FAZENDA DA BOA ESPERANÇA ',1,'2024-10-14 00:00:00'),(11,'PROPRIEDADE COMPLETA',2,2,500,100000,'FAZENDA DA BOA ESPERANÇA',1,'2024-10-14 00:00:00'),(12,'LOJA ALI DA ESQUINA',3,2,123,123123,'FAZENDA DA BOA ESPERANÇA ',2,'2024-10-14 00:00:00'),(15,'POLIMASSA ARGAMASSA LTDA',1,2,2000,10000000,'BR 101 - KM 106',8,'2024-10-15 00:00:00');
 /*!40000 ALTER TABLE `propriedade` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -273,7 +275,7 @@ CREATE TABLE `situacao` (
   `id_situacao` int NOT NULL AUTO_INCREMENT,
   `nome_situacao` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id_situacao`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -282,7 +284,7 @@ CREATE TABLE `situacao` (
 
 LOCK TABLES `situacao` WRITE;
 /*!40000 ALTER TABLE `situacao` DISABLE KEYS */;
-INSERT INTO `situacao` VALUES (1,'À Venda'),(2,'Para Alugar'),(3,'Arrendamento'),(4,'Permuta'),(5,'Em Construção'),(6,'Vendido'),(7,'Alugado');
+INSERT INTO `situacao` VALUES (1,'À Venda'),(2,'Para Alugar'),(3,'Arrendamento'),(4,'Permuta'),(5,'Em Construção'),(6,'Vendido'),(7,'Alugado'),(8,'Disponivel');
 /*!40000 ALTER TABLE `situacao` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -297,7 +299,7 @@ CREATE TABLE `tipo_prop` (
   `id_tipo_prop` int NOT NULL AUTO_INCREMENT,
   `nome_tipo` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id_tipo_prop`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -306,7 +308,7 @@ CREATE TABLE `tipo_prop` (
 
 LOCK TABLES `tipo_prop` WRITE;
 /*!40000 ALTER TABLE `tipo_prop` DISABLE KEYS */;
-INSERT INTO `tipo_prop` VALUES (1,'Residencial'),(2,'Industrial'),(3,'Rural'),(4,'Terreno'),(5,'Institucional'),(6,'Misto'),(7,'Comercial');
+INSERT INTO `tipo_prop` VALUES (1,'Residencial'),(2,'Industrial'),(3,'Rural'),(4,'Terreno'),(7,'Comercial');
 /*!40000 ALTER TABLE `tipo_prop` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -320,12 +322,12 @@ DROP TABLE IF EXISTS `usuarios`;
 CREATE TABLE `usuarios` (
   `idusuario` int NOT NULL AUTO_INCREMENT,
   `nome_usuario` varchar(45) NOT NULL,
-  `senha` varchar(20) NOT NULL,
+  `senha` varchar(200) NOT NULL,
   `idnivel_acesso` int NOT NULL,
   `email` varchar(100) NOT NULL,
   `id_inquilino` int DEFAULT NULL,
   PRIMARY KEY (`idusuario`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -334,6 +336,7 @@ CREATE TABLE `usuarios` (
 
 LOCK TABLES `usuarios` WRITE;
 /*!40000 ALTER TABLE `usuarios` DISABLE KEYS */;
+INSERT INTO `usuarios` VALUES (1,'micael','$2y$10$/Tg2pox.43DYGEgVmUBARuAlMsTX3hyU2AjrBBa4GloZKKfhAQ0OS',1,'micaellucasdias@gmail.com',3);
 /*!40000 ALTER TABLE `usuarios` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -346,4 +349,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-10-16 13:21:41
+-- Dump completed on 2024-10-21 10:24:01
