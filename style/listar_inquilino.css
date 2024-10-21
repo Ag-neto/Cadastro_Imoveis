@@ -37,7 +37,7 @@ a.btn-voltar:hover {
     background-color: #218838;
 }
 
-a.btn-criar_propriedade {
+a.btn-criar_inquilino {
     display: inline-block;
     padding: 10px 20px;
     background-color: #32cac7;
@@ -48,7 +48,7 @@ a.btn-criar_propriedade {
     cursor: pointer;
 }
 
-a.btn-criar_propriedade:hover {
+a.btn-criar_inquilino:hover {
     background-color: #228d8b;
 }
 

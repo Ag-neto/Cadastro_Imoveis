@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lista de Propriedades</title>
+    <title>Lista de inquilinos</title>
     <link rel="stylesheet" href="../style/listar_inquilino.css">
 </head>
 
@@ -15,19 +15,19 @@
 
     <section class="form-section">
         <h2>Inquilinos</h2>
-        <form id="buscar-propriedade-form" method="GET" action="listar_propriedades.php">
+        <form id="buscar-inquilino-form" method="GET" action="listar_inquilinos.php">
             <div class="form-group">
                 <label for="busca">Buscar Inquilinos:</label>
-                <input type="text" id="busca" name="busca" placeholder="Digite o nome ou CPF">
+                <input type="text" id="busca" name="busca" placeholder="Digite o NOME ou CPF">
             </div>
 
             <button type="submit">Buscar</button>
             <a href="../index.php" class="btn-voltar">Voltar</a>
-            <a href="cadastro_inquilo.php" class="btn-criar_propriedade">Cadastrar Inquilino</a>
+            <a href="cadastro_inquilo.php" class="btn-criar_inquilino">Cadastrar Inquilino</a>
         </form>
     </section>
 
-    <section class="propriedades-lista">
+    <section class="inquilinos-lista">
         <h2>Inquilinos Cadastrados</h2>
         <table>
             <thead>
@@ -61,10 +61,10 @@
                 $result = $conn->query($sql);
 
                 if ($result->num_rows > 0) {
-                    // Loop para listar as propriedades
+                    // Loop para listar as inquilinos
                     while ($row = $result->fetch_assoc()) {
                         echo '<tr>';
-                        echo '<td>' . $row['idinquilino'] . '</td>'; // Supondo que o ID da propriedade seja 'id_propriedade'
+                        echo '<td>' . $row['idinquilino'] . '</td>'; // Supondo que o ID da inquilino seja 'id_inquilino'
                         echo '<td>' . $row['nome_inquilino'] . '</td>';
                         echo '<td>' . $row['telefone'] . '</td>';
                         echo '<td>' . $row['cpf_numero'] .'</td>';
@@ -85,7 +85,7 @@
         <p>&copy; 2024 - Sistema de Gestão de Propriedades</p>
     </footer>
 
-    <script src="../scripts/script_propriedades.js"></script>
+    <script src="../scripts/script_inquilinos.js"></script>
 </body>
 
 </html>
