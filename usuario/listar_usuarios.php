@@ -73,7 +73,7 @@
                         echo '<td>' . $nomeInquilino . '</td>';
                         echo '<td>
                                 <a href="detalhes_usuario.php?id=' . $row['idusuario'] . '">Ver Detalhes</a> |
-                                <a href="excluir_usuario.php?id=' . $row['idusuario'] . '" 
+                                <a href="deletar_usuario.php?id=' . $row['idusuario'] . '" 
                                    onclick="return confirm(\'Tem certeza que deseja excluir este usuário?\')">Excluir</a>
                               </td>';
                         echo '</tr>';
