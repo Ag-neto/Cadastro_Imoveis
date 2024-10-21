@@ -21,11 +21,21 @@
             <div class="form-group">
                 <div class="form-item">
                     <label for="propriedade">Propriedade:</label>
-                    <select id="propriedade" name="propriedade" required>
-                        <option value="">Selecione a Propriedade</option>
-                        <option value="1">Apartamento Central</option>
-                        <option value="2">Casa Verde</option>
-                        <option value="3">Loja Comercial</option>
+                    <select name="idpropriedade" id="idpropriedade" required>
+                        <option value="" disabled selected>Selecione</option>
+                        <?php
+                        require_once "../conexao/conexao.php";
+
+                        $sql = "SELECT * FROM propriedade";
+                        $result = $conn->query($sql);
+
+                        if ($result->num_rows > 0) {
+                            while ($row = $result->fetch_assoc()) {
+                                echo '<option value="' . $row['idpropriedade'] . '">' . $row['nome_propriedade'] . '</option>';
+                            }
+                        }
+
+                        ?>
                     </select>
                 </div>
             </div>
@@ -34,11 +44,20 @@
             <div class="form-group">
                 <div class="form-item">
                     <label for="inquilino">Inquilino:</label>
-                    <select id="inquilino" name="inquilino" required>
-                        <option value="">Selecione o Inquilino</option>
-                        <option value="1">João da Silva</option>
-                        <option value="2">Maria Oliveira</option>
-                        <option value="3">Carlos Pereira</option>
+                    <select name="idinquilino" id="idinquilino" required>
+                        <option value="" disabled selected>Selecione</option>
+                        <?php
+
+                        $sql = "SELECT * FROM inquilino";
+                        $result = $conn->query($sql);
+
+                        if ($result->num_rows > 0) {
+                            while ($row = $result->fetch_assoc()) {
+                                echo '<option value="' . $row['idinquilino'] . '">' . $row['nome_inquilino'] . '</option>';
+                            }
+                        }
+
+                        ?>
                     </select>
                 </div>
             </div>

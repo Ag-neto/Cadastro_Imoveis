@@ -30,8 +30,12 @@ require_once "../conexao/conexao.php";
                 $endereco = $_POST['endereco'];
                 $situacao = $_POST['id_situacao'];
                 $data = $_POST['data'];
+                $tipo_imposto = $_POST['tipo_imposto'];
+                $valor_imposto = $_POST['valor_imposto'];
+                $periodo_imposto = $_POST['periodo_imposto'];
 
-                $sql = "INSERT INTO propriedade (nome_propriedade, id_localizacao, id_tipo_prop, tamanho, valor_adquirido, endereco, id_situacao, data_registro) VALUES ('$nome', '$localidade', '$tipo', '$tamanho', '$valor_adquirido', '$endereco', '$situacao', '$data')";
+
+                $sql = "INSERT INTO propriedade (nome_propriedade, id_localizacao, id_tipo_prop, tamanho, valor_adquirido, endereco, id_situacao, data_registro, tipo_imposto, valor_imposto, periodo_imposto) VALUES ('$nome', '$localidade', '$tipo', '$tamanho', '$valor_adquirido', '$endereco', '$situacao', '$data', '$tipo_imposto', '$valor_imposto', '$periodo_imposto')";
 
                 if (mysqli_query($conn, $sql)) {
                     echo "<p class='success'>$nome cadastrado(a) com sucesso!</p>";

@@ -56,7 +56,32 @@
                 </div>
 
                 <div class="form-item">
-                    <label for="tamanho">Tamanho: (m²)</label>
+                    <label for="tipo_imposto">Tipo de imposto:</label>
+                    <select name="tipo_imposto" id="tipo_imposto" required>
+                        <option value="" disabled selected>Selecione</option>
+                        <option value="nenhum">Nenhum</option>
+                        <option value="IPTU">IPTU - Imposto Predial e Territorial Urbano</option>
+                        <option value="ITR">ITR - Imposto sobre a Propriedade Territorial Rural</option>
+                    </select>
+                </div>
+
+                <div class="form-item">
+                    <label for="valor_imposto">Valor do imposto:</label>
+                    <input type="number" name="valor_imposto" id="valor_imposto">
+                </div>
+
+                <div class="form-item">
+                    <label for="periodo_imposto">Periodicidade do Imposto:</label>
+                    <select name="periodo_imposto" id="periodo_imposto" required>
+                        <option value="" disabled selected>Selecione</option>
+                        <option value="Nenhum">Nenhum</option>
+                        <option value="Mensal">Mensal</option>
+                        <option value="Anual">Anual</option>
+                    </select>
+                </div>
+
+                <div class="form-item">
+                    <label for="tamanho">Tamanho da propriedade: (m²)</label>
                     <input type="number" id="tamanho" name="tamanho" required>
                 </div>
 
