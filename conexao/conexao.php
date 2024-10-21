@@ -1,7 +1,7 @@
 <?php
-$servidor = "localhost";
-$usuario = "root";
-$senha = "root";
+$server = "localhost";
+$user = "root";
+$password = "gui13579";
 $bd = "controledepropriedade";
 
 // Tentativa de conexão com o banco de dados
