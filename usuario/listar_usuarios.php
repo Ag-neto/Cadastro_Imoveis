@@ -37,6 +37,7 @@
                     <th>E-mail</th>
                     <th>Nível de Acesso</th>
                     <th>Inquilino Associado</th>
+                    <th>Ações</th>
                 </tr>
             </thead>
             <tbody>
@@ -70,10 +71,15 @@
                         echo '<td>' . $row['email'] . '</td>';
                         echo '<td>' . $nivelAcesso . '</td>';
                         echo '<td>' . $nomeInquilino . '</td>';
+                        echo '<td>
+                                <a href="detalhes_usuario.php?id=' . $row['idusuario'] . '">Ver Detalhes</a> |
+                                <a href="excluir_usuario.php?id=' . $row['idusuario'] . '" 
+                                   onclick="return confirm(\'Tem certeza que deseja excluir este usuário?\')">Excluir</a>
+                              </td>';
                         echo '</tr>';
                     }
                 } else {
-                    echo '<tr><td colspan="5">Nenhum usuário encontrado.</td></tr>';
+                    echo '<tr><td colspan="6">Nenhum usuário encontrado.</td></tr>';
                 }
                 ?>
             </tbody>
