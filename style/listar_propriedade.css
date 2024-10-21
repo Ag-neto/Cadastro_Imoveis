@@ -9,8 +9,21 @@
 /* Estiliza cada item de filtro */
 .filtro-item {
     display: flex;
-    flex-direction: column;
+    flex-direction: row; /* Alinha os elementos horizontalmente */
+    align-items: center; /* Alinha verticalmente ao centro */
+    gap: 10px; /* Espaçamento entre os elementos */
+    margin-bottom: 10px; /* Menor espaçamento inferior */
 }
+
+/* Ajusta o estilo dos labels e inputs */
+.filtro-item label {
+    margin: 0; /* Remove margem para reduzir espaço vertical */
+}
+
+.filtro-item input[type="checkbox"] {
+    margin-right: 5px; /* Espaço entre a checkbox e o label */
+}
+
 
 /* Outras regras de estilo */
 * {
