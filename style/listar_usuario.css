@@ -33,6 +33,21 @@ a.btn-voltar {
     cursor: pointer;
 }
 
+a.btn-editar:hover {
+    background-color: #218838;
+}
+
+a.btn-editar {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #28a745;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 0.9em;
+    cursor: pointer;
+}
+
 a.btn-voltar:hover {
     background-color: #218838;
 }
@@ -69,6 +84,7 @@ label {
 }
 
 input[type="text"],
+input[type="email"],
 select {
     width: 100%;
     padding: 10px;
