@@ -1,20 +1,30 @@
 <?php
 require_once "../conexao/conexao.php"; // Sua conexão com o banco de dados
-
-// Supondo que o ID da propriedade seja passado pela URL
 $id_propriedade = $_GET['id_propriedade'] ?? 1;
 
+// Busca o nome da propriedade
+$sql_nome_propriedade = "
+    SELECT nome_propriedade 
+    FROM propriedade 
+    WHERE idpropriedade = $id_propriedade
+";
+$dados_nome = mysqli_query($conn, $sql_nome_propriedade);
+$nome_propriedade = mysqli_fetch_assoc($dados_nome)['nome_propriedade'] ?? 'Propriedade Desconhecida';
+
+
 // Busca os movimentos financeiros da propriedade
-$query = "SELECT * FROM conta_corrente_propriedade WHERE id_propriedade = ?";
-$stmt = $pdo->prepare($query);
-$stmt->execute([$id_propriedade]);
-$movimentos = $stmt->fetchAll(PDO::FETCH_ASSOC);
+$sql_movimentos = "SELECT * FROM conta_corrente_propriedade WHERE id_propriedade = $id_propriedade ORDER BY data_movimento DESC";
+$dados_movimentos = mysqli_query($conn, $sql_movimentos);
+
+$movimentos = [];
+while ($linha = mysqli_fetch_assoc($dados_movimentos)) {
+    $movimentos[] = $linha;
+}
 
 // Busca o saldo acumulado
-$query_saldo = "SELECT saldo_acumulado FROM conta_corrente_propriedade WHERE id_propriedade = ? ORDER BY data_movimento DESC LIMIT 1";
-$stmt_saldo = $pdo->prepare($query_saldo);
-$stmt_saldo->execute([$id_propriedade]);
-$saldo_acumulado = $stmt_saldo->fetchColumn() ?? 0;
+$sql_saldo = "SELECT saldo_acumulado FROM conta_corrente_propriedade WHERE id_propriedade = $id_propriedade ORDER BY data_movimento DESC LIMIT 1";
+$dados_saldo = mysqli_query($conn, $sql_saldo);
+$saldo_acumulado = mysqli_fetch_assoc($dados_saldo)['saldo_acumulado'] ?? 0;
 ?>
 
 <!DOCTYPE html>
@@ -31,10 +41,12 @@ $saldo_acumulado = $stmt_saldo->fetchColumn() ?? 0;
     <header>
         <h1>Conta Corrente da Propriedade</h1>
         <h2>ID da Propriedade: <?php echo $id_propriedade; ?></h2>
+        <h2>Nome: <?php echo $nome_propriedade; ?></h2>
     </header>
 
     <section class="movimentos-section">
         <h3>Movimentações Financeiras</h3>
+        <h3>Saldo Atual: R$ <?php echo number_format($saldo_acumulado, 2, ',', '.'); ?></h3>
         <table>
             <thead>
                 <tr>
@@ -63,30 +75,8 @@ $saldo_acumulado = $stmt_saldo->fetchColumn() ?? 0;
                 <?php endif; ?>
             </tbody>
         </table>
-
-        <h3>Saldo Atual: R$ <?php echo number_format($saldo_acumulado, 2, ',', '.'); ?></h3>
+        <a href="movimento_conta.php">Adicionar um movimento</a>
     </section>
-
-    <section class="form-section">
-        <h3>Adicionar Movimento Financeiro</h3>
-        <form method="POST" action="add_movimento.php">
-            <input type="hidden" name="id_propriedade" value="<?php echo $id_propriedade; ?>">
-            <label for="descricao">Descrição:</label>
-            <input type="text" id="descricao" name="descricao" required>
-
-            <label for="valor">Valor (R$):</label>
-            <input type="number" id="valor" name="valor" step="0.01" required>
-
-            <label for="tipo_movimento">Tipo de Movimento:</label>
-            <select id="tipo_movimento" name="tipo_movimento" required>
-                <option value="receita">Receita</option>
-                <option value="despesa">Despesa</option>
-            </select>
-
-            <button type="submit">Adicionar Movimento</button>
-        </form>
-    </section>
-
 </body>
 
 </html>

@@ -153,7 +153,7 @@
                         echo '<td>' . number_format($row['valor_adquirido'], 2, ',', '.') . '</td>';
                         echo '<td>' . $row['nome_situacao'] . '</td>';
                         echo '<td><a href="detalhes_propriedade.php?id=' . $row['idpropriedade'] . '">Ver Detalhes</a></td>';
-                        echo '<td><a href="contas_correntes.php"><i class="bi bi-bank"></i></a></td>';
+                        echo '<td><a href="contas_correntes.php?id_propriedade=' . $row['idpropriedade'] . '"><i class="bi bi-bank"></i></a></td>';
                         echo '</tr>';
                     }
                 } else {
