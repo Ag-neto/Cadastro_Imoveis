@@ -85,6 +85,18 @@ if (isset($_GET['id'])) {
                 <strong>Data de Registro:</strong>
                 <span><?php echo date('d/m/Y', strtotime($propriedade['data_registro'])); ?></span>
             </div>
+            <div class="info-item">
+                <strong>Tipo de Imposto:</strong>
+                <span><?php echo $propriedade['tipo_imposto']; ?></span>
+            </div>
+            <div class="info-item">
+                <strong>Valor do Imposto:</strong>
+                <span><?php echo $propriedade['valor_imposto']; ?></span>
+            </div>
+            <div class="info-item">
+                <strong>Periodicidade do Imposto:</strong>
+                <span><?php echo $propriedade['periodo_imposto']; ?></span>
+            </div>
         </div>
 
         <h2>Documentos Associados</h2>

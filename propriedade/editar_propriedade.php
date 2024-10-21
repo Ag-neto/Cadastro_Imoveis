@@ -9,6 +9,8 @@ $dados = mysqli_query($conn, $sql);
 
 $linha = mysqli_fetch_assoc($dados);
 
+$tipo_imposto = $linha['tipo_imposto'];
+$periodo_imposto = $linha['periodo_imposto'];
 $data_registro = isset($linha['data_registro']) ? date('Y-m-d', strtotime($linha['data_registro'])) : '';
 
 ?>
@@ -61,7 +63,7 @@ $data_registro = isset($linha['data_registro']) ? date('Y-m-d', strtotime($linha
                             $sql = "SELECT l.*, e.nome_estado, e.sigla 
                             FROM localizacao l 
                             JOIN estados e ON l.id_estado = e.id_estado";
-                            
+
                             $result = $conn->query($sql);
                             while ($row = $result->fetch_assoc()) {
                                 // Verifica se o id_localizacao corresponde ao da propriedade
@@ -76,6 +78,31 @@ $data_registro = isset($linha['data_registro']) ? date('Y-m-d', strtotime($linha
                     <div class="form-item">
                         <label for="valor_adquirido">Valor - Adquirido (R$):</label>
                         <input type="number" id="valor_adquirido" name="valor_adquirido" value="<?php echo $linha['valor_adquirido']; ?>" required>
+                    </div>
+
+                    <div class="form-item">
+                        <label for="tipo_imposto">Tipo de imposto:</label>
+                        <select name="tipo_imposto" id="tipo_imposto" required>
+                            <option value="" disabled <?php echo ($tipo_imposto == '') ? 'selected' : ''; ?>>Selecione</option>
+                            <option value="nenhum" <?php echo ($tipo_imposto == 'nenhum') ? 'selected' : ''; ?>>Nenhum</option>
+                            <option value="IPTU" <?php echo ($tipo_imposto == 'IPTU') ? 'selected' : ''; ?>>IPTU - Imposto Predial e Territorial Urbano</option>
+                            <option value="ITR" <?php echo ($tipo_imposto == 'ITR') ? 'selected' : ''; ?>>ITR - Imposto sobre a Propriedade Territorial Rural</option>
+                        </select>
+                    </div>
+
+
+                    <div class="form-item">
+                        <label for="valor_imposto">Valor do imposto (R$):</label>
+                        <input type="number" id="valor_imposto" name="valor_imposto" value="<?php echo $linha['valor_imposto']; ?>" required>
+                    </div>
+
+                    <div class="form-item">
+                        <label for="periodo_imposto">Periodicidade do Imposto:</label>
+                        <select name="periodo_imposto" id="periodo_imposto" required>
+                            <option value="" disabled <?php echo ($periodo_imposto == '') ? 'selected' : ''; ?>>Selecione</option>
+                            <option value="Mensal" <?php echo ($periodo_imposto == 'Mensal') ? 'selected' : ''; ?>>Mensal</option>
+                            <option value="Anual" <?php echo ($periodo_imposto == 'Anual') ? 'selected' : ''; ?>>Anual</option>
+                        </select>
                     </div>
 
                     <div class="form-item">
