@@ -107,7 +107,7 @@ if (isset($_GET['id'])) {
         </div>
 
         <div class="acoes">
-            <a href="listar_inquilinos.php">Voltar</a>
+        <button onclick="history.back()">Voltar</button>
             <a href="editar_inquilino.php?id=<?= $id_inquilino; ?>">Editar Inquilino</a>
             <a id="deletar" href="deletar_inquilino.php?id=<?= $id_inquilino; ?>" 
                onclick="return confirmarDeletar();">Deletar Inquilino</a>
