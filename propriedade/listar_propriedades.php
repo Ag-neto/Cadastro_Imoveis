@@ -8,18 +8,6 @@
     <link rel="stylesheet" href="../style/listar_propriedade.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
-
-    <script>
-        // Função para mostrar ou esconder os campos de seleção baseados nos checkboxes marcados
-        function toggleSelectField(checkbox, selectId) {
-            var selectField = document.getElementById(selectId);
-            if (checkbox.checked) {
-                selectField.style.display = 'block';
-            } else {
-                selectField.style.display = 'none';
-            }
-        }
-    </script>
 </head>
 
 <body>
@@ -36,9 +24,8 @@
                     <input type="text" name="nome" id="nome" placeholder="Insira o nome">
                 </div>
                 <div class="filtro-item">
-                    <input type="checkbox" name="cidade_checkbox" id="cidade_checkbox" onclick="toggleSelectField(this, 'select-cidade')">
                     <label for="cidade_checkbox">Cidade</label>
-                    <select id="select-cidade" name="cidade" style="display:none;">
+                    <select id="select-cidade" name="cidade">
                         <option value="">Selecione uma cidade</option>
                         <?php
                         // Busca todas as cidades disponíveis no banco de dados
@@ -51,9 +38,8 @@
                     </select>
                 </div>
                 <div class="filtro-item">
-                    <input type="checkbox" name="situacao_checkbox" id="situacao_checkbox" onclick="toggleSelectField(this, 'select-situacao')">
                     <label for="situacao_checkbox">Situação</label>
-                    <select id="select-situacao" name="situacao" style="display:none;">
+                    <select id="select-situacao" name="situacao">
                         <option value="">Selecione uma situação</option>
                         <?php
                         // Busca todas as situações disponíveis no banco de dados
@@ -65,9 +51,8 @@
                     </select>
                 </div>
                 <div class="filtro-item">
-                    <input type="checkbox" name="tipo_propriedade_checkbox" id="tipo_propriedade_checkbox" onclick="toggleSelectField(this, 'select-tipo-propriedade')">
                     <label for="tipo_propriedade_checkbox">Tipo de Propriedade</label>
-                    <select id="select-tipo-propriedade" name="tipo_propriedade" style="display:none;">
+                    <select id="select-tipo-propriedade" name="tipo_propriedade">
                         <option value="">Selecione um tipo de propriedade</option>
                         <?php
                         // Busca todos os tipos de propriedades disponíveis no banco de dados
