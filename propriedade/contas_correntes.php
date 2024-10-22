@@ -2,15 +2,17 @@
 require_once "../conexao/conexao.php"; // Sua conexão com o banco de dados
 $id_propriedade = $_GET['id_propriedade'] ?? 1;
 
-// Busca o nome da propriedade
-$sql_nome_propriedade = "
-    SELECT nome_propriedade 
-    FROM propriedade 
-    WHERE idpropriedade = $id_propriedade
-";
-$dados_nome = mysqli_query($conn, $sql_nome_propriedade);
-$nome_propriedade = mysqli_fetch_assoc($dados_nome)['nome_propriedade'] ?? 'Propriedade Desconhecida';
+// Busca o nome da propriedade e o valor adquirido
+$sql_propriedade = "SELECT nome_propriedade, valor_adquirido
+                    FROM propriedade 
+                    WHERE idpropriedade = $id_propriedade";
 
+$dados_prop = mysqli_query($conn, $sql_propriedade);
+$propriedade = mysqli_fetch_assoc($dados_prop);
+
+// Verifica se a propriedade foi encontrada
+$nome_propriedade = $propriedade['nome_propriedade'] ?? 'Propriedade Desconhecida';
+$valor_adquirido = $propriedade['valor_adquirido'] ?? 'Valor Desconhecido';
 
 // Busca os movimentos financeiros da propriedade
 $sql_movimentos = "SELECT * FROM conta_corrente_propriedade WHERE id_propriedade = $id_propriedade ORDER BY data_movimento DESC";
@@ -46,6 +48,7 @@ $saldo_acumulado = mysqli_fetch_assoc($dados_saldo)['saldo_acumulado'] ?? 0;
 
     <section class="movimentos-section">
         <h3>Movimentações Financeiras</h3>
+        <h3>Valor Adquirido: R$ <?php echo number_format($valor_adquirido, 2, ',', '.');?></h3>
         <h3>Saldo Atual: R$ <?php echo number_format($saldo_acumulado, 2, ',', '.'); ?></h3>
         <table>
             <thead>
