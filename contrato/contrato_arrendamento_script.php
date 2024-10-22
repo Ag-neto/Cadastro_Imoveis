@@ -20,38 +20,29 @@ require_once "../conexao/conexao.php";
     <main>
         <section class="form-section">
             <?php
-
             if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $idpropriedade = $_POST['idpropriedade'];
-                $idinquilino = $_POST['idinquilino'];
-                $valor = $_POST['valor'];
+                $idarrendatario = $_POST['idarrendatario']; // Captura o ID do arrendatário
+                $valor = $_POST['valor_arrendamento']; // Valor do arrendamento
                 $data_ini = $_POST['data_inicio'];
-                $data_fim = $_POST['data_fim'];
-                $cobranca = $_POST['cobranca'];
+                $data_fim = $_POST['data_termino'];
 
-                $tipo_contrato = "ARRENDAMENTO";
+                // Verifique se as variáveis necessárias não estão vazias
+                if (!empty($idpropriedade) && !empty($idarrendatario) && !empty($valor) && !empty($data_ini) && !empty($data_fim)) {
+                    $tipo_contrato = "ARRENDAMENTO";
 
-                // Crie objetos DateTime a partir das datas
-                $data_inicio = new DateTime($data_ini);
-                $data_final = new DateTime($data_fim);
+                    // Crie o SQL para inserção
+                    $sql = "INSERT INTO contratos (id_propriedade, id_inquilino, valor_aluguel, data_inicio_residencia, data_final_residencia, tipo_contrato) 
+                            VALUES ('$idpropriedade', '$idarrendatario', '$valor', '$data_ini', '$data_fim', '$tipo_contrato')";
 
-                // Calcule a diferença entre as datas
-                $diferenca = $data_inicio->diff($data_final);
-
-                // Obtenha o número de dias da diferença
-                $periodo_residencia = $diferenca->days;
-
-                // Inserir no banco de dados o contrato de arrendamento
-                $sql = "INSERT INTO contratos (id_propriedade, id_inquilino, valor_aluguel, data_inicio_residencia, data_final_residencia, vencimento, periodo_residencia, tipo_contrato) 
-                        VALUES ('$idpropriedade', '$idinquilino', '$valor', '$data_ini', '$data_fim', '$cobranca', '$periodo_residencia', '$tipo_contrato')";
-
-                // Verifica se o contrato foi inserido com sucesso
-                if (mysqli_query($conn, $sql)) {
-                    // Redireciona para a página de listagem de contratos
-                    header('Location: listar_contratos.php');
-                    exit();  // Garante que o script seja finalizado após o redirecionamento
+                    if (mysqli_query($conn, $sql)) {
+                        header('Location: listar_contratos.php');
+                        exit(); // Para garantir que o script pare aqui
+                    } else {
+                        echo "<p class='error'>Não foi possível gerar o contrato! Erro: " . mysqli_error($conn) . "</p>";
+                    }
                 } else {
-                    echo "<p class='error'>Não foi possível gerar o contrato de arrendamento!</p>";
+                    echo "<p class='error'>Por favor, preencha todos os campos obrigatórios!</p>";
                 }
             }
             ?>
