@@ -44,6 +44,7 @@ header {
     padding: 20px;
     border-radius: 8px;
     text-align: center;
+    margin-bottom: 10px;
 }
 
 h1 {
@@ -80,7 +81,12 @@ a.btn-criar_propriedade:hover {
     background-color: #228d8b;
 }
 
+a.btn-conta{
+    text-decoration: none;
+}
+
 form {
+    margin-top: 10px;
     margin-bottom: 20px;
     padding: 20px;
     background-color: white;
@@ -117,18 +123,71 @@ button:hover {
 table {
     width: 100%;
     border-collapse: collapse;
+    margin-top: 15px;
     margin-bottom: 20px;
+    table-layout: fixed;
+    /* Mantém a largura das colunas estável */
 }
 
-table th, table td {
+table th,
+table td {
     padding: 10px;
-    text-align: left;
+    text-align: center;
+    /* Centraliza o texto horizontalmente */
+    vertical-align: middle;
+    /* Centraliza o texto verticalmente */
+    border-bottom: 1px solid #ccc;
+}
+
+
+tbody td {
+    padding: 10px;
+    text-align: center;
+    /* Centraliza o texto horizontalmente */
+    vertical-align: middle;
+    /* Centraliza o texto verticalmente */
     border-bottom: 1px solid #ccc;
 }
 
 table th {
     background-color: #343a40;
     color: white;
+    position: sticky;
+    /* Fixa o cabeçalho no topo ao rolar */
+    top: 0;
+    z-index: 2;
+    /* Garante que o cabeçalho esteja sobreposto ao conteúdo ao rolar */
+    text-align: center;
+    /* Centraliza o texto horizontalmente no thead */
+    vertical-align: middle;
+    /* Centraliza o texto verticalmente no thead */
+}
+
+tbody {
+    display: block;
+    max-height: 300px;
+    /* Define a altura máxima do corpo da tabela */
+    overflow-y: auto;
+    /* Adiciona a barra de rolagem vertical */
+    width: 100%;
+}
+
+tbody tr {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+    /* Mantém a consistência na largura das colunas */
+}
+
+tbody tr {
+    display: table;
+    width: 100%;
+}
+
+thead tr{
+    display: table;
+    width: 100%;
+    table-layout: fixed;
 }
 
 table tr:hover {

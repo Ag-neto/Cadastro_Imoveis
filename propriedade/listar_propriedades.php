@@ -71,29 +71,28 @@
         </form>
     </section>
 
-    <section class="propriedades-lista">
-        <h2>Propriedades Cadastradas</h2>
+<section class="propriedades-lista">
+    <h2>Propriedades Cadastradas</h2>
+    <div class="table-container">
         <table>
             <thead>
                 <tr>
-                    <th>ID</th>
                     <th>Nome</th>
                     <th>Tipo</th>
                     <th>Cidade</th>
                     <th>Valor (R$)</th>
                     <th>Situação</th>
                     <th>Detalhes</th>
-                    <th><i class="bi bi-bank"></i></th>
+                    <th>Conta Corrente</th>
                 </tr>
             </thead>
             <tbody>
                 <?php
                 require_once "../conexao/conexao.php";
 
-                // Inicializa o array de condições
                 $condicoes = [];
 
-                // Verifica se os filtros foram aplicados
+                // Adiciona as condições de filtro
                 if (!empty($_GET['nome'])) {
                     $nome = $conn->real_escape_string($_GET['nome']);
                     $condicoes[] = "p.nome_propriedade LIKE '%$nome%'";
@@ -119,7 +118,7 @@
                 JOIN estados e ON l.id_estado = e.id_estado
                 JOIN situacao s ON p.id_situacao = s.id_situacao";
 
-                // Adiciona as condições de busca, se houver
+                // Adiciona as condições de busca
                 if (!empty($condicoes)) {
                     $sql .= " WHERE " . implode(" AND ", $condicoes);
                 }
@@ -131,30 +130,28 @@
                     // Loop para listar as propriedades
                     while ($row = $result->fetch_assoc()) {
                         echo '<tr>';
-                        echo '<td>' . $row['idpropriedade'] . '</td>';
                         echo '<td>' . $row['nome_propriedade'] . '</td>';
                         echo '<td>' . $row['nome_tipo'] . '</td>';
                         echo '<td>' . $row['nome_cidade'] . " - " . $row['sigla'] . '</td>';
                         echo '<td>' . number_format($row['valor_adquirido'], 2, ',', '.') . '</td>';
                         echo '<td>' . $row['nome_situacao'] . '</td>';
                         echo '<td><a href="detalhes_propriedade.php?id=' . $row['idpropriedade'] . '">Ver Detalhes</a></td>';
-                        echo '<td><a href="contas_correntes.php?id_propriedade=' . $row['idpropriedade'] . '"><i class="bi bi-bank"></i></a></td>';
+                        echo '<td><a href="contas_correntes.php?id_propriedade=' . $row['idpropriedade'] . '"class="btn-conta">Conta <i class="bi bi-bank"></i></a></td>';
                         echo '</tr>';
                     }
                 } else {
-                    echo '<tr><td colspan="7">Nenhuma propriedade encontrada.</td></tr>';
+                    echo '<tr><td colspan="7">Nenhuma propriedade encontrada.</td></tr>'; // Ajusta o colspan para 7
                 }
                 ?>
-
             </tbody>
         </table>
-    </section>
+    </div>
+</section>
+
 
     <footer>
         <p>&copy; 2024 - Sistema de Gestão de Propriedades</p>
     </footer>
-
-    <script src="../scripts/script_propriedades.js"></script>
 </body>
 
 </html>
