@@ -57,7 +57,6 @@ if ($result) {
                     <option value="">Todos</option>
                     <option value="venda">Venda</option>
                     <option value="aluguel">Aluguel</option>
-                    <option value="arrendamento">Arrendamento</option> <!-- Adicionado arrendamento -->
                 </select>
             </div>
             <button type="submit">Buscar</button>
@@ -82,38 +81,24 @@ if ($result) {
                 </tr>
             </thead>
             <tbody>
-                <!-- Exemplo de dados estáticos -->
-                <tr>
-                    <td>1</td>
-                    <td>Venda</td>
-                    <td>Apartamento Central</td>
-                    <td>João da Silva</td>
-                    <td>01/01/2024</td>
-                    <td>N/A</td>
-                    <td>450.000,00</td>
-                    <td><a href="detalhes_contrato.php?id=1">Ver Detalhes</a></td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td>Aluguel</td>
-                    <td>Casa Verde</td>
-                    <td>Maria Oliveira</td>
-                    <td>01/05/2024</td>
-                    <td>01/05/2025</td>
-                    <td>1.200,00</td>
-                    <td><a href="detalhes_contrato.php?id=2">Ver Detalhes</a></td>
-                </tr>
-                <tr>
-                    <td>3</td>
-                    <td>Arrendamento</td>
-                    <td>Sítio do Campo</td>
-                    <td>Roberto Santos</td>
-                    <td>15/06/2024</td>
-                    <td>15/06/2025</td>
-                    <td>2.500,00</td>
-                    <td><a href="detalhes_contrato.php?id=3">Ver Detalhes</a></td>
-                </tr>
-                <!-- Aqui vamos fazer um loop para listar os contratos dinâmicos -->
+                <?php if (count($contratos) > 0): ?>
+                    <?php foreach ($contratos as $contrato): ?>
+                        <tr>
+                            <td><?php echo $contrato['id_contrato']; ?></td>
+                            <td><?php echo ucfirst($contrato['tipo_contrato']); ?></td>
+                            <td><?php echo $contrato['nome_propriedade']; ?></td>
+                            <td><?php echo $contrato['nome_inquilino']; ?></td>
+                            <td><?php echo date('d/m/Y', strtotime($contrato['data_inicio_residencia'])); ?></td>
+                            <td><?php echo ($contrato['data_final_residencia'] != null) ? date('d/m/Y', strtotime($contrato['data_final_residencia'])) : 'N/A'; ?></td>
+                            <td><?php echo number_format($contrato['valor_aluguel'], 2, ',', '.'); ?></td>
+                            <td><a href="detalhes_contrato.php?id=<?php echo $contrato['id_contrato']; ?>">Ver Detalhes</a></td>
+                        </tr>
+                    <?php endforeach; ?>
+                <?php else: ?>
+                    <tr>
+                        <td colspan="8">Nenhum contrato encontrado.</td>
+                    </tr>
+                <?php endif; ?>
             </tbody>
         </table>
     </section>
