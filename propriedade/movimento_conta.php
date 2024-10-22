@@ -32,7 +32,8 @@
 
             <button type="submit">Salvar</button>
         </form>
-        <a href="contas_correntes.php">Voltar</a>
+        <a href="contas_correntes.php?id_propriedade=<?php echo $id_propriedade; ?>">Voltar</a>
+
     </section>
 </body>
 </html>
