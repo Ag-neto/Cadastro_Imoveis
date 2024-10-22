@@ -15,7 +15,7 @@
 
     <section class="form-section">
         <h2>Informações do Contrato</h2>
-        <form id="contrato-form">
+        <form id="contrato-form" method="POST" action="contrato_aluguel_script.php"> 
 
             <!-- Escolha da propriedade -->
             <div class="form-group">
@@ -77,6 +77,10 @@
                 <div class="form-item">
                     <label for="data_fim">Data de Término:</label>
                     <input type="date" id="data_fim" name="data_fim" required>
+                </div>
+                <div class="form-item">
+                    <label for="cobranca">Cobrança</label>
+                    <input type="date" id="cobranca" name="cobranca" required>
                 </div>
             </div>
 
