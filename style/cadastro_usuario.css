@@ -62,6 +62,21 @@ button:hover {
     background-color: #218838;
 }
 
+/* Estilo para o botão Voltar */
+.btn-voltar {
+    padding: 10px 20px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px; /* Adiciona um pouco de espaço acima do botão */
+}
+
+.btn-voltar:hover {
+    background-color: #218838;
+}
+
 footer {
     text-align: center;
     margin-top: 20px;

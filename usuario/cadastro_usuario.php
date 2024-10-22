@@ -95,7 +95,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
 
             <button type="submit">Cadastrar Usuário</button>
-            <a href="listar_usuarios.php" class="btn-voltar">Voltar</a>
+            <button type="button" class="btn-voltar" onclick="window.location.href='listar_usuarios.php'">Voltar</button>
         </form>
     </section>
 
