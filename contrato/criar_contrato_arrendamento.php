@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Criar Contrato de Arrendamento</title>
-    <link rel="stylesheet" href="../style/criar_contrato.css">
+    <link rel="stylesheet" href="../style/criar_contrato.css"> <!-- Caminho relativo ajustado -->
 </head>
 
 <body>
@@ -14,7 +14,7 @@
     </header>
 
     <section class="form-section">
-        <form method="POST" action="processar_contrato_arrendamento.php">
+        <form method="POST" action="processar_contrato_arrendamento.php"> <!-- Certifique-se que este arquivo exista -->
             <h2>Dados do Contrato de Arrendamento</h2>
             
             <div class="form-group">
@@ -26,11 +26,11 @@
                         // Conexão com o banco de dados
                         require_once "../conexao/conexao.php";
 
-                        // Selecionar propriedades que estão na situação de Arrendamento
+                        // Selecionar propriedades disponíveis para Arrendamento
                         $sql = "SELECT p.idpropriedade, p.nome_propriedade 
                                 FROM propriedade p 
                                 JOIN situacao s ON p.id_situacao = s.id_situacao
-                                WHERE s.nome_situacao = 'Arrendamento'"; // Filtra por situação de Arrendamento
+                                WHERE s.nome_situacao = 'Arrendamento'";
                         $result = $conn->query($sql);
 
                         if ($result->num_rows > 0) {
@@ -70,7 +70,7 @@
             </div>
 
             <button type="submit">Criar Contrato</button>
-            <a href="listar_contratos.php" class="btn-voltar">Voltar</a>
+            <a href="listar_contratos.php" class="btn-voltar">Voltar</a> <!-- Certifique-se que listar_contratos.php exista -->
         </form>
     </section>
 
