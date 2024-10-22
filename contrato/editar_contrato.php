@@ -65,8 +65,7 @@
             <!-- Botão para atualizar contrato -->
             <button type="submit">Salvar Alterações</button>
 
-            <a href="../index.php">Voltar para o menu</a>
-            <a href="listar_contratos.php">Voltar para contratos</a>
+            <a href="detalhes_contrato.php">Voltar</a>
         </form>
     </section>
 
