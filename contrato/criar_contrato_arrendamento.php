@@ -14,13 +14,13 @@
     </header>
 
     <section class="form-section">
-        <form method="POST" action="processar_contrato_arrendamento.php"> <!-- Certifique-se que este arquivo exista -->
+        <form method="POST" action="contrato_arrendamento_script.php"> <!-- Certifique-se que este arquivo exista -->
             <h2>Dados do Contrato de Arrendamento</h2>
             
             <div class="form-group">
                 <div class="form-item">
                     <label for="propriedade">Propriedade:</label>
-                    <select id="propriedade" name="propriedade" required>
+                    <select id="propriedade" name="idpropriedade" required>
                         <option value="" disabled selected>Selecione uma propriedade</option>
                         <?php
                         // Conexão com o banco de dados
@@ -46,7 +46,22 @@
 
                 <div class="form-item">
                     <label for="arrendatario">Arrendatário:</label>
-                    <input type="text" id="arrendatario" name="arrendatario" required placeholder="Digite o nome do arrendatário">
+                    <select id="arrendatario" name="idarrendatario" required>
+                        <option value="" disabled selected>Selecione um arrendatário</option>
+                        <?php
+                        // Selecionar arrendatários disponíveis
+                        $sql = "SELECT idinquilino, nome_inquilino FROM inquilino"; // Ajuste a tabela de acordo com sua estrutura
+                        $result = $conn->query($sql);
+
+                        if ($result->num_rows > 0) {
+                            while ($row = $result->fetch_assoc()) {
+                                echo '<option value="' . $row['idinquilino'] . '">' . $row['nome_inquilino'] . '</option>';
+                            }
+                        } else {
+                            echo '<option value="">Nenhum arrendatário disponível</option>';
+                        }
+                        ?>
+                    </select>
                 </div>
             </div>
 
