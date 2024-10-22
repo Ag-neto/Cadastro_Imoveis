@@ -22,6 +22,10 @@
             <a href="criar_contrato_aluguel.php" class="selection-option">
                 <h2>Contrato de Aluguel</h2>
             </a>
+            
+            <a href="criar_contrato_arrendamento.php" class="selection-option"> <!-- Adicionado arrendamento -->
+                <h2>Contrato de Arrendamento</h2>
+            </a>
         </div>
     </section>
     <a href="listar_contratos.php">Voltar para o menu</a>   

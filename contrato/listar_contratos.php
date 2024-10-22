@@ -27,6 +27,7 @@
                     <option value="">Todos</option>
                     <option value="venda">Venda</option>
                     <option value="aluguel">Aluguel</option>
+                    <option value="arrendamento">Arrendamento</option> <!-- Adicionado arrendamento -->
                 </select>
             </div>
 
@@ -72,6 +73,16 @@
                     <td>01/05/2025</td>
                     <td>1.200,00</td>
                     <td><a href="detalhes_contrato.php?id=2">Ver Detalhes</a></td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>Arrendamento</td>
+                    <td>Sítio do Campo</td>
+                    <td>Roberto Santos</td>
+                    <td>15/06/2024</td>
+                    <td>15/06/2025</td>
+                    <td>2.500,00</td>
+                    <td><a href="detalhes_contrato.php?id=3">Ver Detalhes</a></td>
                 </tr>
                 <!-- Aqui vamos fazer um loop para listar os contratos dinâmicos -->
             </tbody>
