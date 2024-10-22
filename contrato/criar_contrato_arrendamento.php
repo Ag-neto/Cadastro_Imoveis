@@ -30,7 +30,7 @@
                         $sql = "SELECT p.idpropriedade, p.nome_propriedade 
                                 FROM propriedade p 
                                 JOIN situacao s ON p.id_situacao = s.id_situacao
-                                WHERE s.nome_situacao = 'Arrendamento'";
+                                WHERE s.nome_situacao = 'ARRENDAMENTO'";
                         $result = $conn->query($sql);
 
                         if ($result->num_rows > 0) {
@@ -38,8 +38,22 @@
                                 echo '<option value="' . $row['idpropriedade'] . '">' . $row['nome_propriedade'] . '</option>';
                             }
                         } else {
-                            echo '<option value="">Nenhuma propriedade disponível para arrendamento</option>';
+                            //echo '<option value="">Nenhuma propriedade disponível para arrendamento</option>';
                         }
+
+                        //Com esse script, é buscada toda propriedade no momento da criação do contrato de arrendamento, já a de cima, lista apenas as propriedades cadastradas especificamente para arrendamento. (Decidir depois de como vai ficar)
+
+                        //$sql = "SELECT * FROM propriedade";
+                        //$result = $conn->query($sql);
+
+                        //if ($result->num_rows > 0) {
+                            //while ($row = $result->fetch_assoc()) {
+                                //echo '<option value="' . $row['idpropriedade'] . '">' . $row['nome_propriedade'] . '</option>';
+                            //}
+                        //}else{
+                            //echo '<option value="">Nenhuma propriedade disponível para arrendamento</option>';
+                        //}
+
                         ?>
                     </select>
                 </div>
@@ -85,7 +99,7 @@
             </div>
 
             <button type="submit">Criar Contrato</button>
-            <a href="listar_contratos.php" class="btn-voltar">Voltar</a> <!-- Certifique-se que listar_contratos.php exista -->
+            <a href="tipo_contrato.php" class="btn-voltar">Voltar</a>
         </form>
     </section>
 

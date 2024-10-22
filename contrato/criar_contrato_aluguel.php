@@ -87,7 +87,7 @@
             <!-- Botão para criar contrato -->
             <button type="submit">Criar Contrato</button>
 
-            <a href="../index.php">Voltar para o menu</a>
+            <a href="tipo_contrato.php">Voltar</a>
         </form>
     </section>
 
