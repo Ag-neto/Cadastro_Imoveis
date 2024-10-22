@@ -21,9 +21,9 @@ while ($linha = mysqli_fetch_assoc($dados_movimentos)) {
     $movimentos[] = $linha;
 }
 
-// Busca o saldo acumulado
-$sql_saldo = "SELECT saldo_acumulado FROM conta_corrente_propriedade WHERE id_propriedade = $id_propriedade ORDER BY data_movimento DESC LIMIT 1";
-$dados_saldo = mysqli_query($conn, $sql_saldo);
+// Busca o saldo_acumulado anterior da propriedade em questão
+$sql_saldo_acumulado = "SELECT saldo_acumulado FROM conta_corrente_propriedade WHERE id_propriedade = $id_propriedade ORDER BY id_movimento DESC LIMIT 1";
+$dados_saldo = mysqli_query($conn, $sql_saldo_acumulado);
 $saldo_acumulado = mysqli_fetch_assoc($dados_saldo)['saldo_acumulado'] ?? 0;
 ?>
 
@@ -61,7 +61,7 @@ $saldo_acumulado = mysqli_fetch_assoc($dados_saldo)['saldo_acumulado'] ?? 0;
                 <?php if (count($movimentos) > 0): ?>
                     <?php foreach ($movimentos as $movimento): ?>
                         <tr>
-                            <td><?php echo $movimento['data_movimento']; ?></td>
+                            <td><?php echo DateTime::createFromFormat('Y-m-d', $movimento['data_movimento'])->format('d/m/Y'); ?></td>
                             <td><?php echo $movimento['descricao']; ?></td>
                             <td><?php echo ucfirst($movimento['tipo_movimento']); ?></td>
                             <td><?php echo number_format($movimento['valor'], 2, ',', '.'); ?></td>
@@ -74,8 +74,12 @@ $saldo_acumulado = mysqli_fetch_assoc($dados_saldo)['saldo_acumulado'] ?? 0;
                     </tr>
                 <?php endif; ?>
             </tbody>
+
         </table>
-        <a href="movimento_conta.php">Adicionar um movimento</a>
+        <a href="movimento_conta.php?id_propriedade=<?php echo $id_propriedade; ?>">Adicionar um movimento</a>
+        <a href="listar_propriedades.php">Voltar </a>
+
+
     </section>
 </body>
 
