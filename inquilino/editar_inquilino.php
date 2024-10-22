@@ -58,6 +58,21 @@ $data_nascimento = isset($linha['data_nascimento']) ? date('Y-m-d', strtotime($l
                     </div>
 
                     <div class="form-item">
+                        <label for="prosissao">Profissão:</label>
+                        <input type="text" id="profissao" name="profissao" value="<?php echo $linha['profissao']; ?>" required oninput="this.value = this.value.toUpperCase()">
+                    </div>
+
+                    <div class="form-item">
+                        <label for="nacionalidade">Nacionalidade:</label>
+                        <input type="text" id="nacionalidade" name="nacionalidade" value="<?php echo $linha['nacionalidade']; ?>" required oninput="this.value = this.value.toUpperCase()">
+                    </div>
+
+                    <div class="form-item">
+                        <label for="cep">CEP:</label>
+                        <input type="text" id="cep" name="cep" value="<?php echo $linha['cep']; ?>" required>
+                    </div>
+
+                    <div class="form-item">
                         <label for="localizacao">Cidade:</label>
                         <select name="id_localizacao" id="id_localizacao" required>
                             <option value="" disabled selected>Selecione</option>
@@ -131,6 +146,13 @@ $data_nascimento = isset($linha['data_nascimento']) ? date('Y-m-d', strtotime($l
                 value = value.replace(/(\d{3})(\d)/, '$1.$2'); // Adiciona ponto após o sexto dígito
                 value = value.replace(/(\d{3})(\d{1,2})$/, '$1-$2'); // Adiciona hífen antes dos dois últimos dígitos
                 e.target.value = value.substring(0, 14); // Limita o tamanho máximo a 14 caracteres
+            });
+
+            // Máscara para o campo CEP
+            document.getElementById('cep').addEventListener('input', function(e) {
+                let value = e.target.value.replace(/\D/g, ''); // Remove caracteres não numéricos
+                value = value.replace(/(\d{5})(\d)/, '$1-$2'); // Adiciona hífen após os cinco primeiros dígitos
+                e.target.value = value.substring(0, 10); // Limita o tamanho máximo a 10 caracteres
             });
         </script>
 

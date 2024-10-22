@@ -72,6 +72,15 @@ if (isset($_GET['id'])) {
             <div class="info-item">
                 <strong>Telefone:</strong> <span><?= htmlspecialchars($inquilino['telefone']); ?></span>
             </div>
+            <div class="info-item">
+                <strong>Profissão:</strong> <span><?= htmlspecialchars($inquilino['profissao']); ?></span>
+            </div>
+            <div class="info-item">
+                <strong>Nacionalidade:</strong> <span><?= htmlspecialchars($inquilino['nacionalidade']); ?></span>
+            </div>
+            <div class="info-item">
+                <strong>CEP:</strong> <span><?= htmlspecialchars($inquilino['cep']); ?></span>
+            </div>
         </div>
 
         <h2>Documentos Associados</h2>

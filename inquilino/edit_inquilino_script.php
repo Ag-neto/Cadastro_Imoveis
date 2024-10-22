@@ -24,8 +24,12 @@ require_once "../conexao/conexao.php";
     $rg_numero = $_POST['rg_numero'];
     $cpf_numero = $_POST['cpf_numero'];
     $telefone = $_POST['telefone'];
+    $profissao = $_POST['profissao'];
+    $nacionalidade = $_POST['nacionalidade'];
+    $cep = $_POST['cep'];
 
-    $sql = "UPDATE inquilino SET nome_inquilino = '$nome', endereco = '$endereco', id_localizacao = '$localidade', data_nascimento = '$data_nascimento', rg_numero = '$rg_numero', cpf_numero = '$cpf_numero', telefone = '$telefone' WHERE idinquilino = '$id'";
+
+    $sql = "UPDATE inquilino SET nome_inquilino = '$nome', endereco = '$endereco', id_localizacao = '$localidade', data_nascimento = '$data_nascimento', rg_numero = '$rg_numero', cpf_numero = '$cpf_numero', telefone = '$telefone', profissao = '$profissao', nacionalidade = '$nacionalidade', cep = '$cep' WHERE idinquilino = '$id'";
 
     if (mysqli_query($conn, $sql)) {
         echo "$nome alterado com sucesso!";

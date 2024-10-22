@@ -1,3 +1,33 @@
+<?php
+require_once "../conexao/conexao.php";
+
+    // Prepara a consulta SQL
+    $sql = "SELECT 
+    contratos.*,
+    propriedade.nome_propriedade,
+    propriedade.endereco AS endereco_propriedade,
+    inquilino.nome_inquilino,
+    inquilino.rg_numero,
+    inquilino.cpf_numero,
+    inquilino.profissao,
+    inquilino.nacionalidade,
+    inquilino.cep,
+    inquilino.endereco AS endereco_inquilino
+FROM contratos
+JOIN propriedade ON contratos.id_propriedade = propriedade.idpropriedade
+JOIN inquilino ON contratos.id_inquilino = inquilino.idinquilino
+WHERE contratos.id_contrato = 2";
+
+
+    $result = $conn->query($sql);
+        $contrato = $result->fetch_assoc();
+
+        // Formatação da data
+$vencimento = new DateTime($contrato['vencimento']);
+$dataFormatada = $vencimento->format('d/m/Y');
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -32,11 +62,11 @@
 
     <p>
         Pelo presente instrumento, ARNALDO DARDIS JÚNIOR, brasileiro, empresário, casado, RG n. 9 1171848-SSP/PB, CPF/MF n. 9 552.496.044-04, domiciliado na Rua Governador Antonio Mariz, nº 600, Bairro Portal do Sol, nesta cidade, adiante denominado LOCADOR; 
-        e Maria Patriciane Silva De Melo, brasileira, RG nº 3109561-SSP/PB, CPF/MF nº 059.380.574-77, domiciliada na Rua Goncalo de Sousa Pontes n 173, Cep. 58.051-790, adiante denominada LOCATÁRIA, têm entre si justo e contratado o que se segue:
+        e <?php echo $contrato['nome_inquilino']; ?>, <?php echo $contrato['nacionalidade']; ?>, RG nº <?php echo $contrato['rg_numero']; ?>, CPF/MF nº <?php echo $contrato['cpf_numero']; ?>, domiciliado(a) na <?php echo $contrato['endereco_inquilino']; ?>, Cep. <?php echo $contrato['cep']; ?>, adiante denominada LOCATÁRIO(A), têm entre si justo e contratado o que se segue:
     </p>
 
     <p>
-        1.0 O LOCADOR é senhor e legítimo proprietário da Loja nº 07 do Ed. PARTHENOM HOME BUSINESS, situado na Rua Josita Almeida, QD 82, LT 294, S/N, bairro Altiplano, Cabo Branco, nesta cidade, pelo que, através do presente contrato, LOCA-A o segundo nominada, aqui chamada LOCATÁRIA.
+        1.0 O LOCADOR é senhor e legítimo proprietário da <?php echo $contrato['nome_propriedade']; ?>, situado na <?php echo $contrato['endereco_propriedade']; ?>, nesta cidade, pelo que, através do presente contrato, LOCA-A o segundo nominada, aqui chamada LOCATÁRIA.
     </p>
 
     <p>
@@ -44,7 +74,8 @@
     </p>
 
     <p>
-        3.0 O valor mensal do aluguel, durante todo o período, será de R$ 2.500,00 (dois mil e quinhentos reais), que será pago todo o dia 30 de cada mês, na forma de 12 cheques pré-datados, sendo o primeiro para o dia 30 de novembro de 2017 e o último para o dia 30 de novembro de 2018.
+        3.0 O valor mensal do aluguel, durante todo o período, será de <?php echo ' R$ ' . number_format($contrato['valor_aluguel'], 2, ',', '.'); ?>
+        (Valor por extenso), que será pago todo o dia <?php echo $dataFormatada; ?> de cada mês, na forma de cheques pré-datados, sendo o primeiro para o dia <?php echo $dataFormatada; ?> e o último para o dia <?php echo $dataFormatada; ?>.
     </p>
 
     <p>
@@ -108,9 +139,9 @@
         <p>_______________________________</p>
         <p>ARNALDO DARDIS JÚNIOR</p>
         <br>
-        <p>LOCATÁRIA:</p>
+        <p>LOCATÁRIO(A):</p>
         <p>_______________________________</p>
-        <p>Maria Patriciane Silva De Melo</p>
+        <p><?php echo $contrato['nome_inquilino']; ?></p>
         <br>
         <p>TESTEMUNHAS:</p>
         <p>_______________________________</p>
