@@ -62,7 +62,7 @@ if (isset($_GET['id'])) {
         </div>
 
         <div class="acoes">
-            <button onclick="window.history.back();">Voltar</button>
+            <a href="listar_contratos.php">Voltar</a>
             <a href="editar_contrato.php?id=<?php echo $contrato['id_contrato']; ?>">Editar Contrato</a>
         </div>
     </section>
