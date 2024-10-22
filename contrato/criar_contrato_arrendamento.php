@@ -20,7 +20,28 @@
             <div class="form-group">
                 <div class="form-item">
                     <label for="propriedade">Propriedade:</label>
-                    <input type="text" id="propriedade" name="propriedade" required placeholder="Digite a propriedade">
+                    <select id="propriedade" name="propriedade" required>
+                        <option value="" disabled selected>Selecione uma propriedade</option>
+                        <?php
+                        // Conexão com o banco de dados
+                        require_once "../conexao/conexao.php";
+
+                        // Selecionar propriedades que estão na situação de Arrendamento
+                        $sql = "SELECT p.idpropriedade, p.nome_propriedade 
+                                FROM propriedade p 
+                                JOIN situacao s ON p.id_situacao = s.id_situacao
+                                WHERE s.nome_situacao = 'Arrendamento'"; // Filtra por situação de Arrendamento
+                        $result = $conn->query($sql);
+
+                        if ($result->num_rows > 0) {
+                            while ($row = $result->fetch_assoc()) {
+                                echo '<option value="' . $row['idpropriedade'] . '">' . $row['nome_propriedade'] . '</option>';
+                            }
+                        } else {
+                            echo '<option value="">Nenhuma propriedade disponível para arrendamento</option>';
+                        }
+                        ?>
+                    </select>
                 </div>
 
                 <div class="form-item">
