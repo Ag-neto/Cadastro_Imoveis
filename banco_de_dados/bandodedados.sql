@@ -35,7 +35,7 @@ CREATE TABLE `conta_corrente_propriedade` (
   PRIMARY KEY (`id_movimento`),
   KEY `id_propriedade` (`id_propriedade`),
   CONSTRAINT `conta_corrente_propriedade_ibfk_1` FOREIGN KEY (`id_propriedade`) REFERENCES `propriedade` (`idpropriedade`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -44,7 +44,7 @@ CREATE TABLE `conta_corrente_propriedade` (
 
 LOCK TABLES `conta_corrente_propriedade` WRITE;
 /*!40000 ALTER TABLE `conta_corrente_propriedade` DISABLE KEYS */;
-INSERT INTO `conta_corrente_propriedade` VALUES (9,8,'LIMPESA',500.00,'2024-10-21','despesa',-500.00),(10,8,'LIMPESA 2',500.00,'2024-10-21','despesa',-1000.00),(12,8,'LIMPESA 3',500.00,'2024-10-21','despesa',-1500.00),(13,8,'ALUGUEL PAGO',2000.00,'2024-10-21','receita',500.00);
+INSERT INTO `conta_corrente_propriedade` VALUES (9,8,'LIMPESA',500.00,'2024-10-21','despesa',-500.00),(10,8,'LIMPESA 2',500.00,'2024-10-21','despesa',-1000.00),(12,8,'LIMPESA 3',500.00,'2024-10-21','despesa',-1500.00),(13,8,'ALUGUEL PAGO',2000.00,'2024-10-21','receita',500.00),(14,11,'TESTE',100.00,'2024-10-22','despesa',-100100.00),(15,11,'TESTE',100.00,'2024-10-22','receita',-100000.00);
 /*!40000 ALTER TABLE `conta_corrente_propriedade` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -65,7 +65,10 @@ CREATE TABLE `contratos` (
   `data_final_residencia` date DEFAULT NULL,
   `periodo_residencia` int DEFAULT NULL,
   `tipo_contrato` varchar(45) DEFAULT NULL,
-  PRIMARY KEY (`id_contrato`)
+  PRIMARY KEY (`id_contrato`),
+  KEY `id_propriedade_idx` (`id_propriedade`),
+  KEY `id_inquilino_idx` (`id_inquilino`),
+  CONSTRAINT `id_propriedade` FOREIGN KEY (`id_propriedade`) REFERENCES `propriedade` (`idpropriedade`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -75,7 +78,7 @@ CREATE TABLE `contratos` (
 
 LOCK TABLES `contratos` WRITE;
 /*!40000 ALTER TABLE `contratos` DISABLE KEYS */;
-INSERT INTO `contratos` VALUES (2,8,3,1500,'2024-10-30','2024-10-01','2024-10-31',30,'ALUGUEL');
+INSERT INTO `contratos` VALUES (2,8,3,1650,'2024-10-30','2024-09-29','2024-10-31',32,'ALUGUEL');
 /*!40000 ALTER TABLE `contratos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -178,6 +181,9 @@ CREATE TABLE `inquilino` (
   `id_localizacao` int DEFAULT NULL,
   `data_nascimento` date DEFAULT NULL,
   `telefone` varchar(45) DEFAULT NULL,
+  `profissao` varchar(45) DEFAULT NULL,
+  `nacionalidade` varchar(45) DEFAULT NULL,
+  `cep` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`idinquilino`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -188,7 +194,7 @@ CREATE TABLE `inquilino` (
 
 LOCK TABLES `inquilino` WRITE;
 /*!40000 ALTER TABLE `inquilino` DISABLE KEYS */;
-INSERT INTO `inquilino` VALUES (3,'MICAEL LUCAS DIAS TAVARES','12.345.678-9','123.456.789-09','RUA NOVA, MATA REDONDA',1,'2005-01-20','(83) 98179-7415');
+INSERT INTO `inquilino` VALUES (3,'MICAEL LUCAS DIAS TAVARES','12.345.678-9','123.456.789-09','RUA NOVA, MATA REDONDA',1,'2005-01-20','(83) 98179-7415','DESENVOLVEDOR DE SOFTWARE','BRASILEIRO','58320-000');
 /*!40000 ALTER TABLE `inquilino` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -409,4 +415,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-10-22 14:04:58
+-- Dump completed on 2024-10-22 20:57:37
