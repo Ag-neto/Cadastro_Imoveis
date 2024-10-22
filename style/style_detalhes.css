@@ -57,6 +57,19 @@ button:hover {
     background-color: #218838;
 }
 
+a{
+    padding: 10px 20px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+}
+a:hover {
+    background-color: #218838;
+}
+
 footer {
     text-align: center;
     margin-top: 20px;
