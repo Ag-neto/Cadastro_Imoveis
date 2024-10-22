@@ -1,3 +1,20 @@
+<?php
+require_once "../conexao/conexao.php";
+
+$id = $_GET["id"] ?? "";
+
+$sql = "SELECT * FROM contratos WHERE id_contrato = $id";
+
+$dados = mysqli_query($conn, $sql);
+
+$linha = mysqli_fetch_assoc($dados);
+
+$data_inicial = isset($linha['data_inicio_residencia']) ? date('Y-m-d', strtotime($linha['data_inicio_residencia'])) : '';
+$data_final = isset($linha['data_final_residencia']) ? date('Y-m-d', strtotime($linha['data_final_residencia'])) : '';
+$vencimento = isset($linha['vencimento']) ? date('Y-m-d', strtotime($linha['vencimento'])) : '';
+?>
+
+
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -15,31 +32,58 @@
 
     <section class="form-section">
         <h2>Informações do Contrato</h2>
-        <form id="editar-contrato-form" action="atualizar_contrato.php" method="POST">
+        <form action="atualizar_contrato.php" method="POST">
 
             <!-- ID do contrato (oculto) -->
-            <input type="hidden" id="contrato_id" name="contrato_id" value="1"> <!-- Substitua pelo ID real -->
+            <input type="hidden" id="id_contrato" name="id_contrato" value="<?php echo $id ?>"> <!-- Substitua pelo ID real -->
 
             <!-- Escolha da propriedade -->
             <div class="form-group">
                 <div class="form-item">
                     <label for="propriedade">Propriedade:</label>
-                    <select id="propriedade" name="propriedade" required>
-                        <option value="1" selected>Apartamento Central</option>
-                        <option value="2">Casa Verde</option>
-                        <option value="3">Loja Comercial</option>
+                    <select id="id_propriedade" name="id_propriedade" required>
+                        <?php
+                        // Consulta para buscar todas as propriedades
+                        $sql = "SELECT p.idpropriedade, p.nome_propriedade 
+                                FROM propriedade p";
+
+                        // Executa a consulta
+                        $result = $conn->query($sql);
+
+                        // Loop pelos resultados
+                        while ($row = $result->fetch_assoc()) {
+                            // Verifica se o id_propriedade corresponde ao do contrato (se aplicável)
+                            $selected = isset($linha['id_propriedade']) && $row['idpropriedade'] == $linha['id_propriedade'] ? 'selected' : '';
+                            echo '<option value="' . $row['idpropriedade'] . '" ' . $selected . '>' . htmlspecialchars($row['nome_propriedade']) . '</option>';
+                        }
+
+                        ?>
                     </select>
+
                 </div>
             </div>
 
             <!-- Escolha do cliente -->
             <div class="form-group">
                 <div class="form-item">
-                    <label for="cliente">Cliente:</label>
-                    <select id="cliente" name="cliente" required>
-                        <option value="1" selected>João da Silva</option>
-                        <option value="2">Maria Oliveira</option>
-                        <option value="3">Carlos Pereira</option>
+                    <label for="id_inquilino">Inquilino:</label>
+                    <select id="id_inquilino" name="id_inquilino" required>
+                        <?php
+                        // Consulta para buscar todas as propriedades
+                        $sql = "SELECT i.idinquilino, i.nome_inquilino 
+                                FROM inquilino i";
+
+                        // Executa a consulta
+                        $result = $conn->query($sql);
+
+                        // Loop pelos resultados
+                        while ($row = $result->fetch_assoc()) {
+                            // Verifica se o id_inquilino corresponde ao do contrato (se aplicável)
+                            $selected = isset($linha['id_inquilino']) && $row['idinquilino'] == $linha['id_inquilino'] ? 'selected' : '';
+                            echo '<option value="' . $row['idinquilino'] . '" ' . $selected . '>' . htmlspecialchars($row['nome_inquilino']) . '</option>';
+                        }
+
+                        ?>
                     </select>
                 </div>
             </div>
@@ -48,17 +92,22 @@
             <div class="form-group">
                 <div class="form-item">
                     <label for="valor">Valor (R$):</label>
-                    <input type="number" id="valor" name="valor" placeholder="Ex: 450000" required value="450000">
+                    <input type="number" id="valor_aluguel" name="valor_aluguel" value="<?php echo $linha['valor_aluguel']; ?>">
                 </div>
 
                 <div class="form-item">
-                    <label for="data_inicio">Data de Início:</label>
-                    <input type="date" id="data_inicio" name="data_inicio" required value="2024-01-01">
+                    <label for="data_inicio">Data Inicial:</label>
+                    <input type="date" name="data_inicio" id="data_inicio" value="<?php echo $data_inicial; ?>">
                 </div>
 
                 <div class="form-item">
-                    <label for="data_fim">Data de Término:</label>
-                    <input type="date" id="data_fim" name="data_fim" value="2024-12-31">
+                    <label for="data_fim">Data Final:</label>
+                    <input type="date" name="data_fim" id="data_fim" value="<?php echo $data_final; ?>">
+                </div>
+
+                <div class="form-item">
+                    <label for="vencimento">Vencimento:</label>
+                    <input type="date" name="vencimento" id="vencimento" value="<?php echo $vencimento  ; ?>">
                 </div>
             </div>
 
