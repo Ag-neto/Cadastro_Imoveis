@@ -18,35 +18,6 @@ USE `controledepropriedade`;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `aluguel`
---
-
-DROP TABLE IF EXISTS `aluguel`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `aluguel` (
-  `idaluguel` int NOT NULL,
-  `id_propriedade` int DEFAULT NULL,
-  `id_inquilino` int DEFAULT NULL,
-  `valor_aluguel` float DEFAULT NULL,
-  `cobranca` datetime DEFAULT NULL,
-  `data_inicio_residencia` datetime DEFAULT NULL,
-  `data_final_residencia` datetime DEFAULT NULL,
-  `periodo_residencia` int DEFAULT NULL,
-  PRIMARY KEY (`idaluguel`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `aluguel`
---
-
-LOCK TABLES `aluguel` WRITE;
-/*!40000 ALTER TABLE `aluguel` DISABLE KEYS */;
-/*!40000 ALTER TABLE `aluguel` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `conta_corrente_propriedade`
 --
 
@@ -75,6 +46,37 @@ LOCK TABLES `conta_corrente_propriedade` WRITE;
 /*!40000 ALTER TABLE `conta_corrente_propriedade` DISABLE KEYS */;
 INSERT INTO `conta_corrente_propriedade` VALUES (9,8,'LIMPESA',500.00,'2024-10-21','despesa',-500.00),(10,8,'LIMPESA 2',500.00,'2024-10-21','despesa',-1000.00),(12,8,'LIMPESA 3',500.00,'2024-10-21','despesa',-1500.00),(13,8,'ALUGUEL PAGO',2000.00,'2024-10-21','receita',500.00);
 /*!40000 ALTER TABLE `conta_corrente_propriedade` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `contratos`
+--
+
+DROP TABLE IF EXISTS `contratos`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `contratos` (
+  `id_contrato` int NOT NULL AUTO_INCREMENT,
+  `id_propriedade` int DEFAULT NULL,
+  `id_inquilino` int DEFAULT NULL,
+  `valor_aluguel` float DEFAULT NULL,
+  `vencimento` date DEFAULT NULL,
+  `data_inicio_residencia` date DEFAULT NULL,
+  `data_final_residencia` date DEFAULT NULL,
+  `periodo_residencia` int DEFAULT NULL,
+  `tipo_contrato` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`id_contrato`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `contratos`
+--
+
+LOCK TABLES `contratos` WRITE;
+/*!40000 ALTER TABLE `contratos` DISABLE KEYS */;
+INSERT INTO `contratos` VALUES (2,8,3,1500,'2024-10-30','2024-10-01','2024-10-31',30,'ALUGUEL');
+/*!40000 ALTER TABLE `contratos` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -265,6 +267,30 @@ INSERT INTO `nivel_de_acesso` VALUES (1,'administrador'),(2,'usuario');
 UNLOCK TABLES;
 
 --
+-- Table structure for table `pagamento_aluguel`
+--
+
+DROP TABLE IF EXISTS `pagamento_aluguel`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `pagamento_aluguel` (
+  `idpagamento_aluguel` int NOT NULL AUTO_INCREMENT,
+  `id_contrato_aluguel` int DEFAULT NULL,
+  `status` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`idpagamento_aluguel`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `pagamento_aluguel`
+--
+
+LOCK TABLES `pagamento_aluguel` WRITE;
+/*!40000 ALTER TABLE `pagamento_aluguel` DISABLE KEYS */;
+/*!40000 ALTER TABLE `pagamento_aluguel` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `propriedade`
 --
 
@@ -294,7 +320,7 @@ CREATE TABLE `propriedade` (
 
 LOCK TABLES `propriedade` WRITE;
 /*!40000 ALTER TABLE `propriedade` DISABLE KEYS */;
-INSERT INTO `propriedade` VALUES (8,'MINHA LOJA',2,7,100,123456,'FAZENDA DA BOA ESPERANÇA ',1,'2024-10-14 00:00:00',NULL,NULL,NULL),(11,'PROPRIEDADE COMPLETA',2,2,500,100000,'FAZENDA DA BOA ESPERANÇA',1,'2024-10-14 00:00:00',NULL,NULL,NULL),(12,'LOJA ALI DA ESQUINA',3,2,123,123123,'FAZENDA DA BOA ESPERANÇA ',2,'2024-10-14 00:00:00',NULL,NULL,NULL),(15,'POLIMASSA ARGAMASSA LTDA',1,2,2000,10000000,'BR 101 - KM 106',8,'2024-10-15 00:00:00',NULL,NULL,NULL),(18,'PROPRIEDADE COM IMPOSTO',2,1,22,100000,'CENTRO',8,'2024-10-21 00:00:00','IPTU',1000,'Anual'),(19,'TESTE2',1,1,123,12312,'FAZENDA DA BOA ESPERANÇA ',1,'2024-10-21 00:00:00','ITR',122,'Mensal'),(20,'TEST3',3,1,123,122,'CENTRO, S/N',1,'2024-10-21 00:00:00','IPTU',123,'Nenhum');
+INSERT INTO `propriedade` VALUES (8,'MINHA LOJA',2,7,100,123456,'FAZENDA DA BOA ESPERANÇA ',1,'2024-10-14 00:00:00','IPTU',150,'Mensal'),(11,'PROPRIEDADE COMPLETA',2,2,500,100000,'FAZENDA DA BOA ESPERANÇA',1,'2024-10-14 00:00:00',NULL,NULL,NULL),(12,'LOJA ALI DA ESQUINA',3,2,123,123123,'FAZENDA DA BOA ESPERANÇA ',2,'2024-10-14 00:00:00',NULL,NULL,NULL),(15,'POLIMASSA ARGAMASSA LTDA',1,2,2000,10000000,'BR 101 - KM 106',8,'2024-10-15 00:00:00',NULL,NULL,NULL),(18,'PROPRIEDADE COM IMPOSTO',2,1,22,100000,'CENTRO',8,'2024-10-21 00:00:00','IPTU',1000,'Anual'),(19,'TESTE2',1,1,123,12312,'FAZENDA DA BOA ESPERANÇA ',1,'2024-10-21 00:00:00','ITR',122,'Mensal'),(20,'TEST3',3,1,123,122,'CENTRO, S/N',1,'2024-10-21 00:00:00','IPTU',123,'Nenhum');
 /*!40000 ALTER TABLE `propriedade` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -383,4 +409,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-10-21 23:24:04
+-- Dump completed on 2024-10-22 14:04:58
