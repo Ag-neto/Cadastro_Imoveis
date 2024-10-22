@@ -57,6 +57,7 @@ if ($result) {
                     <option value="">Todos</option>
                     <option value="venda">Venda</option>
                     <option value="aluguel">Aluguel</option>
+                    <option value="arrendamento">Arrendamento</option>
                 </select>
             </div>
             <button type="submit">Buscar</button>
@@ -73,7 +74,7 @@ if ($result) {
                     <th>ID</th>
                     <th>Tipo de Contrato</th>
                     <th>Propriedade</th>
-                    <th>Cliente</th>
+                    <th>Inquilino</th>
                     <th>Data Início</th>
                     <th>Data Fim</th>
                     <th>Valor (R$)</th>
