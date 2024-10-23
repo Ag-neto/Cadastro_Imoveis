@@ -1,8 +1,8 @@
 <?php
 require_once "../conexao/conexao.php";
 
-    // Prepara a consulta SQL
-    $sql = "SELECT 
+// Prepara a consulta SQL
+$sql = "SELECT 
     contratos.*,
     propriedade.nome_propriedade,
     propriedade.endereco AS endereco_propriedade,
@@ -18,15 +18,83 @@ JOIN propriedade ON contratos.id_propriedade = propriedade.idpropriedade
 JOIN inquilino ON contratos.id_inquilino = inquilino.idinquilino
 WHERE contratos.id_contrato = 2";
 
+$result = $conn->query($sql);
+$contrato = $result->fetch_assoc();
 
-    $result = $conn->query($sql);
-        $contrato = $result->fetch_assoc();
-
-        // Formatação da data
 $vencimento = new DateTime($contrato['vencimento']);
 $dataFormatada = $vencimento->format('d/m/Y');
+$dataFormatadaDia = $vencimento->format('d');
+
+
+// Verifica se as datas estão disponíveis
+if (!empty($contrato['data_inicio_residencia']) && !empty($contrato['data_final_residencia'])) {
+    $dataInicio = new DateTime($contrato['data_inicio_residencia']);
+    $dataFim = new DateTime($contrato['data_final_residencia']);
+
+    // Calcula a diferença entre as datas
+    $intervalo = $dataInicio->diff($dataFim);
+
+    // Formata a saída
+    $anos = $intervalo->y; // Quantidade de anos completos
+    $meses = $intervalo->m; // Meses restantes
+
+    if ($anos > 0) {
+        $tempo = $anos . " ano(s)";
+        if ($meses > 0) {
+            $tempo .= " e " . $meses . " mês(es)";
+        }
+    } else {
+        $tempo = $meses . " mês(es)";
+    }
+} else {
+    $tempo = "Período não disponível";
+}
+
+function valorPorExtenso($valor = 0)
+{
+    $singular = array("centavo", "real", "mil", "milhão", "bilhão", "trilhão", "quatrilhão");
+    $plural = array("centavos", "reais", "mil", "milhões", "bilhões", "trilhões", "quatrilhões");
+
+    $c = array("", "cem", "duzentos", "trezentos", "quatrocentos", "quinhentos", "seiscentos", "setecentos", "oitocentos", "novecentos");
+    $d = array("", "dez", "vinte", "trinta", "quarenta", "cinquenta", "sessenta", "setenta", "oitenta", "noventa");
+    $d10 = array("dez", "onze", "doze", "treze", "quatorze", "quinze", "dezesseis", "dezessete", "dezoito", "dezenove");
+    $u = array("", "um", "dois", "três", "quatro", "cinco", "seis", "sete", "oito", "nove");
+
+    $z = 0;
+    $valor = number_format($valor, 2, ".", ".");
+    $inteiro = explode(".", $valor);
+    for ($i = 0; $i < count($inteiro); $i++) {
+        for ($ii = strlen($inteiro[$i]); $ii < 3; $ii++) {
+            $inteiro[$i] = "0" . $inteiro[$i];
+        }
+    }
+
+    $fim = count($inteiro) - ($inteiro[count($inteiro) - 1] > 0 ? 1 : 2);
+    $rt = "";
+    for ($i = 0; $i < count($inteiro); $i++) {
+        $valor = $inteiro[$i];
+        $rc = (($valor > 100) && ($valor < 200)) ? "cento" : $c[$valor[0]];
+        $rd = ($valor[1] < 2) ? "" : $d[$valor[1]];
+        $ru = ($valor > 0) ? (($valor[1] == 1) ? $d10[$valor[2]] : $u[$valor[2]]) : "";
+
+        $r = $rc . (($rc && ($rd || $ru)) ? " e " : "") . $rd . (($rd && $ru) ? " e " : "") . $ru;
+        $t = count($inteiro) - 1 - $i;
+        $r .= $r ? " " . ($valor > 1 ? $plural[$t] : $singular[$t]) : "";
+        if ($valor == "000") $z++;
+        elseif ($z > 0) $z--;
+        if (($t == 1) && ($z > 0) && ($inteiro[0] > 0)) $r .= (($z > 1) ? " de " : "") . $plural[$t];
+        if ($r) $rt = $rt . ((($i > 0) && ($i <= $fim) && ($inteiro[0] > 0) && ($z < 1)) ? (($i < $fim) ? ", " : " e ") : " ") . $r;
+    }
+
+    return ucfirst(trim($rt));
+}
+
+// Utilização no código
+$valorAluguel = $contrato['valor_aluguel'];
+$valorPorExtenso = valorPorExtenso($valorAluguel);
 
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -41,16 +109,16 @@ $dataFormatada = $vencimento->format('d/m/Y');
             margin: 20px;
             line-height: 1.6;
         }
-        
+
         h1 {
             text-align: center;
             margin-bottom: 20px;
         }
-        
+
         p {
             margin: 10px 0;
         }
-        
+
         .signature {
             margin-top: 40px;
         }
@@ -61,7 +129,7 @@ $dataFormatada = $vencimento->format('d/m/Y');
     <h1>CONTRATO DE LOCAÇÃO DE IMÓVEL COMERCIAL</h1>
 
     <p>
-        Pelo presente instrumento, ARNALDO DARDIS JÚNIOR, brasileiro, empresário, casado, RG n. 9 1171848-SSP/PB, CPF/MF n. 9 552.496.044-04, domiciliado na Rua Governador Antonio Mariz, nº 600, Bairro Portal do Sol, nesta cidade, adiante denominado LOCADOR; 
+        Pelo presente instrumento, ARNALDO DARDIS JÚNIOR, brasileiro, empresário, casado, RG n. 9 1171848-SSP/PB, CPF/MF n. 9 552.496.044-04, domiciliado na Rua Governador Antonio Mariz, nº 600, Bairro Portal do Sol, nesta cidade, adiante denominado LOCADOR;
         e <?php echo $contrato['nome_inquilino']; ?>, <?php echo $contrato['nacionalidade']; ?>, RG nº <?php echo $contrato['rg_numero']; ?>, CPF/MF nº <?php echo $contrato['cpf_numero']; ?>, domiciliado(a) na <?php echo $contrato['endereco_inquilino']; ?>, Cep. <?php echo $contrato['cep']; ?>, adiante denominada LOCATÁRIO(A), têm entre si justo e contratado o que se segue:
     </p>
 
@@ -70,12 +138,12 @@ $dataFormatada = $vencimento->format('d/m/Y');
     </p>
 
     <p>
-        2.0 O prazo de locação é de 01 (um) ano, de 30 de novembro de 2017 a 30 de novembro de 2018. Ao final do contrato, a LOCATÁRIA se obriga a entregar o imóvel locado completamente desocupado e em perfeitas condições de higiene e uso para o LOCADOR.
+        2.0 O prazo de locação é de <?php echo $tempo; ?>, de <?php echo date('d/m/Y', strtotime($contrato['data_inicio_residencia'])); ?> a <?php echo date('d/m/Y', strtotime($contrato['data_final_residencia'])); ?>. Ao final do contrato, a LOCATÁRIA se obriga a entregar o imóvel locado completamente desocupado e em perfeitas condições de higiene e uso para o LOCADOR.
     </p>
 
     <p>
         3.0 O valor mensal do aluguel, durante todo o período, será de <?php echo ' R$ ' . number_format($contrato['valor_aluguel'], 2, ',', '.'); ?>
-        (Valor por extenso), que será pago todo o dia <?php echo $dataFormatada; ?> de cada mês, na forma de cheques pré-datados, sendo o primeiro para o dia <?php echo $dataFormatada; ?> e o último para o dia <?php echo $dataFormatada; ?>.
+        (<?php echo $valorPorExtenso; ?>), que será pago todo o dia <?php echo $dataFormatadaDia; ?> de cada mês, na forma de cheques pré-datados, sendo o primeiro para o dia <?php echo $dataFormatada; ?> e o último para o dia <?php echo $dataFormatada; ?>.
     </p>
 
     <p>
