@@ -91,7 +91,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
 
                 if ($tudo_certo) {
                     echo "<p>Todos os arquivos foram enviados!</p>";
-                    header('Location: detalhes_cliente.php?id=' . $id_ultimo_cliente);
+                    header('Location: listar_clientes.php');
                 } else {
                     echo "<p>Falha ao enviar 1 ou mais arquivos! Verifique o formato e tamanho (Max: 2MB)</p>";
                 }

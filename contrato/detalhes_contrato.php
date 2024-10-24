@@ -81,11 +81,11 @@ if (isset($_GET['id'])) {
         <p>&copy; 2024 - Sistema de Gestão de contratos</p>
     </footer>
 
-    <script>
+    <!--<script>
         function editarContrato(id) {
             window.location.href = `editar_contrato.php?id=${id}`;
         }
-    </script>
+    </script> -->
 </body>
 
 </html>

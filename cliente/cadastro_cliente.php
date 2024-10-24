@@ -44,6 +44,21 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                 </div>
 
                 <div class="form-item">
+                        <label for="prosissao">Profissão:</label>
+                        <input type="text" id="profissao" name="profissao" required oninput="this.value = this.value.toUpperCase()">
+                    </div>
+
+                    <div class="form-item">
+                        <label for="nacionalidade">Nacionalidade:</label>
+                        <input type="text" id="nacionalidade" name="nacionalidade" required oninput="this.value = this.value.toUpperCase()">
+                    </div>
+
+                    <div class="form-item">
+                        <label for="cep">CEP:</label>
+                        <input type="text" id="cep" name="cep" required>
+                    </div>
+
+                <div class="form-item">
                     <label for="localizacao">Cidade:</label>
                     <select name="id_localizacao" id="id_localizacao" required>
                         <option value="" disabled selected>Selecione</option>
@@ -116,6 +131,13 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
             value = value.replace(/(\d{3})(\d{1,2})$/, '$1-$2'); // Adiciona hífen antes dos dois últimos dígitos
             e.target.value = value.substring(0, 14); // Limita o tamanho máximo a 14 caracteres
         });
+
+        // Máscara para o campo CEP
+        document.getElementById('cep').addEventListener('input', function(e) {
+                let value = e.target.value.replace(/\D/g, ''); // Remove caracteres não numéricos
+                value = value.replace(/(\d{5})(\d)/, '$1-$2'); // Adiciona hífen após os cinco primeiros dígitos
+                e.target.value = value.substring(0, 10); // Limita o tamanho máximo a 10 caracteres
+            });
     </script>
 
 </body>
