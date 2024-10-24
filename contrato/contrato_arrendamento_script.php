@@ -32,14 +32,15 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                 $valor = $_POST['valor_arrendamento']; // Valor do arrendamento
                 $data_ini = $_POST['data_inicio'];
                 $data_fim = $_POST['data_termino'];
+                $dia_cobranca = $_POST['dia_cobranca']; // Captura o dia de cobrança
 
                 // Verifique se as variáveis necessárias não estão vazias
-                if (!empty($idpropriedade) && !empty($idarrendatario) && !empty($valor) && !empty($data_ini) && !empty($data_fim)) {
+                if (!empty($idpropriedade) && !empty($idarrendatario) && !empty($valor) && !empty($data_ini) && !empty($data_fim) && !empty($dia_cobranca)) {
                     $tipo_contrato = "ARRENDAMENTO";
 
                     // Crie o SQL para inserção
-                    $sql = "INSERT INTO contratos (id_propriedade, id_cliente, valor_aluguel, data_inicio_residencia, data_final_residencia, tipo_contrato) 
-                            VALUES ('$idpropriedade', '$idarrendatario', '$valor', '$data_ini', '$data_fim', '$tipo_contrato')";
+                    $sql = "INSERT INTO contratos (id_propriedade, id_cliente, valor_aluguel, data_inicio_residencia, data_final_residencia, tipo_contrato, vencimento) 
+                            VALUES ('$idpropriedade', '$idarrendatario', '$valor', '$data_ini', '$data_fim', '$tipo_contrato', '$dia_cobranca')";
 
                     if (mysqli_query($conn, $sql)) {
                         header('Location: listar_contratos.php');
