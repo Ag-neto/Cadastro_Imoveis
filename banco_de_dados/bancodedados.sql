@@ -18,6 +18,39 @@ USE `controledepropriedade`;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
+-- Table structure for table `cliente`
+--
+
+DROP TABLE IF EXISTS `cliente`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `cliente` (
+  `idcliente` int NOT NULL AUTO_INCREMENT,
+  `nome_cliente` varchar(45) DEFAULT NULL,
+  `rg_numero` varchar(45) DEFAULT NULL,
+  `cpf_numero` varchar(45) DEFAULT NULL,
+  `endereco` varchar(45) DEFAULT NULL,
+  `id_localizacao` int DEFAULT NULL,
+  `data_nascimento` date DEFAULT NULL,
+  `telefone` varchar(45) DEFAULT NULL,
+  `profissao` varchar(45) DEFAULT NULL,
+  `nacionalidade` varchar(45) DEFAULT NULL,
+  `cep` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`idcliente`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `cliente`
+--
+
+LOCK TABLES `cliente` WRITE;
+/*!40000 ALTER TABLE `cliente` DISABLE KEYS */;
+INSERT INTO `cliente` VALUES (3,'MICAEL LUCAS DIAS TAVARES','12.345.678-9','123.456.789-09','RUA NOVA, MATA REDONDA',1,'2005-01-20','(83) 98179-7415','DESENVOLVEDOR DE SOFTWARE','BRASILEIRO','58320-000');
+/*!40000 ALTER TABLE `cliente` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `conta_corrente_propriedade`
 --
 
@@ -35,7 +68,7 @@ CREATE TABLE `conta_corrente_propriedade` (
   PRIMARY KEY (`id_movimento`),
   KEY `id_propriedade` (`id_propriedade`),
   CONSTRAINT `conta_corrente_propriedade_ibfk_1` FOREIGN KEY (`id_propriedade`) REFERENCES `propriedade` (`idpropriedade`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -44,7 +77,7 @@ CREATE TABLE `conta_corrente_propriedade` (
 
 LOCK TABLES `conta_corrente_propriedade` WRITE;
 /*!40000 ALTER TABLE `conta_corrente_propriedade` DISABLE KEYS */;
-INSERT INTO `conta_corrente_propriedade` VALUES (9,8,'LIMPESA',500.00,'2024-10-21','despesa',-500.00),(10,8,'LIMPESA 2',500.00,'2024-10-21','despesa',-1000.00),(12,8,'LIMPESA 3',500.00,'2024-10-21','despesa',-1500.00),(13,8,'ALUGUEL PAGO',2000.00,'2024-10-21','receita',500.00),(14,11,'TESTE',100.00,'2024-10-22','despesa',-100100.00),(15,11,'TESTE',100.00,'2024-10-22','receita',-100000.00);
+INSERT INTO `conta_corrente_propriedade` VALUES (9,8,'LIMPESA',500.00,'2024-10-21','despesa',-500.00),(10,8,'LIMPESA 2',500.00,'2024-10-21','despesa',-1000.00),(12,8,'LIMPESA 3',500.00,'2024-10-21','despesa',-1500.00),(13,8,'ALUGUEL PAGO',2000.00,'2024-10-21','receita',500.00),(14,11,'TESTE',100.00,'2024-10-22','despesa',-100100.00),(15,11,'TESTE',100.00,'2024-10-22','receita',-100000.00),(16,11,'ALUGUEL PAGO',5000.00,'2024-10-23','receita',-95000.00);
 /*!40000 ALTER TABLE `conta_corrente_propriedade` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -56,20 +89,21 @@ DROP TABLE IF EXISTS `contratos`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `contratos` (
-  `id_contrato` int NOT NULL AUTO_INCREMENT,
+  `id_contratos` int NOT NULL AUTO_INCREMENT,
   `id_propriedade` int DEFAULT NULL,
-  `id_inquilino` int DEFAULT NULL,
+  `id_cliente` int DEFAULT NULL,
   `valor_aluguel` float DEFAULT NULL,
   `vencimento` date DEFAULT NULL,
   `data_inicio_residencia` date DEFAULT NULL,
   `data_final_residencia` date DEFAULT NULL,
   `periodo_residencia` int DEFAULT NULL,
   `tipo_contrato` varchar(45) DEFAULT NULL,
-  PRIMARY KEY (`id_contrato`),
+  PRIMARY KEY (`id_contratos`),
   KEY `id_propriedade_idx` (`id_propriedade`),
-  KEY `id_inquilino_idx` (`id_inquilino`),
-  CONSTRAINT `id_propriedade` FOREIGN KEY (`id_propriedade`) REFERENCES `propriedade` (`idpropriedade`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  KEY `id_cliente_idx` (`id_cliente`),
+  CONSTRAINT `fk_cliente_contrato` FOREIGN KEY (`id_cliente`) REFERENCES `cliente` (`idcliente`),
+  CONSTRAINT `fk_propriedade_contrato` FOREIGN KEY (`id_propriedade`) REFERENCES `propriedade` (`idpropriedade`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -78,37 +112,36 @@ CREATE TABLE `contratos` (
 
 LOCK TABLES `contratos` WRITE;
 /*!40000 ALTER TABLE `contratos` DISABLE KEYS */;
-INSERT INTO `contratos` VALUES (2,8,3,1650,'2024-10-30','2024-09-29','2024-10-31',32,'ALUGUEL');
 /*!40000 ALTER TABLE `contratos` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `documentacao_inquilino`
+-- Table structure for table `documentacao_cliente`
 --
 
-DROP TABLE IF EXISTS `documentacao_inquilino`;
+DROP TABLE IF EXISTS `documentacao_cliente`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `documentacao_inquilino` (
-  `iddocumentacao_inquilino` int NOT NULL AUTO_INCREMENT,
+CREATE TABLE `documentacao_cliente` (
+  `iddocumentacao_cliente` int NOT NULL AUTO_INCREMENT,
   `nome_doc` varchar(45) DEFAULT NULL,
   `path` varchar(100) DEFAULT NULL,
   `data_upload` date DEFAULT NULL,
-  `id_inquilino` int DEFAULT NULL,
-  PRIMARY KEY (`iddocumentacao_inquilino`),
-  KEY `id_inquilino_idx` (`id_inquilino`),
-  CONSTRAINT `id_inquilino` FOREIGN KEY (`id_inquilino`) REFERENCES `inquilino` (`idinquilino`)
+  `id_cliente` int DEFAULT NULL,
+  PRIMARY KEY (`iddocumentacao_cliente`),
+  KEY `id_cliente_idx` (`id_cliente`),
+  CONSTRAINT `id_cliente` FOREIGN KEY (`id_cliente`) REFERENCES `cliente` (`idcliente`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `documentacao_inquilino`
+-- Dumping data for table `documentacao_cliente`
 --
 
-LOCK TABLES `documentacao_inquilino` WRITE;
-/*!40000 ALTER TABLE `documentacao_inquilino` DISABLE KEYS */;
-INSERT INTO `documentacao_inquilino` VALUES (3,'Contrato 01-24.pdf','arquivos/670feefe73505.pdf','2024-10-16',3),(4,'Currículo.pdf','arquivos/670feefe74ffc.pdf','2024-10-16',3);
-/*!40000 ALTER TABLE `documentacao_inquilino` ENABLE KEYS */;
+LOCK TABLES `documentacao_cliente` WRITE;
+/*!40000 ALTER TABLE `documentacao_cliente` DISABLE KEYS */;
+INSERT INTO `documentacao_cliente` VALUES (3,'Contrato 01-24.pdf','arquivos/670feefe73505.pdf','2024-10-16',3),(4,'Currículo.pdf','arquivos/670feefe74ffc.pdf','2024-10-16',3);
+/*!40000 ALTER TABLE `documentacao_cliente` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -163,39 +196,6 @@ LOCK TABLES `estados` WRITE;
 /*!40000 ALTER TABLE `estados` DISABLE KEYS */;
 INSERT INTO `estados` VALUES (1,'Acre','AC'),(2,'Alagoas','AL'),(3,'Amapá','AP'),(4,'Amazonas','AM'),(5,'Bahia','BA'),(6,'Ceará','CE'),(7,'Distrito Federal','DF'),(8,'Espírito Santo','ES'),(9,'Goiás','GO'),(10,'Maranhão','MA'),(11,'Mato Grosso','MT'),(12,'Mato Grosso do Sul','MS'),(13,'Minas Gerais','MG'),(14,'Pará','PA'),(15,'Paraíba','PB'),(16,'Paraná','PR'),(17,'Pernambuco','PE'),(18,'Piauí','PI'),(19,'Rio de Janeiro','RJ'),(20,'Rio Grande do Norte','RN'),(21,'Rio Grande do Sul','RS'),(22,'Rondônia','RO'),(23,'Roraima','RR'),(24,'Santa Catarina','SC'),(25,'São Paulo','SP'),(26,'Sergipe','SE'),(27,'Tocantins','TO');
 /*!40000 ALTER TABLE `estados` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `inquilino`
---
-
-DROP TABLE IF EXISTS `inquilino`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `inquilino` (
-  `idinquilino` int NOT NULL AUTO_INCREMENT,
-  `nome_inquilino` varchar(45) DEFAULT NULL,
-  `rg_numero` varchar(45) DEFAULT NULL,
-  `cpf_numero` varchar(45) DEFAULT NULL,
-  `endereco` varchar(45) DEFAULT NULL,
-  `id_localizacao` int DEFAULT NULL,
-  `data_nascimento` date DEFAULT NULL,
-  `telefone` varchar(45) DEFAULT NULL,
-  `profissao` varchar(45) DEFAULT NULL,
-  `nacionalidade` varchar(45) DEFAULT NULL,
-  `cep` varchar(45) DEFAULT NULL,
-  PRIMARY KEY (`idinquilino`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `inquilino`
---
-
-LOCK TABLES `inquilino` WRITE;
-/*!40000 ALTER TABLE `inquilino` DISABLE KEYS */;
-INSERT INTO `inquilino` VALUES (3,'MICAEL LUCAS DIAS TAVARES','12.345.678-9','123.456.789-09','RUA NOVA, MATA REDONDA',1,'2005-01-20','(83) 98179-7415','DESENVOLVEDOR DE SOFTWARE','BRASILEIRO','58320-000');
-/*!40000 ALTER TABLE `inquilino` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -391,8 +391,10 @@ CREATE TABLE `usuarios` (
   `senha` varchar(200) NOT NULL,
   `idnivel_acesso` int NOT NULL,
   `email` varchar(100) NOT NULL,
-  `id_inquilino` int DEFAULT NULL,
-  PRIMARY KEY (`idusuario`)
+  `id_cliente` int DEFAULT NULL,
+  PRIMARY KEY (`idusuario`),
+  KEY `id_cliente_idx` (`id_cliente`),
+  CONSTRAINT `fk_cliente_usuario` FOREIGN KEY (`id_cliente`) REFERENCES `cliente` (`idcliente`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -415,4 +417,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-10-22 20:57:37
+-- Dump completed on 2024-10-24 15:58:51
