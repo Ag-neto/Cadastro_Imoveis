@@ -21,15 +21,15 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
 <body>
 
     <header>
-        <h1>Cadastro de cliente</h1>
+        <h1>Cadastro de Cliente</h1>
     </header>
 
     <section class="form-section">
-        <h2>Adicionar cliente</h2>
+        <h2>Adicionar Cliente</h2>
         <form action="cliente_script.php" method="POST">
             <div class="form-group">
                 <div class="form-item">
-                    <label for="nome_cliente">Nome do cliente:</label>
+                    <label for="nome_cliente">Nome do Cliente:</label>
                     <input type="text" id="nome_cliente" name="nome_cliente" placeholder="Ex: Rodrigo Carvalho" required oninput="this.value = this.value.toUpperCase()">
                 </div>
 

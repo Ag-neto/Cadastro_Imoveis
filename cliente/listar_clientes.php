@@ -20,25 +20,25 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
 
 <body>
     <header>
-        <h1>Lista de clientes</h1>
+        <h1>Lista de Clientes</h1>
     </header>
 
     <section class="form-section">
-        <h2>clientes</h2>
+        <h2>Clientes</h2>
         <form id="buscar-cliente-form" method="GET" action="listar_clientes.php">
             <div class="form-group">
-                <label for="busca">Buscar clientes:</label>
+                <label for="busca">Buscar Clientes:</label>
                 <input type="text" id="busca" name="busca" placeholder="Digite o NOME ou CPF">
             </div>
 
             <button type="submit">Buscar</button>
             <a href="../index.php" class="btn-voltar">Voltar</a>
-            <a href="cadastro_cliente.php" class="btn-criar_cliente">Cadastrar cliente</a>
+            <a href="cadastro_cliente.php" class="btn-criar_cliente">Cadastrar Cliente</a>
         </form>
     </section>
 
     <section class="clientes-lista">
-        <h2>clientes Cadastrados</h2>
+        <h2>Clientes Cadastrados</h2>
         <table>
             <thead>
                 <tr>

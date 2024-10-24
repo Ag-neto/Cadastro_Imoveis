@@ -57,7 +57,7 @@ if (isset($_GET['id'])) {
         <h2>Resumo do cliente</h2>
         <div class="propriedade-info">
             <div class="info-item">
-                <strong>ID do cliente:</strong> <span><?= $cliente['idcliente']; ?></span>
+                <strong>ID do Cliente:</strong> <span><?= $cliente['idcliente']; ?></span>
             </div>
             <div class="info-item">
                 <strong>Nome:</strong> <span><?= htmlspecialchars($cliente['nome_cliente']); ?></span>
@@ -116,7 +116,7 @@ if (isset($_GET['id'])) {
                 </ul>
                 <a href="add_documento_cli_existente.php?idcliente=<?= $id_cliente; ?>">Adicionar Documento (PDF)</a>
             <?php else: ?>
-                <p>Nenhum documento encontrado para este cliente.</p>
+                <p>Nenhum documento encontrado para este Cliente.</p>
                 <p>
                     Para vincular um documento, clique 
                     <a href="add_documento_cli_existente.php?idcliente=<?= $id_cliente; ?>">aqui (PDF)</a>
@@ -126,14 +126,14 @@ if (isset($_GET['id'])) {
 
         <div class="acoes">
         <button onclick="history.back()">Voltar</button>
-            <a href="editar_cliente.php?id=<?= $id_cliente; ?>">Editar cliente</a>
+            <a href="editar_cliente.php?id=<?= $id_cliente; ?>">Editar Cliente</a>
             <a id="deletar" href="deletar_cliente.php?id=<?= $id_cliente; ?>" 
-               onclick="return confirmarDeletar();">Deletar cliente</a>
+               onclick="return confirmarDeletar();">Deletar Cliente</a>
         </div>
 
         <script>
             function confirmarDeletar() {
-                return confirm("Você tem certeza que deseja deletar este cliente? Esta ação não poderá ser desfeita.");
+                return confirm("Você tem certeza que deseja deletar este Cliente? Esta ação não poderá ser desfeita.");
             }
         </script>
     </section>
