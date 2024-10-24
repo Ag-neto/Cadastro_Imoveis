@@ -1,5 +1,14 @@
 <?php
-require_once "../conexao/conexao.php"; // Conexão com o banco de dados
+session_start();
+require_once "../conexao/conexao.php";
+
+if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
+    header("Location: ../usuario/login.php");
+    exit;
+}
+?>
+
+<?php
 
 // Obtém o ID e garante que seja um número válido
 $id = isset($_GET["id"]) ? (int)$_GET["id"] : 0;

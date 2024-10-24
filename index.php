@@ -1,5 +1,36 @@
 <?php
+session_start();
 require_once "conexao/conexao.php";
+
+function hasAccessLevel($levels)
+{
+    global $conn;
+
+    // Assegura que $levels é um array (É om esse vetor que a gente separa quem enxerga determinadas funçÕes na tela)
+    if (!is_array($levels)) {
+        $levels = [$levels];
+    }
+
+    // Verifica se o usuário logado possui um dos níveis de acesso fornecidos
+    if (isset($_SESSION["idnivel_acesso"]) && in_array($_SESSION["idnivel_acesso"], $levels)) {
+        return true;
+    }
+
+    return false;
+}
+
+function logout()
+{
+    session_unset();
+    session_destroy();
+    header("Location: usuario/login.php");
+    exit;
+}
+
+if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
+    header("Location: usuario/login.php");
+    exit;
+}
 
 $limite = 6;
 
@@ -83,7 +114,7 @@ $result = $conn->query($sql);
                     <span class="txt-link">Finanças </span>
                 </a>
             </li>
-            
+
             <li class="item-menu">
                 <a href="contrato/listar_contratos.php">
                     <span class="icon"><i class="bi bi-archive-fill"></i></span>
@@ -97,12 +128,26 @@ $result = $conn->query($sql);
                     <span class="txt-link">Localidades</span>
                 </a>
             </li>
+
+            <li>
+                <form action="" method="POST" class="logout-form">
+                    <button type="submit" name="logout">
+                        <span class="icon"><i class="bi bi-box-arrow-right"></i></span>
+                        <span class="txt-link">Sair</span>
+                    </button>
+                    <?php
+                    if (isset($_POST["logout"])) {
+                        logout();
+                    }
+                    ?>
+                </form>
+            </li>
         </ul>
     </nav>
 
     <main>
         <section>
-            <h2>Bem-vindo ao Sistema de Gestão de Imóveis</h2>
+            <h2>Bem-vindo ao Sistema de Gestão de Propriedades</h2>
             <p>Escolha uma das opções no menu lateral para gerenciar suas propriedades e locações.</p>
         </section>
     </main>

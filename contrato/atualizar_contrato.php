@@ -1,3 +1,13 @@
+<?php
+session_start();
+require_once "../conexao/conexao.php";
+
+if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
+    header("Location: ../usuario/login.php");
+    exit;
+}
+?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -8,9 +18,6 @@
 </head>
 
 <body>
-    <?php
-    require_once "../conexao/conexao.php";
-    ?>
 
     <!DOCTYPE html>
     <html lang="pt_br">

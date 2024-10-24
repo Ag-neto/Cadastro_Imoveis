@@ -1,3 +1,13 @@
+<?php
+session_start();
+require_once "../conexao/conexao.php";
+
+if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
+    header("Location: ../usuario/login.php");
+    exit;
+}
+?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -11,8 +21,6 @@
     <main>
         <section class="form-section">
             <?php
-
-            require_once "../conexao/conexao.php";
 
             if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $id = $_POST['id_propriedade'];

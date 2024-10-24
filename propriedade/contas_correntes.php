@@ -1,5 +1,14 @@
 <?php
-require_once "../conexao/conexao.php"; // Sua conexão com o banco de dados
+session_start();
+require_once "../conexao/conexao.php";
+
+if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
+    header("Location: ../usuario/login.php");
+    exit;
+}
+?>
+
+<?php
 $id_propriedade = $_GET['id_propriedade'] ?? 1;
 
 // Busca o nome da propriedade e o valor adquirido

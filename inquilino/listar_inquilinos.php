@@ -1,3 +1,13 @@
+<?php
+session_start();
+require_once "../conexao/conexao.php";
+
+if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
+    header("Location: ../usuario/login.php");
+    exit;
+}
+?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -43,7 +53,6 @@
             </thead>
             <tbody>
                 <?php
-                require_once "../conexao/conexao.php";
 
                 // Verifica se há uma busca
                 $busca = isset($_GET['busca']) ? $_GET['busca'] : '';

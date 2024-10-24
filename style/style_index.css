@@ -214,6 +214,41 @@ h3 {
     font-size: 16px;
 }
 
+.logout-form{
+}
+
+.logout-form button {
+    background-color: #343a40;
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    transition: background-color 0.3s ease;
+}
+
+.logout-form button:hover {
+    background-color: #ff3333;
+}
+
+.logout-form .icon {
+    font-size: 25px;
+}
+
+.logout-form .txt-link {
+    font-weight: bold;
+    font-size: 1.5em;
+    margin-left: 15px;
+    color: white;
+}
+
+.logout-form button:focus {
+    outline: none;
+}
+
 
 /* Responsividade - ajustar para telas menores */
 @media (max-width: 768px) {

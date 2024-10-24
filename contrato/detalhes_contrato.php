@@ -1,5 +1,14 @@
 <?php
+session_start();
 require_once "../conexao/conexao.php";
+
+if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
+    header("Location: ../usuario/login.php");
+    exit;
+}
+?>
+
+<?php
 
 if (isset($_GET['id'])) {
     $id_contrato = intval($_GET['id']); // Converte para inteiro para evitar SQL Injection

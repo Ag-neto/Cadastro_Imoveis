@@ -1,3 +1,13 @@
+<?php
+session_start();
+require_once "../conexao/conexao.php";
+
+if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
+    header("Location: ../usuario/login.php");
+    exit;
+}
+?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -38,7 +48,6 @@
                     <select name="id_localizacao" id="id_localizacao" required>
                         <option value="" disabled selected>Selecione</option>
                         <?php
-                        require_once "../conexao/conexao.php";
 
                         $sql = "SELECT l.*, e.nome_estado, e.sigla 
                         FROM localizacao l 

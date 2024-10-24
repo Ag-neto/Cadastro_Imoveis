@@ -1,5 +1,14 @@
 <?php
+session_start();
 require_once "../conexao/conexao.php";
+
+if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
+    header("Location: ../usuario/login.php");
+    exit;
+}
+?>
+
+<?php
 
 // Inicializar a variável para armazenar a consulta
 $sql = "SELECT c.*, p.nome_propriedade, i.nome_inquilino FROM contratos c 

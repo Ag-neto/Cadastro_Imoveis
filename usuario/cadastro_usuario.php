@@ -1,6 +1,14 @@
 <?php
-require_once "../conexao/conexao.php"; // Conexão com o banco de dados
+session_start();
+require_once "../conexao/conexao.php";
 
+if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
+    header("Location: ../usuario/login.php");
+    exit;
+}
+?>
+
+<?php
 function gerarSenhaAleatoria($comprimento = 12) {
     return bin2hex(random_bytes($comprimento / 2));
 }
