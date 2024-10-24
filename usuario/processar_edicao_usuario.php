@@ -6,29 +6,36 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
     header("Location: ../usuario/login.php");
     exit;
 }
-?>
 
-<?php
+// Recebe os dados enviados pelo formulário
+$id = $_POST['idusuario'];
+$nome = $_POST['nome_usuario'];
+$email = $_POST['email'];
+$idnivel_acesso = intval($_POST['idnivel_acesso']);
+$id_inquilino = empty($_POST['id_inquilino']) ? null : intval($_POST['id_inquilino']); // Aqui alteramos para null
 
-// Verifica se o formulário foi enviado
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $idusuario = $_POST['idusuario'];
-    $nome_usuario = $_POST['nome_usuario'];
-    $email = $_POST['email'];
-    $idnivel_acesso = $_POST['idnivel_acesso'];
-    $id_cliente = !empty($_POST['id_cliente']) ? $_POST['id_cliente'] : null;
+$senha = $_POST['senha'] ?? '';
 
-    // Atualiza os dados do usuário no banco
+// Atualiza a senha apenas se o campo for preenchido
+if (!empty($senha)) {
+    $senha_hash = password_hash($senha, PASSWORD_DEFAULT);
     $sql = "UPDATE usuarios 
-            SET nome_usuario = ?, email = ?, idnivel_acesso = ?, id_cliente = ? 
+            SET nome_usuario = ?, email = ?, idnivel_acesso = ?, id_inquilino = ?, senha = ? 
             WHERE idusuario = ?";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("ssiii", $nome_usuario, $email, $idnivel_acesso, $id_cliente, $idusuario);
+    $stmt->bind_param("ssissi", $nome, $email, $idnivel_acesso, $id_inquilino, $senha_hash, $id);
+} else {
+    $sql = "UPDATE usuarios 
+            SET nome_usuario = ?, email = ?, idnivel_acesso = ?, id_inquilino = ? 
+            WHERE idusuario = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("ssisi", $nome, $email, $idnivel_acesso, $id_inquilino, $id);
+}
 
-    if ($stmt->execute()) {
-        echo '<script>alert("Usuário atualizado com sucesso!"); window.location.href="listar_usuarios.php";</script>';
-    } else {
-        echo '<script>alert("Erro ao atualizar usuário!"); window.history.back();</script>';
-    }
+// Executa a atualização
+if ($stmt->execute()) {
+    echo '<script>alert("Alterações salvas com sucesso!"); window.location.href="detalhes_usuario.php?id=' . $id . '";</script>';
+} else {
+    echo '<script>alert("Erro ao salvar alterações: ' . $conn->error . '"); window.location.href="editar_usuario.php?id=' . $id . '";</script>';
 }
 ?>

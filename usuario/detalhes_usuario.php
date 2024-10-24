@@ -20,9 +20,9 @@ if (empty($id)) {
 
 // Consulta SQL para buscar os dados do usuário pelo ID
 $sql = "SELECT u.idusuario, u.nome_usuario, u.email, u.idnivel_acesso, 
-               i.idcliente, i.nome_cliente 
+               i.idinquilino, i.nome_inquilino 
         FROM usuarios u 
-        LEFT JOIN cliente i ON u.id_cliente = i.idcliente 
+        LEFT JOIN inquilino i ON u.id_inquilino = i.idinquilino 
         WHERE u.idusuario = ?";
 
 $stmt = $conn->prepare($sql);
@@ -33,8 +33,8 @@ $result = $stmt->get_result();
 if ($result->num_rows > 0) {
     $usuario = $result->fetch_assoc();
     $nivelAcesso = ($usuario['idnivel_acesso'] == 1) ? 'Administrador' : 'Usuário Comum';
-    $clienteID = $usuario['idcliente'] ?? null;
-    $nomecliente = $usuario['nome_cliente'] ?? 'Não Associado';
+    $inquilinoID = $usuario['idinquilino'] ?? null;
+    $nomeInquilino = $usuario['nome_inquilino'] ?? 'Não Associado';
 } else {
     echo '<script>alert("Usuário não encontrado!"); window.location.href="listar_usuarios.php";</script>';
     exit();
@@ -62,10 +62,10 @@ if ($result->num_rows > 0) {
         <p><strong>E-mail:</strong> <?= htmlspecialchars($usuario['email']) ?></p>
         <p><strong>Nível de Acesso:</strong> <?= $nivelAcesso ?></p>
 
-        <p><strong>Cliente Associado:</strong> 
-            <?php if ($clienteID): ?>
-                <a href="../cliente/detalhes_cliente.php?id=<?= $clienteID ?>">
-                    <?= htmlspecialchars($nomecliente) ?>
+        <p><strong>Inquilino Associado:</strong> 
+            <?php if ($inquilinoID): ?>
+                <a href="../inquilino/detalhes_inquilino.php?id=<?= $inquilinoID ?>">
+                    <?= htmlspecialchars($nomeInquilino) ?>
                 </a>
             <?php else: ?>
                 Não Associado

@@ -6,9 +6,6 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
     header("Location: ../usuario/login.php");
     exit;
 }
-?>
-
-<?php
 
 // Obtém o ID do usuário pela query string
 $id = $_GET['id'] ?? '';
@@ -19,8 +16,7 @@ if (empty($id)) {
 }
 
 // Consulta para buscar os dados do usuário
-$sql_usuario = "SELECT idusuario, nome_usuario, email, idnivel_acesso, id_cliente 
-                FROM usuarios WHERE idusuario = ?";
+$sql_usuario = "SELECT idusuario, nome_usuario, email, idnivel_acesso, id_inquilino FROM usuarios WHERE idusuario = ?";
 $stmt = $conn->prepare($sql_usuario);
 $stmt->bind_param("i", $id);
 $stmt->execute();
@@ -33,9 +29,9 @@ if ($result->num_rows > 0) {
     exit();
 }
 
-// Consulta para buscar todos os clientes
-$sql_clientes = "SELECT idcliente, nome_cliente FROM cliente";
-$result_clientes = $conn->query($sql_clientes);
+// Consulta para buscar todos os inquilinos
+$sql_inquilinos = "SELECT idinquilino, nome_inquilino FROM inquilino";
+$result_inquilinos = $conn->query($sql_inquilinos);
 ?>
 
 <!DOCTYPE html>
@@ -68,16 +64,20 @@ $result_clientes = $conn->query($sql_clientes);
             <option value="2" <?= $usuario['idnivel_acesso'] == 2 ? 'selected' : '' ?>>Usuário Comum</option>
         </select>
 
-        <label for="id_cliente">Cliente Associado:</label>
-        <select id="id_cliente" name="id_cliente">
+        <label for="id_inquilino">Inquilino Associado:</label>
+        <select id="id_inquilino" name="id_inquilino">
             <option value="">Não Associado</option>
-            <?php while ($cliente = $result_clientes->fetch_assoc()): ?>
-                <option value="<?= $cliente['idcliente'] ?>" 
-                    <?= $cliente['idcliente'] == $usuario['id_cliente'] ? 'selected' : '' ?>>
-                    <?= htmlspecialchars($cliente['nome_cliente']) ?>
+            <?php while ($inquilino = $result_inquilinos->fetch_assoc()): ?>
+                <option value="<?= $inquilino['idinquilino'] ?>" 
+                    <?= $inquilino['idinquilino'] == $usuario['id_inquilino'] ? 'selected' : '' ?>>
+                    <?= htmlspecialchars($inquilino['nome_inquilino']) ?>
                 </option>
             <?php endwhile; ?>
         </select>
+
+        <!-- Campo para alterar a senha -->
+        <label for="senha">Nova Senha:</label>
+        <input type="password" id="senha" name="senha" placeholder="Deixe em branco para não alterar">
 
         <div class="usuario-acoes">
             <button type="submit">Salvar Alterações</button>

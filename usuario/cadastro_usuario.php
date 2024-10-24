@@ -18,7 +18,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $nome_usuario = $_POST['nome_usuario'];
     $email = $_POST['email'];
     $nivel_acesso = $_POST['nivel_acesso'];
-    $cliente = $_POST['cliente'] ?? null; // Pode ser null
+    $inquilino = $_POST['inquilino'] ?? null; // Pode ser null
 
     // Geração da senha aleatória
     $senha_aleatoria = gerarSenhaAleatoria();
@@ -32,12 +32,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($checkResult->num_rows > 0) {
         echo '<script>alert("E-mail já cadastrado!");</script>';
     } else {
-        // Definindo cliente como NULL se não selecionado
-        $cliente = empty($cliente) ? "NULL" : intval($cliente);
+        // Definindo inquilino como NULL se não selecionado
+        $inquilino = empty($inquilino) ? "NULL" : intval($inquilino);
 
         // Inserir dados no banco
-        $sql = "INSERT INTO usuarios (nome_usuario, email, senha, idnivel_acesso, id_cliente) 
-                VALUES ('$nome_usuario', '$email', '$senha_hash', '$nivel_acesso', $cliente)";
+        $sql = "INSERT INTO usuarios (nome_usuario, email, senha, idnivel_acesso, id_inquilino) 
+                VALUES ('$nome_usuario', '$email', '$senha_hash', '$nivel_acesso', $inquilino)";
 
         if ($conn->query($sql) === TRUE) {
             echo '<script>alert("Usuário cadastrado com sucesso! Senha enviada por e-mail."); window.location.href="listar_usuarios.php";</script>';
@@ -84,17 +84,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
 
             <div class="form-group">
-                <label for="cliente">Cliente Associado:</label>
-                <select id="cliente" name="cliente">
+                <label for="inquilino">Inquilino Associado:</label>
+                <select id="inquilino" name="inquilino">
                     <option value="">Nenhum</option>
                     <?php
-                    // Consulta para listar clientes
-                    $sql = "SELECT idcliente, nome_cliente FROM cliente";
+                    // Consulta para listar inquilinos
+                    $sql = "SELECT idinquilino, nome_inquilino FROM inquilino";
                     $result = $conn->query($sql);
 
                     if ($result->num_rows > 0) {
                         while ($row = $result->fetch_assoc()) {
-                            echo '<option value="' . $row['idcliente'] . '">' . htmlspecialchars($row['nome_cliente']) . '</option>';
+                            echo '<option value="' . $row['idinquilino'] . '">' . htmlspecialchars($row['nome_inquilino']) . '</option>';
                         }
                     }
                     ?>
@@ -112,13 +112,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </footer>
 
     <script>
-        const clienteSelect = document.getElementById('cliente');
+        const inquilinoSelect = document.getElementById('inquilino');
         const verDetalhesLink = document.getElementById('ver-detalhes');
 
-        clienteSelect.addEventListener('change', function() {
+        inquilinoSelect.addEventListener('change', function() {
             const selectedId = this.value;
             if (selectedId) {
-                verDetalhesLink.href = `detalhes_cliente.php?id=${selectedId}`;
+                verDetalhesLink.href = `detalhes_inquilino.php?id=${selectedId}`;
                 verDetalhesLink.style.display = 'inline';
             } else {
                 verDetalhesLink.style.display = 'none';

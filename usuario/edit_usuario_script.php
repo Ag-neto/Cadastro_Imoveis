@@ -15,7 +15,7 @@ $id = $_POST['idusuario'];
 $nome = $_POST['nome_usuario'];
 $email = $_POST['email'];
 $idnivel_acesso = intval($_POST['idnivel_acesso']);
-$id_cliente = empty($_POST['id_cliente']) ? 'NULL' : intval($_POST['id_cliente']);
+$id_inquilino = empty($_POST['id_inquilino']) ? 'NULL' : intval($_POST['id_inquilino']);
 $data_criacao = $_POST['data_criacao'];
 
 // Executa a atualização no banco
@@ -23,7 +23,7 @@ $sql = "UPDATE usuarios
         SET nome_usuario = '$nome', 
             email = '$email', 
             idnivel_acesso = $idnivel_acesso, 
-            id_cliente = $id_cliente, 
+            id_inquilino = $id_inquilino, 
             data_criacao = '$data_criacao' 
         WHERE idusuario = $id";
 
