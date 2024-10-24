@@ -15,22 +15,22 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Controle de Propriedade</title>
-    <link rel="stylesheet" href="../style/cadastro_inquilino.css">
+    <link rel="stylesheet" href="../style/cadastro_cliente.css">
 </head>
 
 <body>
 
     <header>
-        <h1>Cadastro de Inquilino</h1>
+        <h1>Cadastro de cliente</h1>
     </header>
 
     <section class="form-section">
-        <h2>Adicionar Inquilino</h2>
-        <form action="inquilino_script.php" method="POST">
+        <h2>Adicionar cliente</h2>
+        <form action="cliente_script.php" method="POST">
             <div class="form-group">
                 <div class="form-item">
-                    <label for="nome_inquilino">Nome do Inquilino:</label>
-                    <input type="text" id="nome_inquilino" name="nome_inquilino" placeholder="Ex: Rodrigo Carvalho" required oninput="this.value = this.value.toUpperCase()">
+                    <label for="nome_cliente">Nome do cliente:</label>
+                    <input type="text" id="nome_cliente" name="nome_cliente" placeholder="Ex: Rodrigo Carvalho" required oninput="this.value = this.value.toUpperCase()">
                 </div>
 
                 <div class="form-item">
@@ -82,7 +82,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
             </div>
 
             <button type="submit">Vincular Documentos</button>
-            <a href="listar_inquilinos.php">Voltar</a>
+            <a href="listar_clientes.php">Voltar</a>
         </form>
     </section>
     <footer>

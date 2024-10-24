@@ -22,21 +22,21 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
 
     $id = $_GET["id"] ?? "";
 
-    // Primeiro, deleta os registros da tabela documentacao_inquilino
-    $sql1 = "DELETE FROM documentacao_inquilino WHERE id_inquilino = $id";
+    // Primeiro, deleta os registros da tabela documentacao_cliente
+    $sql1 = "DELETE FROM documentacao_cliente WHERE id_cliente = $id";
 
     if (mysqli_query($conn, $sql1)) {
-        // Agora tenta deletar da tabela inquilino
-        $sql = "DELETE FROM inquilino WHERE idinquilino = $id";
+        // Agora tenta deletar da tabela cliente
+        $sql = "DELETE FROM cliente WHERE idcliente = $id";
 
         if (mysqli_query($conn, $sql)) {
             echo "Deletado com sucesso!";
-            header('Location: listar_inquilinos.php');
+            header('Location: listar_clientes.php');
         } else {
-            echo "Erro ao deletar da tabela inquilino: " . mysqli_error($conn);
+            echo "Erro ao deletar da tabela cliente: " . mysqli_error($conn);
         }
     } else {
-        echo "Erro ao deletar da tabela documentacao_inquilino: " . mysqli_error($conn);
+        echo "Erro ao deletar da tabela documentacao_cliente: " . mysqli_error($conn);
     }
     ?>
 </body>

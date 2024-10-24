@@ -23,7 +23,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
 
     <?php
     $id = $_POST['id'];
-    $nome = $_POST['nome_inquilino'];
+    $nome = $_POST['nome_cliente'];
     $endereco = $_POST['endereco'];
     $localidade = intval($_POST['id_localizacao']);
     $data_nascimento = $_POST['data_nascimento'];
@@ -35,11 +35,11 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
     $cep = $_POST['cep'];
 
 
-    $sql = "UPDATE inquilino SET nome_inquilino = '$nome', endereco = '$endereco', id_localizacao = '$localidade', data_nascimento = '$data_nascimento', rg_numero = '$rg_numero', cpf_numero = '$cpf_numero', telefone = '$telefone', profissao = '$profissao', nacionalidade = '$nacionalidade', cep = '$cep' WHERE idinquilino = '$id'";
+    $sql = "UPDATE cliente SET nome_cliente = '$nome', endereco = '$endereco', id_localizacao = '$localidade', data_nascimento = '$data_nascimento', rg_numero = '$rg_numero', cpf_numero = '$cpf_numero', telefone = '$telefone', profissao = '$profissao', nacionalidade = '$nacionalidade', cep = '$cep' WHERE idcliente = '$id'";
 
     if (mysqli_query($conn, $sql)) {
         echo "$nome alterado com sucesso!";
-        header('Location: detalhes_inquilino.php?id=' . $id);
+        header('Location: detalhes_cliente.php?id=' . $id);
     } else {
         echo "$nome não foi alterado!";
     }

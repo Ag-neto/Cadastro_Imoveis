@@ -74,12 +74,12 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                         <option value="" disabled selected>Selecione um arrendatário</option>
                         <?php
                         // Selecionar arrendatários disponíveis
-                        $sql = "SELECT idinquilino, nome_inquilino FROM inquilino"; // Ajuste a tabela de acordo com sua estrutura
+                        $sql = "SELECT idcliente, nome_cliente FROM cliente"; // Ajuste a tabela de acordo com sua estrutura
                         $result = $conn->query($sql);
 
                         if ($result->num_rows > 0) {
                             while ($row = $result->fetch_assoc()) {
-                                echo '<option value="' . $row['idinquilino'] . '">' . $row['nome_inquilino'] . '</option>';
+                                echo '<option value="' . $row['idcliente'] . '">' . $row['nome_cliente'] . '</option>';
                             }
                         } else {
                             echo '<option value="">Nenhum arrendatário disponível</option>';

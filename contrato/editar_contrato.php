@@ -75,21 +75,21 @@ $vencimento = isset($linha['vencimento']) ? date('Y-m-d', strtotime($linha['venc
             <!-- Escolha do cliente -->
             <div class="form-group">
                 <div class="form-item">
-                    <label for="id_inquilino">Inquilino:</label>
-                    <select id="id_inquilino" name="id_inquilino" required>
+                    <label for="id_cliente">Cliente:</label>
+                    <select id="id_cliente" name="id_cliente" required>
                         <?php
                         // Consulta para buscar todas as propriedades
-                        $sql = "SELECT i.idinquilino, i.nome_inquilino 
-                                FROM inquilino i";
+                        $sql = "SELECT i.idcliente, i.nome_cliente 
+                                FROM cliente i";
 
                         // Executa a consulta
                         $result = $conn->query($sql);
 
                         // Loop pelos resultados
                         while ($row = $result->fetch_assoc()) {
-                            // Verifica se o id_inquilino corresponde ao do contrato (se aplicável)
-                            $selected = isset($linha['id_inquilino']) && $row['idinquilino'] == $linha['id_inquilino'] ? 'selected' : '';
-                            echo '<option value="' . $row['idinquilino'] . '" ' . $selected . '>' . htmlspecialchars($row['nome_inquilino']) . '</option>';
+                            // Verifica se o id_cliente corresponde ao do contrato (se aplicável)
+                            $selected = isset($linha['id_cliente']) && $row['idcliente'] == $linha['id_cliente'] ? 'selected' : '';
+                            echo '<option value="' . $row['idcliente'] . '" ' . $selected . '>' . htmlspecialchars($row['nome_cliente']) . '</option>';
                         }
 
                         ?>

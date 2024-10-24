@@ -38,7 +38,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                     $tipo_contrato = "ARRENDAMENTO";
 
                     // Crie o SQL para inserção
-                    $sql = "INSERT INTO contratos (id_propriedade, id_inquilino, valor_aluguel, data_inicio_residencia, data_final_residencia, tipo_contrato) 
+                    $sql = "INSERT INTO contratos (id_propriedade, id_cliente, valor_aluguel, data_inicio_residencia, data_final_residencia, tipo_contrato) 
                             VALUES ('$idpropriedade', '$idarrendatario', '$valor', '$data_ini', '$data_fim', '$tipo_contrato')";
 
                     if (mysqli_query($conn, $sql)) {

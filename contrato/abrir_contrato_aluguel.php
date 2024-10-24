@@ -13,16 +13,16 @@ $sql = "SELECT
     contratos.*,
     propriedade.nome_propriedade,
     propriedade.endereco AS endereco_propriedade,
-    inquilino.nome_inquilino,
-    inquilino.rg_numero,
-    inquilino.cpf_numero,
-    inquilino.profissao,
-    inquilino.nacionalidade,
-    inquilino.cep,
-    inquilino.endereco AS endereco_inquilino
+    cliente.nome_cliente,
+    cliente.rg_numero,
+    cliente.cpf_numero,
+    cliente.profissao,
+    cliente.nacionalidade,
+    cliente.cep,
+    cliente.endereco AS endereco_cliente
 FROM contratos
 JOIN propriedade ON contratos.id_propriedade = propriedade.idpropriedade
-JOIN inquilino ON contratos.id_inquilino = inquilino.idinquilino
+JOIN cliente ON contratos.id_cliente = cliente.idcliente
 WHERE contratos.id_contrato = 2";
 
 $result = $conn->query($sql);
@@ -137,7 +137,7 @@ $valorPorExtenso = valorPorExtenso($valorAluguel);
 
     <p>
         Pelo presente instrumento, ARNALDO DARDIS JÚNIOR, brasileiro, empresário, casado, RG n. 9 1171848-SSP/PB, CPF/MF n. 9 552.496.044-04, domiciliado na Rua Governador Antonio Mariz, nº 600, Bairro Portal do Sol, nesta cidade, adiante denominado LOCADOR;
-        e <?php echo $contrato['nome_inquilino']; ?>, <?php echo $contrato['nacionalidade']; ?>, RG nº <?php echo $contrato['rg_numero']; ?>, CPF/MF nº <?php echo $contrato['cpf_numero']; ?>, domiciliado(a) na <?php echo $contrato['endereco_inquilino']; ?>, Cep. <?php echo $contrato['cep']; ?>, adiante denominada LOCATÁRIO(A), têm entre si justo e contratado o que se segue:
+        e <?php echo $contrato['nome_cliente']; ?>, <?php echo $contrato['nacionalidade']; ?>, RG nº <?php echo $contrato['rg_numero']; ?>, CPF/MF nº <?php echo $contrato['cpf_numero']; ?>, domiciliado(a) na <?php echo $contrato['endereco_cliente']; ?>, Cep. <?php echo $contrato['cep']; ?>, adiante denominada LOCATÁRIO(A), têm entre si justo e contratado o que se segue:
     </p>
 
     <p>
@@ -216,7 +216,7 @@ $valorPorExtenso = valorPorExtenso($valorAluguel);
         <br>
         <p>LOCATÁRIO(A):</p>
         <p>_______________________________</p>
-        <p><?php echo $contrato['nome_inquilino']; ?></p>
+        <p><?php echo $contrato['nome_cliente']; ?></p>
         <br>
         <p>TESTEMUNHAS:</p>
         <p>_______________________________</p>

@@ -41,7 +41,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
         <table class="rental-table">
             <thead>
                 <tr>
-                    <th>Inquilino</th>
+                    <th>Cliente</th>
                     <th>Valor da Parcela</th>
                     <th>Data de Vencimento</th>
                     <th>Status do Pagamento</th>

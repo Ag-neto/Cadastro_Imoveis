@@ -29,7 +29,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
 
             if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $idpropriedade = $_POST['idpropriedade'];
-                $idinquilino = $_POST['idinquilino'];
+                $idcliente = $_POST['idcliente'];
                 $valor = $_POST['valor'];
                 $data_ini = $_POST['data_inicio'];
                 $data_fim = $_POST['data_fim'];
@@ -48,7 +48,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                 $periodo_residencia = $diferenca->days;
 
 
-                $sql = "INSERT INTO contratos (id_propriedade, id_inquilino, valor_aluguel, data_inicio_residencia, data_final_residencia, vencimento, periodo_residencia, tipo_contrato) VALUES ('$idpropriedade', '$idinquilino', '$valor', '$data_ini', '$data_fim', '$cobranca', '$periodo_residencia', '$tipo_contrato')";
+                $sql = "INSERT INTO contratos (id_propriedade, id_cliente, valor_aluguel, data_inicio_residencia, data_final_residencia, vencimento, periodo_residencia, tipo_contrato) VALUES ('$idpropriedade', '$idcliente', '$valor', '$data_ini', '$data_fim', '$cobranca', '$periodo_residencia', '$tipo_contrato')";
 
                 if (mysqli_query($conn, $sql)) {
                     header('Location: listar_contratos.php');

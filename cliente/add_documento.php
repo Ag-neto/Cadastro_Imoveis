@@ -21,11 +21,11 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
 
 <body>
     <header>
-        <h1>Cadastro de inquilino</h1>
+        <h1>Cadastro de cliente</h1>
     </header>
     <section class="form-section">
-        <h2>Adicionar Documentação do inquilino</h2>
-        <form enctype="multipart/form-data" method="POST" action="add_documento_inq.php">
+        <h2>Adicionar Documentação do cliente</h2>
+        <form enctype="multipart/form-data" method="POST" action="add_documento_cli.php">
             <label for="documentos">Anexe os documentos (CPF e RG) em formato PDF:</label>
             <p><input multiple type="file" name="documentos[]" id="documentos"></p>
             <button type="submit">Salvar</button>

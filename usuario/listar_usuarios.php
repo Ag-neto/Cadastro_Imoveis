@@ -46,7 +46,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                     <th>Nome</th>
                     <th>E-mail</th>
                     <th>Nível de Acesso</th>
-                    <th>Inquilino Associado</th>
+                    <th>Cliente Associado</th>
                     <th>Ações</th>
                 </tr>
             </thead>
@@ -59,9 +59,9 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
 
                 // Consulta SQL para buscar usuários
                 $sql = "SELECT u.idusuario, u.nome_usuario, u.email, 
-                               u.idnivel_acesso, i.nome_inquilino 
+                               u.idnivel_acesso, i.nome_cliente 
                         FROM usuarios u 
-                        LEFT JOIN inquilino i ON u.id_inquilino = i.idinquilino";
+                        LEFT JOIN cliente i ON u.id_cliente = i.idcliente";
 
                 if (!empty($busca)) {
                     $sql .= " WHERE u.nome_usuario LIKE '%$busca%' 
@@ -73,14 +73,14 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                 if ($result->num_rows > 0) {
                     while ($row = $result->fetch_assoc()) {
                         $nivelAcesso = ($row['idnivel_acesso'] == 1) ? 'Administrador' : 'Usuário Comum';
-                        $nomeInquilino = $row['nome_inquilino'] ?? 'Não Associado';
+                        $nomecliente = $row['nome_cliente'] ?? 'Não Associado';
 
                         echo '<tr>';
                         echo '<td>' . $row['idusuario'] . '</td>';
                         echo '<td>' . $row['nome_usuario'] . '</td>';
                         echo '<td>' . $row['email'] . '</td>';
                         echo '<td>' . $nivelAcesso . '</td>';
-                        echo '<td>' . $nomeInquilino . '</td>';
+                        echo '<td>' . $nomecliente . '</td>';
                         echo '<td>
                                 <a href="detalhes_usuario.php?id=' . $row['idusuario'] . '">Ver Detalhes</a> |
                                 <a href="deletar_usuario.php?id=' . $row['idusuario'] . '" 

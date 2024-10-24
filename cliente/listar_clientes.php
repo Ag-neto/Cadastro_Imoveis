@@ -14,31 +14,31 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lista de inquilinos</title>
-    <link rel="stylesheet" href="../style/listar_inquilino.css">
+    <title>Lista de clientes</title>
+    <link rel="stylesheet" href="../style/listar_cliente.css">
 </head>
 
 <body>
     <header>
-        <h1>Lista de Inquilinos</h1>
+        <h1>Lista de clientes</h1>
     </header>
 
     <section class="form-section">
-        <h2>Inquilinos</h2>
-        <form id="buscar-inquilino-form" method="GET" action="listar_inquilinos.php">
+        <h2>clientes</h2>
+        <form id="buscar-cliente-form" method="GET" action="listar_clientes.php">
             <div class="form-group">
-                <label for="busca">Buscar Inquilinos:</label>
+                <label for="busca">Buscar clientes:</label>
                 <input type="text" id="busca" name="busca" placeholder="Digite o NOME ou CPF">
             </div>
 
             <button type="submit">Buscar</button>
             <a href="../index.php" class="btn-voltar">Voltar</a>
-            <a href="cadastro_inquilo.php" class="btn-criar_inquilino">Cadastrar Inquilino</a>
+            <a href="cadastro_cliente.php" class="btn-criar_cliente">Cadastrar cliente</a>
         </form>
     </section>
 
-    <section class="inquilinos-lista">
-        <h2>Inquilinos Cadastrados</h2>
+    <section class="clientes-lista">
+        <h2>clientes Cadastrados</h2>
         <table>
             <thead>
                 <tr>
@@ -59,31 +59,31 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                 $busca = $conn->real_escape_string($busca); // Evita SQL Injection
 
                 // Prepara a consulta SQL
-                $sql = "SELECT * FROM inquilino";
+                $sql = "SELECT * FROM cliente";
 
                 // Adiciona condição de busca se houver
                 if (!empty($busca)) {
-                    $sql .= " WHERE nome_inquilino LIKE '%$busca%' 
+                    $sql .= " WHERE nome_cliente LIKE '%$busca%' 
                                OR cpf_numero LIKE '%$busca%'";
                 }
 
                 $result = $conn->query($sql);
 
                 if ($result->num_rows > 0) {
-                    // Loop para listar as inquilinos
+                    // Loop para listar as clientes
                     while ($row = $result->fetch_assoc()) {
                         echo '<tr>';
-                        echo '<td>' . $row['idinquilino'] . '</td>'; // Supondo que o ID da inquilino seja 'id_inquilino'
-                        echo '<td>' . $row['nome_inquilino'] . '</td>';
+                        echo '<td>' . $row['idcliente'] . '</td>'; // Supondo que o ID da cliente seja 'id_cliente'
+                        echo '<td>' . $row['nome_cliente'] . '</td>';
                         echo '<td>' . $row['telefone'] . '</td>';
                         echo '<td>' . $row['cpf_numero'] .'</td>';
                         echo '<td>' . $row['endereco'] . '</td>';
                         echo '<td>' . date('d/m/Y', strtotime($row['data_nascimento'])) . '</td>';
-                        echo '<td><a href="detalhes_inquilino.php?id=' . $row['idinquilino'] . '">Ver Detalhes</a></td>';
+                        echo '<td><a href="detalhes_cliente.php?id=' . $row['idcliente'] . '">Ver Detalhes</a></td>';
                         echo '</tr>';
                     }
                 } else {
-                    echo '<tr><td colspan="6">Nenhum inquilino encontrado.</td></tr>';
+                    echo '<tr><td colspan="6">Nenhum cliente encontrado.</td></tr>';
                 }
                 ?>
             </tbody>
@@ -94,7 +94,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
         <p>&copy; 2024 - Sistema de Gestão de Propriedades</p>
     </footer>
 
-    <script src="../scripts/script_inquilinos.js"></script>
+    <script src="../scripts/script_clientes.js"></script>
 </body>
 
 </html>

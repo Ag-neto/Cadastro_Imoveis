@@ -10,7 +10,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
 
 <?php
 
-$id = $_GET["idinquilino"] ?? "";
+$id = $_GET["idcliente"] ?? "";
 ?>
 
 <!DOCTYPE html>
@@ -26,15 +26,15 @@ $id = $_GET["idinquilino"] ?? "";
 
 <body>
 <header>
-        <h1>Documentação do Inquilino</h1>
+        <h1>Documentação do cliente</h1>
     </header>
     <section class="form-section">
-    <h2>Adicionar Documentação do Inquilino</h2>
-    <form enctype="multipart/form-data" method="POST" action="add_doc_inq_existente_script.php">
-        <label for="documentos">Insira as documentações do inquilino aqui:</label>
+    <h2>Adicionar Documentação do cliente</h2>
+    <form enctype="multipart/form-data" method="POST" action="add_doc_cli_existente_script.php">
+        <label for="documentos">Insira as documentações do cliente aqui:</label>
         <p><input multiple type="file" name="documentos[]" id="documentos"></p>
         <button type="submit">Salvar</button>
-        <input type="hidden" name="idinquilino" value="<?php echo $id;?>">
+        <input type="hidden" name="idcliente" value="<?php echo $id;?>">
     </form>
     </section>
 </body>

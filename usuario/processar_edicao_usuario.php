@@ -16,14 +16,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $nome_usuario = $_POST['nome_usuario'];
     $email = $_POST['email'];
     $idnivel_acesso = $_POST['idnivel_acesso'];
-    $id_inquilino = !empty($_POST['id_inquilino']) ? $_POST['id_inquilino'] : null;
+    $id_cliente = !empty($_POST['id_cliente']) ? $_POST['id_cliente'] : null;
 
     // Atualiza os dados do usuário no banco
     $sql = "UPDATE usuarios 
-            SET nome_usuario = ?, email = ?, idnivel_acesso = ?, id_inquilino = ? 
+            SET nome_usuario = ?, email = ?, idnivel_acesso = ?, id_cliente = ? 
             WHERE idusuario = ?";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("ssiii", $nome_usuario, $email, $idnivel_acesso, $id_inquilino, $idusuario);
+    $stmt->bind_param("ssiii", $nome_usuario, $email, $idnivel_acesso, $id_cliente, $idusuario);
 
     if ($stmt->execute()) {
         echo '<script>alert("Usuário atualizado com sucesso!"); window.location.href="listar_usuarios.php";</script>';

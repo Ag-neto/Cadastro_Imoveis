@@ -35,7 +35,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
         <?php
         $id = $_POST['id_contrato'];
         $id_propriedade = $_POST['id_propriedade'];
-        $id_inquilino = $_POST['id_inquilino'];
+        $id_cliente = $_POST['id_cliente'];
         $valor_aluguel = $_POST['valor_aluguel'];
         $data_ini = $_POST['data_inicio'];
         $data_fim = $_POST['data_fim'];
@@ -52,7 +52,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
          $periodo_residencia = $diferenca->days;
 
 
-        $sql = "UPDATE contratos SET id_propriedade = '$id_propriedade', id_inquilino = '$id_inquilino', valor_aluguel = '$valor_aluguel', data_inicio_residencia = '$data_ini', vencimento = '$vencimento', data_final_residencia = '$data_fim', periodo_residencia = '$periodo_residencia' WHERE id_contrato = '$id'";
+        $sql = "UPDATE contratos SET id_propriedade = '$id_propriedade', id_cliente = '$id_cliente', valor_aluguel = '$valor_aluguel', data_inicio_residencia = '$data_ini', vencimento = '$vencimento', data_final_residencia = '$data_fim', periodo_residencia = '$periodo_residencia' WHERE id_contrato = '$id'";
 
         if (mysqli_query($conn, $sql)) {
             echo " alterado com sucesso!";

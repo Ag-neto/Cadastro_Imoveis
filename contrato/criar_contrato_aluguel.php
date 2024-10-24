@@ -50,20 +50,20 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                 </div>
             </div>
 
-            <!-- Escolha do inquilino -->
+            <!-- Escolha do cliente -->
             <div class="form-group">
                 <div class="form-item">
-                    <label for="inquilino">Inquilino:</label>
-                    <select name="idinquilino" id="idinquilino" required>
+                    <label for="cliente">Cliente:</label>
+                    <select name="idcliente" id="idcliente" required>
                         <option value="" disabled selected>Selecione</option>
                         <?php
 
-                        $sql = "SELECT * FROM inquilino";
+                        $sql = "SELECT * FROM cliente";
                         $result = $conn->query($sql);
 
                         if ($result->num_rows > 0) {
                             while ($row = $result->fetch_assoc()) {
-                                echo '<option value="' . $row['idinquilino'] . '">' . $row['nome_inquilino'] . '</option>';
+                                echo '<option value="' . $row['idcliente'] . '">' . $row['nome_cliente'] . '</option>';
                             }
                         }
 

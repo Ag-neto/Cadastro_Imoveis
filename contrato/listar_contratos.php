@@ -11,9 +11,9 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
 <?php
 
 // Inicializar a variável para armazenar a consulta
-$sql = "SELECT c.*, p.nome_propriedade, i.nome_inquilino FROM contratos c 
+$sql = "SELECT c.*, p.nome_propriedade, i.nome_cliente FROM contratos c 
 JOIN propriedade p ON c.id_propriedade = p.idpropriedade 
-JOIN inquilino i ON c.id_inquilino = i.idinquilino";
+JOIN cliente i ON c.id_cliente = i.idcliente";
 
 
 // Verifica se há uma busca
@@ -83,7 +83,7 @@ if ($result) {
                     <th>ID</th>
                     <th>Tipo de Contrato</th>
                     <th>Propriedade</th>
-                    <th>Inquilino</th>
+                    <th>Cliente</th>
                     <th>Data Início</th>
                     <th>Data Fim</th>
                     <th>Valor (R$)</th>
@@ -97,7 +97,7 @@ if ($result) {
                             <td><?php echo $contrato['id_contrato']; ?></td>
                             <td><?php echo ucfirst($contrato['tipo_contrato']); ?></td>
                             <td><?php echo $contrato['nome_propriedade']; ?></td>
-                            <td><?php echo $contrato['nome_inquilino']; ?></td>
+                            <td><?php echo $contrato['nome_cliente']; ?></td>
                             <td><?php echo date('d/m/Y', strtotime($contrato['data_inicio_residencia'])); ?></td>
                             <td><?php echo ($contrato['data_final_residencia'] != null) ? date('d/m/Y', strtotime($contrato['data_final_residencia'])) : 'N/A'; ?></td>
                             <td><?php echo number_format($contrato['valor_aluguel'], 2, ',', '.'); ?></td>

@@ -12,7 +12,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
 
 $id = $_GET["id"] ?? "";
 
-$sql = "SELECT * FROM inquilino WHERE idinquilino = $id";
+$sql = "SELECT * FROM cliente WHERE idcliente = $id";
 
 $dados = mysqli_query($conn, $sql);
 
@@ -39,21 +39,21 @@ $data_nascimento = isset($linha['data_nascimento']) ? date('Y-m-d', strtotime($l
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Controle de Propriedade</title>
-        <link rel="stylesheet" href="../style/cadastro_inquilino.css">
+        <link rel="stylesheet" href="../style/cadastro_cliente.css">
     </head>
 
     <body>
         <header>
-            <h1>Editar informações de Inquilino</h1>
+            <h1>Editar informações de cliente</h1>
         </header>
 
         <section class="form-section">
-            <h2>Inquilinos</h2>
-            <form enctype="multipart/form-data" action="edit_inquilino_script.php" method="POST">
+            <h2>clientes</h2>
+            <form enctype="multipart/form-data" action="edit_cliente_script.php" method="POST">
                 <div class="form-group">
                     <div class="form-item">
-                        <label for="nome_inquilino">Nome do Inquilino:</label>
-                        <input type="text" id="nome_inquilino" name="nome_inquilino" value="<?php echo $linha['nome_inquilino']; ?>" required oninput="this.value = this.value.toUpperCase()">
+                        <label for="nome_cliente">Nome do cliente:</label>
+                        <input type="text" id="nome_cliente" name="nome_cliente" value="<?php echo $linha['nome_cliente']; ?>" required oninput="this.value = this.value.toUpperCase()">
                     </div>
 
                     <div class="form-item">
@@ -93,7 +93,7 @@ $data_nascimento = isset($linha['data_nascimento']) ? date('Y-m-d', strtotime($l
 
                             $result = $conn->query($sql);
                             while ($row = $result->fetch_assoc()) {
-                                // Verifica se o id_localizacao corresponde ao do inquilino
+                                // Verifica se o id_localizacao corresponde ao do cliente
                                 $selected = $row['idlocalizacao'] == $linha['id_localizacao'] ? 'selected' : '';
                                 echo '<option value="' . $row['idlocalizacao'] . '" ' . $selected . '>' . htmlspecialchars($row['nome_cidade']) . " - " . $row['sigla'] . '</option>';
                             }
@@ -122,7 +122,7 @@ $data_nascimento = isset($linha['data_nascimento']) ? date('Y-m-d', strtotime($l
 
                 <button type="submit">Salvar Alterações</button>
                 <input type="hidden" name="id" value="<?php echo $id; ?>">
-                <a href="listar_inquilinos.php">Voltar</a>
+                <a href="listar_clientes.php">Voltar</a>
             </form>
         </section>
         <footer>

@@ -13,12 +13,12 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gestão de Pagamentos de Aluguel</title>
+    <title>Gestão de Pagamentos</title>
     <link rel="stylesheet" href="../style/pag_cliente.css">
 </head>
 <body>
     <header>
-        <h1>Gestão de Pagamentos de Aluguel</h1>
+        <h1>Gestão de Pagamentos</h1>
     </header>
 
     <section class="payment-history">
@@ -27,7 +27,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
             <thead>
                 <tr>
                     <th>Propriedade</th>
-                    <th>Inquilino</th>
+                    <th>Cliente</th>
                     <th>Valor (R$)</th>
                     <th>Data de Vencimento</th>
                     <th>Status</th>

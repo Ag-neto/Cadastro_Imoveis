@@ -93,11 +93,11 @@ $result = $conn->query($sql);
                     <span class="txt-link">Propriedades</span>
                 </a>
             </li>
-
+            
             <li class="item-menu">
-                <a href="inquilino/listar_inquilinos.php">
+                <a href="cliente/listar_clientes.php">
                     <span class="icon"><i class="bi bi-person-vcard-fill"></i></span>
-                    <span class="txt-link">Inquilinos</span>
+                    <span class="txt-link">Clientes</span>
                 </a>
             </li>
 

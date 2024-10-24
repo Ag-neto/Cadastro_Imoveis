@@ -19,7 +19,7 @@ if (empty($id)) {
 }
 
 // Consulta para buscar os dados do usuário
-$sql_usuario = "SELECT idusuario, nome_usuario, email, idnivel_acesso, id_inquilino 
+$sql_usuario = "SELECT idusuario, nome_usuario, email, idnivel_acesso, id_cliente 
                 FROM usuarios WHERE idusuario = ?";
 $stmt = $conn->prepare($sql_usuario);
 $stmt->bind_param("i", $id);
@@ -33,9 +33,9 @@ if ($result->num_rows > 0) {
     exit();
 }
 
-// Consulta para buscar todos os inquilinos
-$sql_inquilinos = "SELECT idinquilino, nome_inquilino FROM inquilino";
-$result_inquilinos = $conn->query($sql_inquilinos);
+// Consulta para buscar todos os clientes
+$sql_clientes = "SELECT idcliente, nome_cliente FROM cliente";
+$result_clientes = $conn->query($sql_clientes);
 ?>
 
 <!DOCTYPE html>
@@ -68,13 +68,13 @@ $result_inquilinos = $conn->query($sql_inquilinos);
             <option value="2" <?= $usuario['idnivel_acesso'] == 2 ? 'selected' : '' ?>>Usuário Comum</option>
         </select>
 
-        <label for="id_inquilino">Inquilino Associado:</label>
-        <select id="id_inquilino" name="id_inquilino">
+        <label for="id_cliente">Cliente Associado:</label>
+        <select id="id_cliente" name="id_cliente">
             <option value="">Não Associado</option>
-            <?php while ($inquilino = $result_inquilinos->fetch_assoc()): ?>
-                <option value="<?= $inquilino['idinquilino'] ?>" 
-                    <?= $inquilino['idinquilino'] == $usuario['id_inquilino'] ? 'selected' : '' ?>>
-                    <?= htmlspecialchars($inquilino['nome_inquilino']) ?>
+            <?php while ($cliente = $result_clientes->fetch_assoc()): ?>
+                <option value="<?= $cliente['idcliente'] ?>" 
+                    <?= $cliente['idcliente'] == $usuario['id_cliente'] ? 'selected' : '' ?>>
+                    <?= htmlspecialchars($cliente['nome_cliente']) ?>
                 </option>
             <?php endwhile; ?>
         </select>

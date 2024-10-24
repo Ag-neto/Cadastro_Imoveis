@@ -47,16 +47,15 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                 $caminho_completo = $pasta . $novo_nome_arquivo . "." . $extensao;
                 $deu_certo = move_uploaded_file($tmp_name, $caminho_completo);
 
-                // Obtém o ID da última propriedade cadastrada
-                $sql1 = "SELECT MAX(idinquilino) AS idinquilino FROM inquilino";
-                $dados = mysqli_query($conn, $sql1);
-                $linha = mysqli_fetch_assoc($dados);
-                $id_ultimo_inquilino = $linha['idinquilino'];
+                // Obtém o ID do cliente selecionada para redirecionar página para detalhes
+                if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+                    $id_cliente = $_POST['idcliente'];
+                }
 
                 if ($deu_certo) {
                     echo "<p>Arquivo enviado com sucesso! Para acessá-lo, clique aqui: <a target='_blank' href='" . $caminho_completo . "'>Download do arquivo</a></p>";
 
-                    $sql = "INSERT INTO documentacao_inquilino (nome_doc, path, data_upload, id_inquilino) VALUES('$nome_arquivo_escapado', '$caminho_completo', NOW(), '$id_ultimo_inquilino')";
+                    $sql = "INSERT INTO documentacao_cliente (nome_doc, path, data_upload, id_cliente) VALUES('$nome_arquivo_escapado', '$caminho_completo', NOW(), '$id_cliente')";
 
                     // Executa a consulta para inserir os dados no banco de dados
                     if (mysqli_query($conn, $sql)) {
@@ -83,15 +82,14 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                     }
                 }
 
-                // Obtém o ID da última propriedade cadastrada
-                $sql1 = "SELECT MAX(idinquilino) AS idinquilino FROM inquilino";
-                $dados = mysqli_query($conn, $sql1);
-                $linha = mysqli_fetch_assoc($dados);
-                $id_ultimo_inquilino = $linha['idinquilino'];
+                // Obtém o ID do cliente selecionada para redirecionar página para detalhes
+                if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+                    $id_cliente = $_POST['idcliente'];
+                }
 
                 if ($tudo_certo) {
                     echo "<p>Todos os arquivos foram enviados!</p>";
-                    header('Location: detalhes_inquilino.php?id=' . $id_ultimo_inquilino);
+                    header('Location: detalhes_cliente.php?id=' . $id_cliente);
                 } else {
                     echo "<p>Falha ao enviar 1 ou mais arquivos! Verifique o formato e tamanho (Max: 2MB)</p>";
                 }
@@ -99,7 +97,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
             ?>
         </section>
 
-        <a href="listar_inquilinos.php" class="button">Voltar</a>
+        <a href="listar_clientes.php" class="button">Voltar</a>
     </main>
 
     <footer>

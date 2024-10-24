@@ -17,10 +17,10 @@ if (isset($_GET['id'])) {
     $sql = "SELECT 
             contratos.*,
             propriedade.nome_propriedade,
-            inquilino.nome_inquilino
+            cliente.nome_cliente
             FROM contratos
             JOIN propriedade ON contratos.id_propriedade = propriedade.idpropriedade
-            JOIN inquilino ON contratos.id_inquilino = inquilino.idinquilino
+            JOIN cliente ON contratos.id_cliente = cliente.idcliente
             WHERE contratos.id_contrato = $id_contrato";
 
     $result = $conn->query($sql);
@@ -60,7 +60,7 @@ if (isset($_GET['id'])) {
             <p><strong>ID do Contrato:</strong> <?php echo $contrato['id_contrato']; ?></p>
             <p><strong>Tipo de Contrato:</strong> <?php echo $contrato['tipo_contrato']; ?></p>
             <p><strong>Propriedade:</strong> <?php echo $contrato['nome_propriedade']; ?></p>
-            <p><strong>Inquilino:</strong> <?php echo $contrato['nome_inquilino']; ?></p>
+            <p><strong>Cliente:</strong> <?php echo $contrato['nome_cliente']; ?></p>
             <p><strong>Valor (R$):</strong> <?php echo $contrato['valor_aluguel']; ?></p>
             <p><strong>Data do Vencimento:</strong> <?php echo date('d/m/Y', strtotime($contrato['vencimento'])); ?></p>
             <p><strong>Data de Início:</strong> <?php echo date('d/m/Y', strtotime($contrato['data_inicio_residencia'])); ?></p>
