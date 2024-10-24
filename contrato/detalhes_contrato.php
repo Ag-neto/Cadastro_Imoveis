@@ -21,7 +21,7 @@ if (isset($_GET['id'])) {
             FROM contratos
             JOIN propriedade ON contratos.id_propriedade = propriedade.idpropriedade
             JOIN cliente ON contratos.id_cliente = cliente.idcliente
-            WHERE contratos.id_contrato = $id_contrato";
+            WHERE contratos.id_contratos = $id_contrato";
 
     $result = $conn->query($sql);
 
@@ -57,7 +57,7 @@ if (isset($_GET['id'])) {
         <h2>Resumo do Contrato</h2>
 
         <div class="contrato-info">
-            <p><strong>ID do Contrato:</strong> <?php echo $contrato['id_contrato']; ?></p>
+            <p><strong>ID do Contrato:</strong> <?php echo $contrato['id_contratos']; ?></p>
             <p><strong>Tipo de Contrato:</strong> <?php echo $contrato['tipo_contrato']; ?></p>
             <p><strong>Propriedade:</strong> <?php echo $contrato['nome_propriedade']; ?></p>
             <p><strong>Cliente:</strong> <?php echo $contrato['nome_cliente']; ?></p>
@@ -72,7 +72,7 @@ if (isset($_GET['id'])) {
 
         <div class="acoes">
             <a href="listar_contratos.php">Voltar</a>
-            <a href="editar_contrato.php?id=<?php echo $contrato['id_contrato']; ?>">Editar Contrato</a>
+            <a href="editar_contrato.php?id=<?php echo $contrato['id_contratos']; ?>">Editar Contrato</a>
             <a href="abrir_contrato_aluguel.php">Abrir Contrato</a>
         </div>
     </section>

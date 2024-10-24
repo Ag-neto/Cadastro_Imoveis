@@ -94,14 +94,14 @@ if ($result) {
                 <?php if (count($contratos) > 0): ?>
                     <?php foreach ($contratos as $contrato): ?>
                         <tr>
-                            <td><?php echo $contrato['id_contrato']; ?></td>
+                            <td><?php echo $contrato['id_contratos']; ?></td>
                             <td><?php echo ucfirst($contrato['tipo_contrato']); ?></td>
                             <td><?php echo $contrato['nome_propriedade']; ?></td>
                             <td><?php echo $contrato['nome_cliente']; ?></td>
                             <td><?php echo date('d/m/Y', strtotime($contrato['data_inicio_residencia'])); ?></td>
                             <td><?php echo ($contrato['data_final_residencia'] != null) ? date('d/m/Y', strtotime($contrato['data_final_residencia'])) : 'N/A'; ?></td>
                             <td><?php echo number_format($contrato['valor_aluguel'], 2, ',', '.'); ?></td>
-                            <td><a href="detalhes_contrato.php?id=<?php echo $contrato['id_contrato']; ?>">Ver Detalhes</a></td>
+                            <td><a href="detalhes_contrato.php?id=<?php echo $contrato['id_contratos']; ?>">Ver Detalhes</a></td>
                         </tr>
                     <?php endforeach; ?>
                 <?php else: ?>

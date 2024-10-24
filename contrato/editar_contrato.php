@@ -12,7 +12,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
 
 $id = $_GET["id"] ?? "";
 
-$sql = "SELECT * FROM contratos WHERE id_contrato = $id";
+$sql = "SELECT * FROM contratos WHERE id_contratos = $id";
 
 $dados = mysqli_query($conn, $sql);
 
@@ -44,7 +44,7 @@ $vencimento = isset($linha['vencimento']) ? date('Y-m-d', strtotime($linha['venc
         <form action="atualizar_contrato.php" method="POST">
 
             <!-- ID do contrato (oculto) -->
-            <input type="hidden" id="id_contrato" name="id_contrato" value="<?php echo $id ?>"> <!-- Substitua pelo ID real -->
+            <input type="hidden" id="id_contratos" name="id_contratos" value="<?php echo $id ?>"> <!-- Substitua pelo ID real -->
 
             <!-- Escolha da propriedade -->
             <div class="form-group">
@@ -123,7 +123,7 @@ $vencimento = isset($linha['vencimento']) ? date('Y-m-d', strtotime($linha['venc
             <!-- Botão para atualizar contrato -->
             <button type="submit">Salvar</button>
 
-            <a href="detalhes_contrato.php?id=<?php echo $linha['id_contrato']; ?>">Voltar</a>
+            <a href="detalhes_contrato.php?id=<?php echo $linha['id_contratos']; ?>">Voltar</a>
 
         </form>
     </section>
