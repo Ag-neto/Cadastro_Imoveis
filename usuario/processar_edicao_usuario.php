@@ -12,7 +12,7 @@ $id = $_POST['idusuario'];
 $nome = $_POST['nome_usuario'];
 $email = $_POST['email'];
 $idnivel_acesso = intval($_POST['idnivel_acesso']);
-$id_inquilino = empty($_POST['id_inquilino']) ? null : intval($_POST['id_inquilino']); // Aqui alteramos para null
+$id_cliente = empty($_POST['id_cliente']) ? null : intval($_POST['id_cliente']); // Aqui alteramos para null
 
 $senha = $_POST['senha'] ?? '';
 
@@ -20,16 +20,16 @@ $senha = $_POST['senha'] ?? '';
 if (!empty($senha)) {
     $senha_hash = password_hash($senha, PASSWORD_DEFAULT);
     $sql = "UPDATE usuarios 
-            SET nome_usuario = ?, email = ?, idnivel_acesso = ?, id_inquilino = ?, senha = ? 
+            SET nome_usuario = ?, email = ?, idnivel_acesso = ?, id_cliente = ?, senha = ? 
             WHERE idusuario = ?";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("ssissi", $nome, $email, $idnivel_acesso, $id_inquilino, $senha_hash, $id);
+    $stmt->bind_param("ssissi", $nome, $email, $idnivel_acesso, $id_cliente, $senha_hash, $id);
 } else {
     $sql = "UPDATE usuarios 
-            SET nome_usuario = ?, email = ?, idnivel_acesso = ?, id_inquilino = ? 
+            SET nome_usuario = ?, email = ?, idnivel_acesso = ?, id_cliente = ? 
             WHERE idusuario = ?";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("ssisi", $nome, $email, $idnivel_acesso, $id_inquilino, $id);
+    $stmt->bind_param("ssisi", $nome, $email, $idnivel_acesso, $id_cliente, $id);
 }
 
 // Executa a atualização
