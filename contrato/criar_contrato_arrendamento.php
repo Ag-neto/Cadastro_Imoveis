@@ -47,23 +47,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                             while ($row = $result->fetch_assoc()) {
                                 echo '<option value="' . $row['idpropriedade'] . '">' . $row['nome_propriedade'] . '</option>';
                             }
-                        } else {
-                            //echo '<option value="">Nenhuma propriedade disponível para arrendamento</option>';
                         }
-
-                        //Com esse script, é buscada toda propriedade no momento da criação do contrato de arrendamento, já a de cima, lista apenas as propriedades cadastradas especificamente para arrendamento. (Decidir depois de como vai ficar)
-
-                        //$sql = "SELECT * FROM propriedade";
-                        //$result = $conn->query($sql);
-
-                        //if ($result->num_rows > 0) {
-                            //while ($row = $result->fetch_assoc()) {
-                                //echo '<option value="' . $row['idpropriedade'] . '">' . $row['nome_propriedade'] . '</option>';
-                            //}
-                        //}else{
-                            //echo '<option value="">Nenhuma propriedade disponível para arrendamento</option>';
-                        //}
-
                         ?>
                     </select>
                 </div>
@@ -105,6 +89,11 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                 <div class="form-item">
                     <label for="valor_arrendamento">Valor do Arrendamento (R$):</label>
                     <input type="number" id="valor_arrendamento" name="valor_arrendamento" required placeholder="Digite o valor do arrendamento" step="0.01">
+                </div>
+                
+                <div class="form-item">
+                    <label for="dia_cobranca">Dia de Cobrança:</label>
+                    <input type="number" id="dia_cobranca" name="dia_cobranca" min="1" max="31 required" placeholder="1 a 31">
                 </div>
             </div>
 
