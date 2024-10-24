@@ -6,9 +6,6 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
     header("Location: ../usuario/login.php");
     exit;
 }
-?>
-
-<?php
 
 if (isset($_GET['id'])) {
     $id_contrato = intval($_GET['id']); // Converte para inteiro para evitar SQL Injection
@@ -66,26 +63,26 @@ if (isset($_GET['id'])) {
             <p><strong>Data de Início:</strong> <?php echo date('d/m/Y', strtotime($contrato['data_inicio_residencia'])); ?></p>
             <p><strong>Data de Término:</strong> <?php echo date('d/m/Y', strtotime($contrato['data_final_residencia'])); ?></p>
             <p><strong>Período de Residência:</strong> <?php echo $contrato['periodo_residencia']; ?> dias</p>
-
-
         </div>
 
         <div class="acoes">
             <a href="listar_contratos.php">Voltar</a>
             <a href="editar_contrato.php?id=<?php echo $contrato['id_contratos']; ?>">Editar Contrato</a>
             <a href="abrir_contrato_aluguel.php">Abrir Contrato</a>
+
+            <!-- Formulário para Deletar Contrato -->
+            <form method="POST" action="deletar_contrato.php" style="display:inline;">
+                <input type="hidden" name="id_contrato" value="<?php echo $contrato['id_contratos']; ?>">
+                <button type="submit" style="background-color: red; color: white; border: none; padding: 10px 15px; cursor: pointer;">
+                    Deletar Contrato
+                </button>
+            </form>
         </div>
     </section>
 
     <footer>
         <p>&copy; 2024 - Sistema de Gestão de contratos</p>
     </footer>
-
-    <!--<script>
-        function editarContrato(id) {
-            window.location.href = `editar_contrato.php?id=${id}`;
-        }
-    </script> -->
 </body>
 
 </html>

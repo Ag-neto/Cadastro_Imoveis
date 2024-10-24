@@ -36,17 +36,22 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
 
                 // Verifique se as variáveis necessárias não estão vazias
                 if (!empty($idpropriedade) && !empty($idarrendatario) && !empty($valor) && !empty($data_ini) && !empty($data_fim) && !empty($dia_cobranca)) {
-                    $tipo_contrato = "ARRENDAMENTO";
-
-                    // Crie o SQL para inserção
-                    $sql = "INSERT INTO contratos (id_propriedade, id_cliente, valor_aluguel, data_inicio_residencia, data_final_residencia, tipo_contrato, vencimento) 
-                            VALUES ('$idpropriedade', '$idarrendatario', '$valor', '$data_ini', '$data_fim', '$tipo_contrato', '$dia_cobranca')";
-
-                    if (mysqli_query($conn, $sql)) {
-                        header('Location: listar_contratos.php');
-                        exit(); // Para garantir que o script pare aqui
+                    // Validação do dia de cobrança
+                    if ($dia_cobranca < 1 || $dia_cobranca > 31) {
+                        echo "<p class='error'>O dia de cobrança deve estar entre 1 e 31!</p>";
                     } else {
-                        echo "<p class='error'>Não foi possível gerar o contrato! Erro: " . mysqli_error($conn) . "</p>";
+                        $tipo_contrato = "ARRENDAMENTO";
+
+                        // Crie o SQL para inserção
+                        $sql = "INSERT INTO contratos (id_propriedade, id_cliente, valor_aluguel, data_inicio_residencia, data_final_residencia, tipo_contrato, vencimento) 
+                                VALUES ('$idpropriedade', '$idarrendatario', '$valor', '$data_ini', '$data_fim', '$tipo_contrato', '$dia_cobranca')";
+
+                        if (mysqli_query($conn, $sql)) {
+                            header('Location: listar_contratos.php');
+                            exit(); // Para garantir que o script pare aqui
+                        } else {
+                            echo "<p class='error'>Não foi possível gerar o contrato! Erro: " . mysqli_error($conn) . "</p>";
+                        }
                     }
                 } else {
                     echo "<p class='error'>Por favor, preencha todos os campos obrigatórios!</p>";
