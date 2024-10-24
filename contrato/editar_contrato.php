@@ -115,7 +115,7 @@ $data_final = isset($linha['data_final_residencia']) ? date('Y-m-d', strtotime($
 
                 <div class="form-item">
                     <label for="vencimento">Vencimento:</label>
-                    <input type="date" name="vencimento" id="vencimento" value="<?php echo $linha['vencimento']; ?>">
+                    <input type="number" name="vencimento" id="vencimento" value="<?php echo $linha['vencimento']; ?>">
                 </div>
             </div>
 
