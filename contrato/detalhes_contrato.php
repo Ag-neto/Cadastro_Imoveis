@@ -73,7 +73,7 @@ if (isset($_GET['id'])) {
             <!-- Formulário para Deletar Contrato -->
             <form method="POST" action="deletar_contrato.php" style="display:inline;">
                 <input type="hidden" name="id_contrato" value="<?php echo $contrato['id_contratos']; ?>">
-                <button type="submit" style="background-color: red; color: white; border: none; padding: 10px 15px; cursor: pointer;">
+                <button type="submit" class="form_deletar">
                     Deletar Contrato
                 </button>
             </form>
