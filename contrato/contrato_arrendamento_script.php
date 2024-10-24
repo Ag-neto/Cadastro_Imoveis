@@ -33,6 +33,17 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                 $data_ini = $_POST['data_inicio'];
                 $data_fim = $_POST['data_termino'];
                 $dia_cobranca = $_POST['dia_cobranca']; // Captura o dia de cobrança
+                 
+                // Crie objetos DateTime a partir das datas
+                 $data_inicio = new DateTime($data_ini);
+                 $data_final = new DateTime($data_fim);
+ 
+                 // Calcule a diferença entre as datas
+                 $diferenca = $data_inicio->diff($data_final);
+ 
+                 // Obtenha o número de dias da diferença
+                 $periodo_residencia = $diferenca->days;
+ 
 
                 // Verifique se as variáveis necessárias não estão vazias
                 if (!empty($idpropriedade) && !empty($idarrendatario) && !empty($valor) && !empty($data_ini) && !empty($data_fim) && !empty($dia_cobranca)) {
@@ -43,8 +54,8 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                         $tipo_contrato = "ARRENDAMENTO";
 
                         // Crie o SQL para inserção
-                        $sql = "INSERT INTO contratos (id_propriedade, id_cliente, valor_aluguel, data_inicio_residencia, data_final_residencia, tipo_contrato, vencimento) 
-                                VALUES ('$idpropriedade', '$idarrendatario', '$valor', '$data_ini', '$data_fim', '$tipo_contrato', '$dia_cobranca')";
+                        $sql = "INSERT INTO contratos (id_propriedade, id_cliente, valor_aluguel, data_inicio_residencia, data_final_residencia, tipo_contrato, vencimento, periodo_residencia) 
+                                VALUES ('$idpropriedade', '$idarrendatario', '$valor', '$data_ini', '$data_fim', '$tipo_contrato', '$dia_cobranca', '$periodo_residencia')";
 
                         if (mysqli_query($conn, $sql)) {
                             header('Location: listar_contratos.php');
