@@ -46,7 +46,8 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                     <th>Propriedade</th>
                     <th>Valor</th>
                     <th>Data de Vencimento</th>
-                    <th>Status / Comprovante</th>
+                    <th>Status</th>
+                    <th>Comprovante</th>
                 </tr>
             </thead>
             <tbody>
@@ -93,7 +94,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                                         <button type="submit">Confirmar Pagamento</button>
                                     </form>
                                 <?php else : ?>
-                                    <span><?php echo ucfirst($pagamento['status']); ?></span>
+                                    <span><a href="../uploads/<?php echo $pagamento['comprovante']; ?>" target="_blank">Ver Comprovante</a></span>
                                 <?php endif; ?>
                             </td>
                         </tr>
