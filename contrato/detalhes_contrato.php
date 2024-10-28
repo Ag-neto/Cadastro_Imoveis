@@ -59,7 +59,7 @@ if (isset($_GET['id'])) {
             <p><strong>Propriedade:</strong> <?php echo $contrato['nome_propriedade']; ?></p>
             <p><strong>Cliente:</strong> <?php echo $contrato['nome_cliente']; ?></p>
             <p><strong>Valor (R$):</strong> <?php echo $contrato['valor_aluguel']; ?></p>
-            <p><strong>Data do Vencimento:</strong> <?php echo $contrato['vencimento']; ?></p>
+            <p><strong>Data de Vencimento:</strong> <?php echo date('d/m/Y', strtotime($contrato['vencimento'])); ?></p>
             <p><strong>Data de Início:</strong> <?php echo date('d/m/Y', strtotime($contrato['data_inicio_residencia'])); ?></p>
             <p><strong>Data de Término:</strong> <?php echo date('d/m/Y', strtotime($contrato['data_final_residencia'])); ?></p>
             <p><strong>Período de Residência:</strong> <?php echo $contrato['periodo_residencia']; ?> dias</p>
