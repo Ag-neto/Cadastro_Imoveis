@@ -6,6 +6,33 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
     header("Location: ../usuario/login.php");
     exit;
 }
+
+$id_cliente = $_SESSION["id_cliente"];
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['comprovante'])) {
+    $id_pagamento = $_POST['id_pagamento'];
+    $arquivo = $_FILES['comprovante'];
+
+    if ($arquivo['error'] == 0) {
+        $pasta = 'uploads/';
+        $nomeArquivo = uniqid() . "_" . basename($arquivo['name']);
+        $caminhoCompleto = $pasta . $nomeArquivo;
+
+        if (move_uploaded_file($arquivo['tmp_name'], $caminhoCompleto)) {
+            // Atualiza o status para "Confirmando Pagamento"
+            $sql = "UPDATE pagamentos SET comprovante = '$nomeArquivo', status = 'confirmando' WHERE id_pagamento = $id_pagamento";
+            if ($conn->query($sql) === TRUE) {
+                echo "Comprovante anexado com sucesso!";
+            } else {
+                echo "Erro ao atualizar o status do pagamento: " . $conn->error;
+            }
+        } else {
+            echo "Erro ao mover o arquivo para o diretório de uploads.";
+        }
+    } else {
+        echo "Erro ao enviar o arquivo.";
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -35,40 +62,48 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                 </tr>
             </thead>
             <tbody>
-                <!-- Pagamento mais recente pendente -->
-                <tr class="pending">
-                    <td>Apartamento - Centro</td>
-                    <td>João Silva</td>
-                    <td>1200.00</td>
-                    <td>2024-10-10</td>
-                    <td>Pendente</td>
-                    <td>
-                        <button class="upload-btn">Anexar Comprovante</button>
-                        <input type="file" class="file-input" accept=".pdf, .jpg, .jpeg, .png" style="display: none;">
-                    </td>
-                </tr>
-                <!-- Pagamentos anteriores -->
-                <tr>
-                    <td>Casa - Zona Norte</td>
-                    <td>Maria Oliveira</td>
-                    <td>1000.00</td>
-                    <td>2024-09-10</td>
-                    <td>Pago</td>
-                    <td>
-                        <button class="view-btn">Ver Comprovante</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Apartamento - Centro</td>
-                    <td>João Silva</td>
-                    <td>1200.00</td>
-                    <td>2024-08-10</td>
-                    <td>Pago</td>
-                    <td>
-                        <button class="view-btn">Ver Comprovante</button>
-                    </td>
-                </tr>
-                <!-- Adicionar mais pagamentos anteriores aqui -->
+                <?php
+                // Consultar apenas os pagamentos do cliente específico
+                $sql = "SELECT p.id_pagamento, propriedade.nome_propriedade, cliente.nome_cliente, p.valor, p.data_vencimento, p.status
+                        FROM pagamentos AS p
+                        JOIN contratos ON p.id_contrato = contratos.id_contratos
+                        JOIN cliente ON contratos.id_cliente = cliente.idcliente
+                        JOIN propriedade ON contratos.id_propriedade = propriedade.idpropriedade
+                        WHERE cliente.idcliente = $id_cliente
+                        ORDER BY p.data_vencimento ASC";
+
+                $result = $conn->query($sql);
+
+                // Iterar sobre os resultados e exibir cada pagamento
+                if ($result->num_rows > 0) {
+                    while ($pagamento = $result->fetch_assoc()) {
+                ?>
+                        <tr>
+                            <td><?php echo $pagamento['nome_propriedade']; ?></td>
+                            <td><?php echo $pagamento['nome_cliente']; ?></td>
+                            <td><?php echo 'R$ ' . number_format($pagamento['valor'], 2, ',', '.'); ?></td>
+                            <td><?php echo date('d/m/Y', strtotime($pagamento['data_vencimento'])); ?></td>
+                            <td><?php echo ucfirst($pagamento['status']); ?></td>
+                            <td>
+                                <?php if ($pagamento['status'] == 'pendente') : ?>
+                                    <form method="POST" enctype="multipart/form-data">
+                                        <input type="hidden" name="id_pagamento" value="<?php echo $pagamento['id_pagamento']; ?>">
+                                        <input type="file" name="comprovante" accept=".pdf, .jpg, .jpeg, .png" required>
+                                        <button type="submit">Anexar Comprovante</button>
+                                    </form>
+                                <?php elseif ($pagamento['status'] == 'confirmando') : ?>
+                                    <span>Aguardando confirmação</span>
+                                <?php else : ?>
+                                    <button class="view-btn">Ver Comprovante</button>
+                                <?php endif; ?>
+                            </td>
+                        </tr>
+                <?php
+                    }
+                } else {
+                    echo "<tr><td colspan='6'>Nenhum pagamento encontrado.</td></tr>";
+                }
+                ?>
             </tbody>
         </table>
 
@@ -81,19 +116,5 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
     <footer>
         <p>&copy; 2024 - Sistema de Gestão de Propriedade</p>
     </footer>
-
-    <script>
-        document.querySelectorAll('.upload-btn').forEach((button, index) => {
-            button.addEventListener('click', function() {
-                const fileInput = this.nextElementSibling;
-                fileInput.click();
-                fileInput.addEventListener('change', function() {
-                    if (fileInput.files.length > 0) {
-                        alert('Comprovante anexado com sucesso!');
-                    }
-                });
-            });
-        });
-    </script>
 </body>
 </html>

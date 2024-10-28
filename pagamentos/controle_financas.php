@@ -6,6 +6,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
     header("Location: ../usuario/login.php");
     exit;
 }
+
 ?>
 
 <!DOCTYPE html>
@@ -42,42 +43,67 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
             <thead>
                 <tr>
                     <th>Cliente</th>
-                    <th>Valor da Parcela</th>
+                    <th>Propriedade</th>
+                    <th>Valor</th>
                     <th>Data de Vencimento</th>
-                    <th>Status do Pagamento</th>
+                    <th>Status / Comprovante</th>
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>João da Silva</td>
-                    <td>R$ 1.200,00</td>
-                    <td>05/10/2024</td>
-                    <td class="paid">Pago</td>
-                </tr>
-                <tr>
-                    <td>Maria Oliveira</td>
-                    <td>R$ 1.500,00</td>
-                    <td>10/10/2024</td>
-                    <td class="overdue">Pendente</td>
-                </tr>
-                <tr>
-                    <td>Pedro Souza</td>
-                    <td>R$ 2.000,00</td>
-                    <td>15/10/2024</td>
-                    <td class="paid">Pago</td>
-                </tr>
-                <tr>
-                    <td>Larissa Costa</td>
-                    <td>R$ 1.800,00</td>
-                    <td>20/10/2024</td>
-                    <td class="overdue">Pendente</td>
-                </tr>
-                <tr>
-                    <td>Carlos Mendes</td>
-                    <td>R$ 2.500,00</td>
-                    <td>25/10/2024</td>
-                    <td class="paid">Pago</td>
-                </tr>
+                <?php
+                require_once "../conexao/conexao.php";
+
+                // Consultar todos os pagamentos, com as informações necessárias
+                $sql = "SELECT cliente.nome_cliente, propriedade.nome_propriedade, p.id_pagamento, p.valor, p.data_vencimento, p.status, p.comprovante
+                        FROM pagamentos AS p
+                        JOIN contratos ON p.id_contrato = contratos.id_contratos
+                        JOIN cliente ON contratos.id_cliente = cliente.idcliente
+                        JOIN propriedade ON contratos.id_propriedade = propriedade.idpropriedade
+                        ORDER BY p.data_vencimento ASC";
+
+                $result = $conn->query($sql);
+
+                // Iterar sobre os resultados e exibir cada pagamento
+                if ($result->num_rows > 0) {
+                    while ($pagamento = $result->fetch_assoc()) {
+                ?>
+                        <tr>
+                            <td><?php echo $pagamento['nome_cliente']; ?></td>
+                            <td><?php echo $pagamento['nome_propriedade']; ?></td>
+                            <td><?php echo 'R$ ' . number_format($pagamento['valor'], 2, ',', '.'); ?></td>
+                            <td><?php echo date('d/m/Y', strtotime($pagamento['data_vencimento'])); ?></td>
+
+                            <!-- Aqui entra o código de exibição do comprovante e confirmação -->
+                            <td>
+                                <?php if ($pagamento['status'] == 'pendente' && $pagamento['comprovante']) : ?>
+                                    <a href="../uploads/<?php echo $pagamento['comprovante']; ?>" target="_blank">Ver Comprovante</a>
+                                    <form method="POST" action="confirmar_pagamento.php">
+                                        <input type="hidden" name="id_pagamento" value="<?php echo $pagamento['id_pagamento']; ?>">
+                                        <button type="submit">Confirmar Pagamento</button>
+                                    </form>
+                                <?php else : ?>
+                                    <span><?php echo ucfirst($pagamento['status']); ?></span>
+                                <?php endif; ?>
+                            </td>
+                            <td>
+                                <?php if ($pagamento['status'] == 'confirmando') : ?>
+                                    <a href="../uploads/<?php echo $pagamento['comprovante']; ?>" target="_blank">Ver Comprovante</a>
+                                    <form method="POST" action="confirmar_pagamento.php">
+                                        <input type="hidden" name="id_pagamento" value="<?php echo $pagamento['id_pagamento']; ?>">
+                                        <button type="submit">Confirmar Pagamento</button>
+                                    </form>
+                                <?php else : ?>
+                                    <span><?php echo ucfirst($pagamento['status']); ?></span>
+                                <?php endif; ?>
+                            </td>
+                        </tr>
+                <?php
+                    }
+                } else {
+                    echo "<tr><td colspan='5'>Nenhum pagamento encontrado.</td></tr>";
+                }
+                ?>
+
             </tbody>
         </table>
     </div>

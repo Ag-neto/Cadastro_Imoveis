@@ -16,18 +16,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if ($result->num_rows === 1) {
         $row = $result->fetch_assoc();
-
+    
         if (password_verify($senha, $row['senha'])) {
             // Define as variáveis de sessão após o login bem-sucedido
             $_SESSION["loggedin"] = true;
             $_SESSION["idusuario"] = $row['idusuario'];
+            $_SESSION["id_cliente"] = $row['id_cliente']; // Certifique-se de que esse campo é retornado
             $_SESSION["idnivel_acesso"] = $row['idnivel_acesso'];
-
+    
             // Redireciona para a página principal (index.php)
             header("location: ../index.php");
             exit;
         }
     }
+    
 
     // Define a mensagem de erro
     $error = "Usuário ou senha incorretos";
