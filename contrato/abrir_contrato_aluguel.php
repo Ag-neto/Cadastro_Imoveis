@@ -136,7 +136,7 @@ $valorPorExtenso = valorPorExtenso($valorAluguel);
     <h1>CONTRATO DE LOCAÇÃO DE IMÓVEL COMERCIAL</h1>
 
     <p>
-        Pelo presente instrumento, ARNALDO DARDIS JÚNIOR, brasileiro, empresário, casado, RG n. 9 1171848-SSP/PB, CPF/MF n. 9 552.496.044-04, domiciliado na Rua Governador Antonio Mariz, nº 600, Bairro Portal do Sol, nesta cidade, adiante denominado LOCADOR;
+        Pelo presente instrumento, ARNALDO DARDIS JÚNIOR, brasileiro, empresário, casado, RG n. 9 1155555-SSP/PB, CPF/MF n. 9 555.555.555-04, domiciliado na Rua Governador Antonio Mariz, nº 600, Bairro Portal do Sol, nesta cidade, adiante denominado LOCADOR;
         e <?php echo $contrato['nome_cliente']; ?>, <?php echo $contrato['nacionalidade']; ?>, RG nº <?php echo $contrato['rg_numero']; ?>, CPF/MF nº <?php echo $contrato['cpf_numero']; ?>, domiciliado(a) na <?php echo $contrato['endereco_cliente']; ?>, Cep. <?php echo $contrato['cep']; ?>, adiante denominada LOCATÁRIO(A), têm entre si justo e contratado o que se segue:
     </p>
 
