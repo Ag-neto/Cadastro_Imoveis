@@ -7,6 +7,13 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
     exit;
 }
 
+// Verifica se o parâmetro 'id' foi passado na URL
+if (!isset($_GET['id'])) {
+    echo "ID do contrato não fornecido.";
+    exit;
+}
+
+$idContrato = (int)$_GET['id']; // Obtém o 'id' e garante que seja um número inteiro
 
 // Prepara a consulta SQL
 $sql = "SELECT 
@@ -23,7 +30,7 @@ $sql = "SELECT
 FROM contratos
 JOIN propriedade ON contratos.id_propriedade = propriedade.idpropriedade
 JOIN cliente ON contratos.id_cliente = cliente.idcliente
-WHERE contratos.id_contrato = 2";
+WHERE contratos.id_contratos = $idContrato";
 
 $result = $conn->query($sql);
 $contrato = $result->fetch_assoc();

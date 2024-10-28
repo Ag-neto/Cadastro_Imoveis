@@ -68,7 +68,7 @@ if (isset($_GET['id'])) {
         <div class="acoes">
             <a href="listar_contratos.php">Voltar</a>
             <a href="editar_contrato.php?id=<?php echo $contrato['id_contratos']; ?>">Editar Contrato</a>
-            <a href="abrir_contrato_aluguel.php">Abrir Contrato</a>
+            <a href="abrir_contrato_aluguel.php?id=<?php echo $contrato['id_contratos']; ?>">Abrir Contrato</a>
 
             <!-- Formulário para Deletar Contrato -->
             <form method="POST" action="deletar_contrato.php" style="display:inline;">
