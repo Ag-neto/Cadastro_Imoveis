@@ -249,6 +249,45 @@ h3 {
     color: #28a745; /* Verde para mensagens de sucesso */
 }
 
+.calendario-container {
+    width: 50%;
+    margin-top: 20px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+}
+
+.calendario-header {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 5px;
+}
+
+.calendario-body {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+}
+
+.calendario-dia {
+    border: 1px solid #ccc;
+    padding: 10px;
+    text-align: center;
+}
+
+.calendario-dia.ativo {
+    background-color: #4CAF50; /* Cor de fundo para o dia atual */
+    color: white; /* Cor do texto para o dia atual */
+    font-weight: bold; /* Deixa o texto mais destacado */
+}
+
+
+.vazio {
+    background-color: #f9f9f9;
+}
+
 
 .logout-form button:hover {
     background-color: #ff3333;
