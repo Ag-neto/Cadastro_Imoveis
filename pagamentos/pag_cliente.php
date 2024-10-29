@@ -100,7 +100,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['comprovante'])) {
 
                                     // Se não houver uma notificação de vencimento existente, insere a nova notificação
                                     if ($logExistente == 0) {
-                                        registrarLogVencimento($_SESSION['idusuario'], $_SESSION['idnivel_acesso'], 'Notificação de Vencimento', 'Pagamento vencido para confirmação', 'pag_cliente.php', $pagamento['id_pagamento']);
+                                        registrarLogVencimento($_SESSION['idusuario'], $_SESSION['idnivel_acesso'], 'Notificação de Vencimento', 'Propriedade: ' . " " . $pagamento['nome_propriedade'] . " "  . 'Pagamento vencido para confirmação', 'pag_cliente.php', $pagamento['id_pagamento']);
                                     }
                                     ?>
                                 <?php elseif ($pagamento['status'] == 'pendente') : ?>

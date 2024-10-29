@@ -61,6 +61,7 @@ $result = $conn->query($sql);
 <body>
     <header>
         <h1>Painel de Controle - Gestão de Propriedades</h1>
+        <h3 href=""><?php Echo "Bem Vindo, " . $_SESSION['nome_usuario'] . " ! ";?></h3>
         <button id="notification-btn">🔔 Notificações</button>
     </header>
 
