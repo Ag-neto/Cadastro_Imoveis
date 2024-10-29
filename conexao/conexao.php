@@ -69,4 +69,29 @@ function mostra_data($data){
     $escreve = $d[2] . "/" . $d[1] . "/" . $d[0];
     return $escreve;
 }
+
+function registrarLog($usuarioId, $nivelAcesso, $acao, $descricao = null, $urlDestino = null)
+{
+    global $conn;
+
+    // Preparando a consulta SQL para inserir o log
+    $sql = "INSERT INTO logs (id_usuario, nivel_acesso, acao, descricao, url_destino) 
+            VALUES (?, ?, ?, ?, ?)";
+
+    if ($stmt = $conn->prepare($sql)) {
+        // Associando os parâmetros
+        $stmt->bind_param("issss", $usuarioId, $nivelAcesso, $acao, $descricao, $urlDestino);
+
+        // Executando a consulta
+        if (!$stmt->execute()) {
+            error_log("Erro ao registrar log: " . $stmt->error);
+        }
+
+        // Fechar o statement
+        $stmt->close();
+    } else {
+        error_log("Erro na preparação da consulta SQL para o log: " . $conn->error);
+    }
+}
+
 ?>

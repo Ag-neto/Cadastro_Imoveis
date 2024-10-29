@@ -85,7 +85,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['comprovante'])) {
                             <td><?php echo date('d/m/Y', strtotime($pagamento['data_vencimento'])); ?></td>
                             <td><?php echo ucfirst($pagamento['status']); ?></td>
                             <td>
-                                <?php if ($pagamento['status'] == 'pendente') : ?>
+                            <?php if ($pagamento['status'] == 'vencido') : ?>
+                                <?php  registrarLog($_SESSION['idusuario'], $_SESSION['idnivel_acesso'], 'Notificação de Vencimento', 'Pagamento vencido para confirmação', 'pag_cliente.php');?>
+                                <?php elseif ($pagamento['status'] == 'pendente') : ?>
                                     <form method="POST" enctype="multipart/form-data">
                                         <input type="hidden" name="id_pagamento" value="<?php echo $pagamento['id_pagamento']; ?>">
                                         <input type="file" name="comprovante" accept=".pdf, .jpg, .jpeg, .png" required>

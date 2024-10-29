@@ -43,6 +43,7 @@ $sql = "SELECT p.*, t.nome_tipo, l.nome_cidade, s.nome_situacao, e.sigla
     JOIN estados e ON l.id_estado = e.id_estado ORDER BY idpropriedade DESC LIMIT $limite";
 
 $result = $conn->query($sql);
+
 ?>
 
 <!DOCTYPE html>
@@ -65,13 +66,84 @@ $result = $conn->query($sql);
 
     <!-- Popup de notificações -->
     <div class="notification-popup" id="notification-popup">
-        <span class="close-btn" id="close-btn">&times;</span>
-        <h3>Notificações</h3>
-        <p>Você tem 3 novas notificações.</p>
-        <p>Propriedade "Casa no Centro" foi atualizada.</p>
-        <p>Pagamento pendente para "Apartamento Vista Mar".</p>
-        <p>Contrato de "Sala Comercial" expirando em breve.</p>
-    </div>
+    <span class="close-btn" id="close-btn">&times;</span>
+    <h3>Notificações</h3>
+    
+    <?php
+    // Marcar todas as notificações como lidas se o botão for pressionado
+    if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['marcar_lida'])) {
+        $sqlMarcarLida = "UPDATE logs SET lida = 1 WHERE id_usuario = ? OR nivel_acesso <= ?";
+        if ($stmtLida = $conn->prepare($sqlMarcarLida)) {
+            $stmtLida->bind_param("ii", $_SESSION['idusuario'], $_SESSION['idnivel_acesso']);
+            $stmtLida->execute();
+            $stmtLida->close();
+            echo "<p>Notificações marcadas como lidas!</p>";
+        } else {
+            echo "<p>Erro ao marcar notificações como lidas: " . $conn->error . "</p>";
+        }
+    }
+
+    // Marcar notificação individual se o botão for pressionado
+    if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['marcar_como_lida'])) {
+        $notificacaoId = $_POST['notificacao_id'];
+
+        // Atualiza o campo `lida` para 1 apenas para a notificação selecionada
+        $sqlMarcarComoLida = "UPDATE logs SET lida = 1 WHERE id = ?";
+        
+        if ($stmtMarcarComoLida = $conn->prepare($sqlMarcarComoLida)) {
+            $stmtMarcarComoLida->bind_param("i", $notificacaoId);
+
+            if ($stmtMarcarComoLida->execute()) {
+                echo "<p>Notificação marcada como lida!</p>";
+            } else {
+                echo "<p>Erro ao atualizar a notificação: " . $stmtMarcarComoLida->error . "</p>";
+            }
+
+            $stmtMarcarComoLida->close();
+        } else {
+            echo "<p>Erro ao preparar a consulta de atualização: " . $conn->error . "</p>";
+        }
+    }
+
+    // Consulta para obter notificações não lidas
+    $sqlNotificacoes = "SELECT id, acao, descricao, data, id_usuario, nivel_acesso 
+                    FROM logs 
+                    WHERE (id_usuario = ? OR nivel_acesso <= ?) AND lida = 0 
+                    ORDER BY data DESC 
+                    LIMIT 5";
+
+    if ($stmt = $conn->prepare($sqlNotificacoes)) {
+        $stmt->bind_param("ii", $_SESSION['idusuario'], $_SESSION['idnivel_acesso']);
+        if ($stmt->execute()) {
+            $result1 = $stmt->get_result();
+            // Exibir notificações
+            while ($log = $result1->fetch_assoc()) {
+                echo '<div class="notificacao-item">';
+                echo '<p><strong>Ação:</strong> ' . htmlspecialchars($log['acao']) . '</p>';
+                echo '<p><strong>Descrição:</strong> ' . htmlspecialchars($log['descricao']) . '</p>';
+                echo '<p><strong>Data:</strong> ' . date('d/m/Y H:i:s', strtotime($log['data'])) . '</p>';
+                echo '<form method="POST">';
+                echo '<input type="hidden" name="notificacao_id" value="' . $log['id'] . '">';
+                echo '<button type="submit" name="marcar_como_lida">Marcar como lida</button>';
+                echo '</form>';
+                echo '</div>';
+            }
+        } else {
+            echo "<p>Erro na consulta de notificações: " . $stmt->error . "</p>";
+        }
+        $stmt->close();
+    } else {
+        echo "<p>Erro ao preparar consulta: " . $conn->error . "</p>";
+    }
+    ?>
+
+    <!-- Botão para Marcar Todas como Lida -->
+    <form method="POST">
+        <button type="submit" name="marcar_lida">Marcar todas como lidas</button>
+    </form>
+</div>
+
+
 
     <nav class="menu-lateral">
         <div class="btn-expandir">
@@ -93,7 +165,7 @@ $result = $conn->query($sql);
                     <span class="txt-link">Propriedades</span>
                 </a>
             </li>
-            
+
             <li class="item-menu">
                 <a href="cliente/listar_clientes.php">
                     <span class="icon"><i class="bi bi-person-vcard-fill"></i></span>

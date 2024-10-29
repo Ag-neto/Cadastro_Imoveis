@@ -68,6 +68,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                 if ($result->num_rows > 0) {
                     while ($pagamento = $result->fetch_assoc()) {
                 ?>
+
                         <tr>
                             <td><?php echo $pagamento['nome_cliente']; ?></td>
                             <td><?php echo $pagamento['nome_propriedade']; ?></td>
@@ -76,27 +77,63 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
 
                             <!-- Aqui entra o código de exibição do comprovante e confirmação -->
                             <td>
-                                <?php if ($pagamento['status'] == 'pendente' && $pagamento['comprovante']) : ?>
-                                    <a href="../uploads/<?php echo $pagamento['comprovante']; ?>" target="_blank">Ver Comprovante</a>
-                                    <form method="POST" action="confirmar_pagamento.php">
-                                        <input type="hidden" name="id_pagamento" value="<?php echo $pagamento['id_pagamento']; ?>">
-                                        <button type="submit">Confirmar Pagamento</button>
-                                    </form>
-                                <?php else : ?>
-                                    <?php
-                                    // Define a classe CSS com base no status
-                                    $statusClass = '';
-                                    if ($pagamento['status'] == 'pendente') {
-                                        $statusClass = 'status-pendente';
-                                    } elseif ($pagamento['status'] == 'pago') {
-                                        $statusClass = 'status-pago';
-                                    } elseif ($pagamento['status'] == 'vencido') {
-                                        $statusClass = 'status-vencido';
+                                <?php
+                                // Define a classe CSS com base no status
+                                $statusClass = '';
+                                if ($pagamento['status'] == 'pendente') {
+                                    $statusClass = 'status-pendente';
+                                } elseif ($pagamento['status'] == 'pago') {
+                                    $statusClass = 'status-pago';
+                                } elseif ($pagamento['status'] == 'vencido') {
+                                    $statusClass = 'status-vencido';
+                                }
+
+                                // Obtendo a data e hora do servidor
+                                $dataServidor = date('Y-m-d');
+
+                                // Data a ser comparada
+                                $vencimento = $pagamento['data_vencimento'];
+
+                                // Convertendo as datas para timestamps
+                                $timestampServidor = strtotime($dataServidor);
+                                $timestampVencimento = strtotime($vencimento);
+
+                                // Comparando as datas
+                                if ($timestampServidor > $timestampVencimento && !$pagamento['comprovante'] && $pagamento['status'] !== 'pago') {
+                                    // A data do servidor é posterior à data comparada e não há comprovante; atualiza o status para 'vencido'
+                                    $id_pagamento = $pagamento['id_pagamento']; // Pegue o ID do pagamento
+
+                                    // Atualiza o status no banco de dados
+                                    $update_sql = "UPDATE pagamentos SET status = 'vencido' WHERE id_pagamento = ?";
+                                    $stmt = $conn->prepare($update_sql);
+                                    $stmt->bind_param("i", $id_pagamento);
+                                    if ($stmt->execute()) {
+                                        // Aqui você pode optar por não exibir a mensagem, já que a atualização será feita em background
+                                        // echo "Status atualizado para 'vencido'.";
+                                    } else {
+                                        echo "Erro ao atualizar o status: " . $stmt->error;
                                     }
-                                    ?>
-                                    <span class="<?php echo $statusClass; ?>"><?php echo ucfirst($pagamento['status']); ?></span>
-                                <?php endif; ?>
+                                    $stmt->close();
+                                } elseif ($timestampServidor < $timestampVencimento && !$pagamento['comprovante'] && $pagamento['status'] !== 'pago') {
+                                    // A data do servidor é posterior à data comparada e não há comprovante; atualiza o status para 'vencido'
+                                    $id_pagamento = $pagamento['id_pagamento']; // Pegue o ID do pagamento
+
+                                    // Atualiza o status no banco de dados
+                                    $update_sql = "UPDATE pagamentos SET status = 'pendente' WHERE id_pagamento = ?";
+                                    $stmt = $conn->prepare($update_sql);
+                                    $stmt->bind_param("i", $id_pagamento);
+                                    if ($stmt->execute()) {
+                                        // Aqui você pode optar por não exibir a mensagem, já que a atualização será feita em background
+                                        // echo "Status atualizado para 'vencido'.";
+                                    } else {
+                                        echo "Erro ao atualizar o status: " . $stmt->error;
+                                    }
+                                }
+
+                                ?>
+                                <span class="<?php echo $statusClass; ?>"><?php echo ucfirst($pagamento['status']); ?></span>
                             </td>
+
                             <td>
                                 <?php if ($pagamento['status'] == 'confirmando') : ?>
                                     <a href="../uploads/<?php echo $pagamento['comprovante']; ?>" target="_blank">Ver Comprovante</a>
@@ -105,7 +142,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                                         <button type="submit">Confirmar Pagamento</button>
                                     </form>
                                 <?php else : ?>
-                                    <span><a href="../uploads/<?php echo $pagamento['comprovante']; ?>" target="_blank">Ver Comprovante</a></span>
+                                    <span><a href="uploads/<?php echo $pagamento['comprovante']; ?>" target="_blank">Ver Comprovante</a></span>
                                 <?php endif; ?>
                             </td>
                         </tr>
