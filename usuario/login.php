@@ -21,6 +21,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             // Define as variáveis de sessão após o login bem-sucedido
             $_SESSION["loggedin"] = true;
             $_SESSION["idusuario"] = $row['idusuario'];
+            $_SESSION["nome_usuario"] = $row['nome_usuario'];
             $_SESSION["id_cliente"] = $row['id_cliente']; // Certifique-se de que esse campo é retornado
             $_SESSION["idnivel_acesso"] = $row['idnivel_acesso'];
     
