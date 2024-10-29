@@ -36,15 +36,20 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                         <?php
                         require_once "../conexao/conexao.php";
 
-                        $sql = "SELECT * FROM propriedade";
+                        // Consulta apenas propriedades com situação 'Para Alugar'
+                        $sql = "SELECT p.idpropriedade, p.nome_propriedade 
+                                FROM propriedade p 
+                                JOIN situacao s ON p.id_situacao = s.id_situacao 
+                                WHERE s.nome_situacao = 'Para Alugar'";
                         $result = $conn->query($sql);
 
                         if ($result->num_rows > 0) {
                             while ($row = $result->fetch_assoc()) {
                                 echo '<option value="' . $row['idpropriedade'] . '">' . $row['nome_propriedade'] . '</option>';
                             }
+                        } else {
+                            echo '<option value="">Nenhuma propriedade disponível para aluguel</option>';
                         }
-
                         ?>
                     </select>
                 </div>
@@ -57,7 +62,6 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                     <select name="idcliente" id="idcliente" required>
                         <option value="" disabled selected>Selecione</option>
                         <?php
-
                         $sql = "SELECT * FROM cliente";
                         $result = $conn->query($sql);
 
@@ -66,7 +70,6 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                                 echo '<option value="' . $row['idcliente'] . '">' . $row['nome_cliente'] . '</option>';
                             }
                         }
-
                         ?>
                     </select>
                 </div>
@@ -88,9 +91,10 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                     <label for="data_fim">Data de Término:</label>
                     <input type="date" id="data_fim" name="data_fim" required>
                 </div>
+
                 <div class="form-item">
-                    <label for="cobranca">Cobrança</label>
-                    <input type="date" id="cobranca" name="cobranca" required>
+                    <label for="cobranca">Cobrança:</label>
+                    <input type="number" id="cobranca" name="cobranca" min="1" max="31" placeholder="1-31" required>
                 </div>
             </div>
 
