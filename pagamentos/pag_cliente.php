@@ -96,7 +96,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['comprovante'])) {
                                     $stmtVerificarLog->execute();
                                     $resultadoVerificacao = $stmtVerificarLog->get_result();
                                     $logExistente = $resultadoVerificacao->fetch_assoc()['total'];
-                                    $stmtVerificarLog->close();
+                                    $stmtVerificarLog->close(); 
 
                                     // Se não houver uma notificação de vencimento existente, insere a nova notificação
                                     if ($logExistente == 0) {

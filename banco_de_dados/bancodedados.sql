@@ -93,7 +93,7 @@ CREATE TABLE `contratos` (
   `id_propriedade` int DEFAULT NULL,
   `id_cliente` int DEFAULT NULL,
   `valor_aluguel` float DEFAULT NULL,
-  `vencimento` int DEFAULT NULL,
+  `vencimento` date DEFAULT NULL,
   `data_inicio_residencia` date DEFAULT NULL,
   `data_final_residencia` date DEFAULT NULL,
   `periodo_residencia` int DEFAULT NULL,
@@ -103,7 +103,7 @@ CREATE TABLE `contratos` (
   KEY `id_cliente_idx` (`id_cliente`),
   CONSTRAINT `fk_cliente_contrato` FOREIGN KEY (`id_cliente`) REFERENCES `cliente` (`idcliente`),
   CONSTRAINT `fk_propriedade_contrato` FOREIGN KEY (`id_propriedade`) REFERENCES `propriedade` (`idpropriedade`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -112,7 +112,7 @@ CREATE TABLE `contratos` (
 
 LOCK TABLES `contratos` WRITE;
 /*!40000 ALTER TABLE `contratos` DISABLE KEYS */;
-INSERT INTO `contratos` VALUES (1,11,3,1000,20241101,'2024-10-24','2025-10-24',365,'ALUGUEL');
+INSERT INTO `contratos` VALUES (4,8,3,2000,'2024-11-01','2024-10-28','2024-12-28',61,'ALUGUEL'),(5,15,5,1500,'2024-11-01','2024-10-01','2025-01-03',94,'ALUGUEL');
 /*!40000 ALTER TABLE `contratos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -250,6 +250,43 @@ LOCK TABLES `log_atividades` WRITE;
 UNLOCK TABLES;
 
 --
+-- Table structure for table `logs`
+--
+
+DROP TABLE IF EXISTS `logs`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `logs` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `acao` varchar(255) NOT NULL,
+  `descricao` text NOT NULL,
+  `data` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `id_usuario` int NOT NULL,
+  `nivel_acesso` int NOT NULL,
+  `url_destino` varchar(45) DEFAULT NULL,
+  `lida` tinyint(1) DEFAULT '0',
+  `id_pagamento` int DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `id_usuario` (`id_usuario`),
+  KEY `nivel_acesso` (`nivel_acesso`),
+  KEY `logs_ibfk_3_idx` (`id_pagamento`),
+  CONSTRAINT `logs_ibfk_1` FOREIGN KEY (`id_usuario`) REFERENCES `usuarios` (`idusuario`),
+  CONSTRAINT `logs_ibfk_2` FOREIGN KEY (`nivel_acesso`) REFERENCES `nivel_de_acesso` (`id_nivel`),
+  CONSTRAINT `logs_ibfk_3` FOREIGN KEY (`id_pagamento`) REFERENCES `pagamentos` (`id_pagamento`)
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `logs`
+--
+
+LOCK TABLES `logs` WRITE;
+/*!40000 ALTER TABLE `logs` DISABLE KEYS */;
+INSERT INTO `logs` VALUES (24,'Notificação de Vencimento','Pagamento vencido para confirmação','2024-12-02 12:53:25',2,2,'pag_cliente.php',0,34099);
+/*!40000 ALTER TABLE `logs` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `nivel_de_acesso`
 --
 
@@ -274,27 +311,33 @@ INSERT INTO `nivel_de_acesso` VALUES (1,'administrador'),(2,'usuario');
 UNLOCK TABLES;
 
 --
--- Table structure for table `pagamento_aluguel`
+-- Table structure for table `pagamentos`
 --
 
-DROP TABLE IF EXISTS `pagamento_aluguel`;
+DROP TABLE IF EXISTS `pagamentos`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `pagamento_aluguel` (
-  `idpagamento_aluguel` int NOT NULL AUTO_INCREMENT,
-  `id_contrato_aluguel` int DEFAULT NULL,
-  `status` varchar(45) DEFAULT NULL,
-  PRIMARY KEY (`idpagamento_aluguel`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+CREATE TABLE `pagamentos` (
+  `id_pagamento` int NOT NULL AUTO_INCREMENT,
+  `id_contrato` int DEFAULT NULL,
+  `valor` decimal(10,2) DEFAULT NULL,
+  `data_vencimento` date DEFAULT NULL,
+  `status` enum('pendente','pago','confirmando','vencido') DEFAULT 'pendente',
+  `comprovante` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id_pagamento`),
+  KEY `id_contrato` (`id_contrato`),
+  CONSTRAINT `pagamentos_ibfk_1` FOREIGN KEY (`id_contrato`) REFERENCES `contratos` (`id_contratos`)
+) ENGINE=InnoDB AUTO_INCREMENT=34101 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `pagamento_aluguel`
+-- Dumping data for table `pagamentos`
 --
 
-LOCK TABLES `pagamento_aluguel` WRITE;
-/*!40000 ALTER TABLE `pagamento_aluguel` DISABLE KEYS */;
-/*!40000 ALTER TABLE `pagamento_aluguel` ENABLE KEYS */;
+LOCK TABLES `pagamentos` WRITE;
+/*!40000 ALTER TABLE `pagamentos` DISABLE KEYS */;
+INSERT INTO `pagamentos` VALUES (34094,4,2000.00,'2024-10-28','pago','671fdda7cad83_Contrato de Locação de Imóvel.pdf'),(34095,4,2000.00,'2024-11-28','pago','671fde9cd4b39_173014180007518349428831625654.jpg'),(34096,4,2000.00,'2024-12-28','pago','671fe1880b407_Contrato de Locação de Imóvel.pdf'),(34097,5,1500.00,'2024-10-01','pago','671fe456df71f_teste.pdf'),(34098,5,1500.00,'2024-11-01','pago','6720e4bf4ae1d_teste.pdf'),(34099,5,1500.00,'2024-12-01','vencido',''),(34100,5,1500.00,'2025-01-01','pendente','');
+/*!40000 ALTER TABLE `pagamentos` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -396,7 +439,7 @@ CREATE TABLE `usuarios` (
   PRIMARY KEY (`idusuario`),
   KEY `id_cliente_idx` (`id_cliente`),
   CONSTRAINT `fk_cliente_usuario` FOREIGN KEY (`id_cliente`) REFERENCES `cliente` (`idcliente`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -405,7 +448,7 @@ CREATE TABLE `usuarios` (
 
 LOCK TABLES `usuarios` WRITE;
 /*!40000 ALTER TABLE `usuarios` DISABLE KEYS */;
-INSERT INTO `usuarios` VALUES (1,'micael','$2y$10$/Tg2pox.43DYGEgVmUBARuAlMsTX3hyU2AjrBBa4GloZKKfhAQ0OS',1,'micaellucasdias@gmail.com',3);
+INSERT INTO `usuarios` VALUES (1,'micael','$2y$10$/Tg2pox.43DYGEgVmUBARuAlMsTX3hyU2AjrBBa4GloZKKfhAQ0OS',1,'micaellucasdias@gmail.com',3),(2,'Usuario Teste','$2y$10$uTNdUhkrAm4hJbq0We8CQepGFDFMc5Z0KmKH2J7VtnkHrNvqqomc6',2,'teste@gmail.com',5);
 /*!40000 ALTER TABLE `usuarios` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -418,4 +461,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-10-28  0:11:42
+-- Dump completed on 2024-10-29 14:36:36
