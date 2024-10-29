@@ -11,6 +11,22 @@ body {
     margin-bottom: 20px;
 }
 
+.status-pendente {
+    color: blue;
+    font-weight: bold;
+}
+
+.status-pago {
+    color: green;
+    font-weight: bold;
+}
+
+.status-vencido {
+    color: red;
+    font-weight: bold;
+}
+
+
 .back-button {
     background-color: #28a745;
     color: white;

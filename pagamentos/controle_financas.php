@@ -83,7 +83,18 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                                         <button type="submit">Confirmar Pagamento</button>
                                     </form>
                                 <?php else : ?>
-                                    <span><?php echo ucfirst($pagamento['status']); ?></span>
+                                    <?php
+                                    // Define a classe CSS com base no status
+                                    $statusClass = '';
+                                    if ($pagamento['status'] == 'pendente') {
+                                        $statusClass = 'status-pendente';
+                                    } elseif ($pagamento['status'] == 'pago') {
+                                        $statusClass = 'status-pago';
+                                    } elseif ($pagamento['status'] == 'vencido') {
+                                        $statusClass = 'status-vencido';
+                                    }
+                                    ?>
+                                    <span class="<?php echo $statusClass; ?>"><?php echo ucfirst($pagamento['status']); ?></span>
                                 <?php endif; ?>
                             </td>
                             <td>
