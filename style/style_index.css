@@ -214,9 +214,6 @@ h3 {
     font-size: 16px;
 }
 
-.logout-form{
-}
-
 .logout-form button {
     background-color: #343a40;
     border: none;
@@ -229,6 +226,29 @@ h3 {
     align-items: center;
     transition: background-color 0.3s ease;
 }
+
+/* Estilo para os botões de notificação */
+.notification-popup button {
+    background-color: #007bff; /* Cor de fundo azul */
+    border: none; /* Sem borda */
+    color: white; /* Texto branco */
+    padding: 8px 12px; /* Espaçamento interno */
+    border-radius: 4px; /* Bordas arredondadas */
+    cursor: pointer; /* Mão ao passar o mouse */
+    transition: background-color 0.3s ease; /* Transição suave */
+}
+
+/* Efeito de hover para os botões */
+.notification-popup button:hover {
+    background-color: #0056b3; /* Azul mais escuro ao passar o mouse */
+}
+
+/* Estilo para a mensagem de feedback */
+.notification-popup p {
+    margin: 5px 0;
+    color: #28a745; /* Verde para mensagens de sucesso */
+}
+
 
 .logout-form button:hover {
     background-color: #ff3333;
