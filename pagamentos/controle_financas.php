@@ -141,6 +141,8 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                                         <input type="hidden" name="id_pagamento" value="<?php echo $pagamento['id_pagamento']; ?>">
                                         <button type="submit">Confirmar Pagamento</button>
                                     </form>
+                                    <?php elseif ($pagamento['status'] == 'pendente') : ?>
+                                        <p>Sem Comprovante Disponível!</p>
                                 <?php else : ?>
                                     <span><a href="uploads/<?php echo $pagamento['comprovante']; ?>" target="_blank">Ver Comprovante</a></span>
                                 <?php endif; ?>
