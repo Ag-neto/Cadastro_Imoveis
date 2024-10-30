@@ -136,7 +136,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
 
                             <td>
                                 <?php if ($pagamento['status'] == 'confirmando') : ?>
-                                    <a href="../uploads/<?php echo $pagamento['comprovante']; ?>" target="_blank">Ver Comprovante</a>
+                                    <a href="uploads/<?php echo $pagamento['comprovante']; ?>" target="_blank">Ver Comprovante</a>
                                     <form method="POST" action="confirmar_pagamento.php">
                                         <input type="hidden" name="id_pagamento" value="<?php echo $pagamento['id_pagamento']; ?>">
                                         <button type="submit">Confirmar Pagamento</button>
