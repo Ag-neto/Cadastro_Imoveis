@@ -89,7 +89,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                 </div>
 
                 <div class="form-item">
-                    <label for="data_conclusao">Data de Conclusão:</label>
+                    <label for="data_conclusao">Data da compra:</label>
                     <input type="date" id="data_conclusao" name="data_conclusao" required>
                 </div>
             </div>
