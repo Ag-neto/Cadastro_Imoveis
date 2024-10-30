@@ -103,3 +103,39 @@ header {
     color: green;
     font-weight: bold;
 }
+
+/* Estilos para os botões de submit */
+button[type="submit"] {
+    background-color: #007bff; /* Azul padrão */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    margin: 5px 0; /* Pequeno espaço entre os botões */
+}
+
+button[type="submit"]:hover {
+    background-color: #0056b3; /* Azul escuro quando hover */
+}
+
+/* Estilos para o input file */
+input[type="file"] {
+    display: block;
+    margin: 10px 0;
+}
+
+input[type="file"]::file-selector-button {
+    background-color: #28a745; /* Verde para o botão do file */
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+input[type="file"]::file-selector-button:hover {
+    background-color: #1d7531; /* Verde escuro quando hover */
+}

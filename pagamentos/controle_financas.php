@@ -7,6 +7,31 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
     exit;
 }
 
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['comprovante'])) {
+    $id_pagamento = $_POST['id_pagamento'];
+    $arquivo = $_FILES['comprovante'];
+
+    if ($arquivo['error'] == 0) {
+        $pasta = 'uploads/';
+        $nomeArquivo = uniqid() . "_" . basename($arquivo['name']);
+        $caminhoCompleto = $pasta . $nomeArquivo;
+
+        if (move_uploaded_file($arquivo['tmp_name'], $caminhoCompleto)) {
+            // Atualiza o status para "Confirmando Pagamento"
+            $sql = "UPDATE pagamentos SET comprovante = '$nomeArquivo', status = 'confirmando' WHERE id_pagamento = $id_pagamento";
+            if ($conn->query($sql) === TRUE) {
+                echo "Comprovante anexado com sucesso!";
+            } else {
+                echo "Erro ao atualizar o status do pagamento: " . $conn->error;
+            }
+        } else {
+            echo "Erro ao mover o arquivo para o diretório de uploads.";
+        }
+    } else {
+        echo "Erro ao enviar o arquivo.";
+    }
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -142,7 +167,11 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                                         <button type="submit">Confirmar Pagamento</button>
                                     </form>
                                     <?php elseif ($pagamento['status'] == 'pendente') : ?>
-                                        <p>Sem Comprovante Disponível!</p>
+                                    <form method="POST" enctype="multipart/form-data">
+                                        <input type="hidden" name="id_pagamento" value="<?php echo $pagamento['id_pagamento']; ?>">
+                                        <input type="file" name="comprovante" accept=".pdf, .jpg, .jpeg, .png" required>
+                                        <button type="submit">Anexar Comprovante</button>
+                                    </form>
                                 <?php else : ?>
                                     <span><a href="uploads/<?php echo $pagamento['comprovante']; ?>" target="_blank">Ver Comprovante</a></span>
                                 <?php endif; ?>
