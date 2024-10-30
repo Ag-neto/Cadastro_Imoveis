@@ -67,10 +67,10 @@ if (isset($_GET['id'])) {
 
         <div class="acoes">
             <a href="listar_contratos.php">Voltar</a>
-            <a href="editar_contrato_aluguel.php?id=<?php echo $contrato['id_contratos']; ?>">Editar Contrato</a>
+            <a href="editar_contrato_arrendamento.php?id=<?php echo $contrato['id_contratos']; ?>">Editar Contrato</a>
 
             <?php if ($contrato['tipo_contrato'] == 'ARRENDAMENTO'): ?>
-                <a href="abrir_contrato_arrendamento.php?id=<?php echo $contrato['id_contratos']; ?>">Abrir Contrato</a>
+                <!-- DISPONÍVEL EM PRÓXIMAS ATUALIZAÇÕES <a href="abrir_contrato_arrendamento.php?id=<?php //echo $contrato['id_contratos']; ?>">Abrir Contrato</a>-->
             <?php elseif ($contrato['tipo_contrato'] == 'VENDA'): ?>
                 <a href="abrir_contrato_venda.php?id=<?php echo $contrato['id_contratos']; ?>">Abrir Contrato</a>
             <?php else: ?>

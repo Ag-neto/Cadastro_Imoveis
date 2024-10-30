@@ -36,10 +36,8 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
         $id = $_POST['id_contratos'];
         $id_propriedade = $_POST['id_propriedade'];
         $id_cliente = $_POST['id_cliente'];
-        $valor_aluguel = $_POST['valor_aluguel'];
-        $data_ini = $_POST['data_inicio'];
-        $data_fim = $_POST['data_fim'];
-        $vencimento = $_POST['vencimento'];
+        $valor = $_POST['valor'];
+        $data_compra = $_POST['data_compra'];
 
          // Crie objetos DateTime a partir das datas
          $data_inicio = new DateTime($data_ini);
@@ -52,11 +50,11 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
          $periodo_residencia = $diferenca->days;
 
 
-        $sql = "UPDATE contratos SET id_propriedade = '$id_propriedade', id_cliente = '$id_cliente', valor_aluguel = '$valor_aluguel', data_inicio_residencia = '$data_ini', vencimento = '$vencimento', data_final_residencia = '$data_fim', periodo_residencia = '$periodo_residencia' WHERE id_contratos = '$id'";
+        $sql = "UPDATE contratos SET id_propriedade = '$id_propriedade', id_cliente = '$id_cliente', valor = '$valor', data_compra = '$data_compra' WHERE id_contratos = '$id'";
 
         if (mysqli_query($conn, $sql)) {
             echo " alterado com sucesso!";
-            header('Location: detalhes_contrato.php?id=' . $id);
+            header('Location: detalhes_contrato_venda.php?id=' . $id);
         } else {
             echo " não foi alterado!";
         }

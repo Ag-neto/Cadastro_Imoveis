@@ -86,8 +86,6 @@ if ($result) {
                     <th>Tipo de Contrato</th>
                     <th>Propriedade</th>
                     <th>Cliente</th>
-                    <th>Data Início</th>
-                    <th>Data Fim</th>
                     <th>Valor (R$)</th>
                     <th>Ações</th>
                 </tr>
@@ -100,9 +98,7 @@ if ($result) {
                             <td><?php echo ucfirst($contrato['tipo_contrato']); ?></td>
                             <td><?php echo $contrato['nome_propriedade']; ?></td>
                             <td><?php echo $contrato['nome_cliente']; ?></td>
-                            <td><?php echo date('d/m/Y', strtotime($contrato['data_inicio_residencia'])); ?></td>
-                            <td><?php echo ($contrato['data_final_residencia'] != null) ? date('d/m/Y', strtotime($contrato['data_final_residencia'])) : 'N/A'; ?></td>
-                            <td><?php echo number_format($contrato['valor_aluguel'], 2, ',', '.'); ?></td>
+                            <td><?php echo number_format($contrato['valor'], 2, ',', '.'); ?></td>
 
                             <?php
                             $idContrato = $contrato['id_contratos'];

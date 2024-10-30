@@ -18,9 +18,7 @@ $dados = mysqli_query($conn, $sql);
 
 $linha = mysqli_fetch_assoc($dados);
 
-$data_inicial = isset($linha['data_inicio_residencia']) ? date('Y-m-d', strtotime($linha['data_inicio_residencia'])) : '';
-$data_final = isset($linha['data_final_residencia']) ? date('Y-m-d', strtotime($linha['data_final_residencia'])) : '';
-$vencimento = isset($linha['vencimento']) ? date('Y-m-d', strtotime($linha['vencimento'])) : '';
+$data_compra = isset($linha['data_compra']) ? date('Y-m-d', strtotime($linha['data_compra'])) : '';
 ?>
 
 
@@ -41,7 +39,7 @@ $vencimento = isset($linha['vencimento']) ? date('Y-m-d', strtotime($linha['venc
 
     <section class="form-section">
         <h2>Informações do Contrato</h2>
-        <form action="atualizar_contrato.php" method="POST">
+        <form action="atualizar_contrato_venda.php" method="POST">
 
             <!-- ID do contrato (oculto) -->
             <input type="hidden" id="id_contratos" name="id_contratos" value="<?php echo $id ?>"> <!-- Substitua pelo ID real -->
@@ -101,29 +99,20 @@ $vencimento = isset($linha['vencimento']) ? date('Y-m-d', strtotime($linha['venc
             <div class="form-group">
                 <div class="form-item">
                     <label for="valor">Valor (R$):</label>
-                    <input type="number" id="valor_aluguel" name="valor_aluguel" value="<?php echo $linha['valor_aluguel']; ?>">
+                    <input type="number" id="valor" name="valor" value="<?php echo $linha['valor']; ?>">
                 </div>
 
                 <div class="form-item">
-                    <label for="data_inicio">Data Inicial:</label>
-                    <input type="date" name="data_inicio" id="data_inicio" value="<?php echo $data_inicial; ?>">
+                    <label for="data_inicio">Data da Compra:</label>
+                    <input type="date" name="data_compra" id="data_compra" value="<?php echo $data_compra; ?>">
                 </div>
 
-                <div class="form-item">
-                    <label for="data_fim">Data Final:</label>
-                    <input type="date" name="data_fim" id="data_fim" value="<?php echo $data_final; ?>">
-                </div>
-
-                <div class="form-item">
-                    <label for="vencimento">Vencimento:</label>
-                    <input type="date" name="vencimento" id="vencimento" value="<?php echo $vencimento ?>">
-                </div>
             </div>
 
             <!-- Botão para atualizar contrato -->
             <button type="submit">Salvar</button>
 
-            <a href="detalhes_contrato.php?id=<?php echo $linha['id_contratos']; ?>">Voltar</a>
+            <a href="detalhes_contrato_venda.php?id=<?php echo $linha['id_contratos']; ?>">Voltar</a>
 
         </form>
     </section>

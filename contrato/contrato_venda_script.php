@@ -18,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (!empty($idpropriedade) && !empty($idcliente) && !empty($valor_venda) && !empty($valor_entrada) && !empty($data_conclusao)) {
         $tipo_contrato = "VENDA";
 
-        $sql = "INSERT INTO contratos (id_propriedade, id_cliente, valor_aluguel, data_inicio_residencia, tipo_contrato) 
+        $sql = "INSERT INTO contratos (id_propriedade, id_cliente, valor, data_compra, tipo_contrato) 
                 VALUES ('$idpropriedade', '$idcliente', '$valor_venda', '$data_conclusao', '$tipo_contrato')";
 
         if (mysqli_query($conn, $sql)) {
