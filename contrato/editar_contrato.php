@@ -20,6 +20,7 @@ $linha = mysqli_fetch_assoc($dados);
 
 $data_inicial = isset($linha['data_inicio_residencia']) ? date('Y-m-d', strtotime($linha['data_inicio_residencia'])) : '';
 $data_final = isset($linha['data_final_residencia']) ? date('Y-m-d', strtotime($linha['data_final_residencia'])) : '';
+$vencimento = isset($linha['vencimento']) ? date('Y-m-d', strtotime($linha['vencimento'])) : '';
 ?>
 
 
@@ -115,7 +116,7 @@ $data_final = isset($linha['data_final_residencia']) ? date('Y-m-d', strtotime($
 
                 <div class="form-item">
                     <label for="vencimento">Vencimento:</label>
-                    <input type="number" name="vencimento" id="vencimento" value="<?php echo $linha['vencimento']; ?>">
+                    <input type="date" name="vencimento" id="vencimento" value="<?php echo $vencimento ?>">
                 </div>
             </div>
 

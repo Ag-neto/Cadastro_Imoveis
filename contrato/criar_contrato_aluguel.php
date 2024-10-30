@@ -94,7 +94,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
 
                 <div class="form-item">
                     <label for="cobranca">Cobrança:</label>
-                    <input type="number" id="cobranca" name="cobranca" min="1" max="31" placeholder="1-31" required>
+                    <input type="date" id="cobranca" name="cobranca" required>
                 </div>
             </div>
 

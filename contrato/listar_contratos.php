@@ -42,12 +42,14 @@ if ($result) {
 
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lista de Contratos</title>
     <link rel="stylesheet" href="../style/listar_contratos.css">
 </head>
+
 <body>
     <header>
         <h1>Lista de Contratos</h1>
@@ -101,7 +103,21 @@ if ($result) {
                             <td><?php echo date('d/m/Y', strtotime($contrato['data_inicio_residencia'])); ?></td>
                             <td><?php echo ($contrato['data_final_residencia'] != null) ? date('d/m/Y', strtotime($contrato['data_final_residencia'])) : 'N/A'; ?></td>
                             <td><?php echo number_format($contrato['valor_aluguel'], 2, ',', '.'); ?></td>
-                            <td><a href="detalhes_contrato.php?id=<?php echo $contrato['id_contratos']; ?>">Ver Detalhes</a></td>
+
+                            <?php
+                            $idContrato = $contrato['id_contratos'];
+                            $tipoDeContrato = $contrato['tipo_contrato'];
+
+                            if ($tipoDeContrato == 'VENDA') {
+                                echo "<td><a href='detalhes_contrato_venda.php?id=$idContrato'>Ver Detalhes</a></td>";
+                            } elseif ($tipoDeContrato == 'ALUGUEL') {
+                                echo "<td><a href='detalhes_contrato_aluguel.php?id=$idContrato'>Ver Detalhes</a></td>";
+                            } elseif ($tipoDeContrato == 'ARRENDAMENTO') {
+                                echo "<td><a href='detalhes_contrato_arrendamento.php?id=$idContrato'>Ver Detalhes</a></td>";
+                            }
+                            ?>
+
+
                         </tr>
                     <?php endforeach; ?>
                 <?php else: ?>
@@ -119,4 +135,5 @@ if ($result) {
 
     <script src="../scripts/script_contratos.js"></script>
 </body>
+
 </html>
