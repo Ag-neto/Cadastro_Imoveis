@@ -176,6 +176,10 @@ $valorPorExtenso = valorPorExtenso($valorArrendamento);
         <p>ARRENDADOR</p>
         <p>__________________________</p>
         <p><?php echo $contrato['nome_cliente']; ?></p>
+        <br>
+        <p>TESTEMUNHAS:</p>
+        <p>_______________________________</p>
+        <p>_______________________________</p>
         <p>ARRENDATÁRIO</p>
     </div>
 </body>
