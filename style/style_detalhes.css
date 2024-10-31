@@ -83,6 +83,38 @@ a:hover {
     background-color: #218838;
 }
 
+.documentos-info {
+    max-height: 300px; /* Ajuste a altura conforme necessário */
+    overflow-y: auto;  /* Adiciona rolagem vertical */
+    border: 1px solid #ccc; /* Adiciona uma borda para destacar a área */
+    padding: 10px; /* Espaçamento interno */
+    background-color: #f9f9f9; /* Cor de fundo */
+}
+
+
+.documentos-info ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.documentos-info li {
+    margin-bottom: 10px;
+}
+
+.documentos-info a{
+    background-color: white;
+    color: blue;
+    padding: 0;
+}
+
+.documentos-info a:hover{
+    text-decoration: underline;
+}
+
+.documentos-info{
+    margin-bottom: 10px;
+}
+
 footer {
     text-align: center;
     margin-top: 20px;

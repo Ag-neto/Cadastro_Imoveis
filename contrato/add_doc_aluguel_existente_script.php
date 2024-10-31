@@ -15,7 +15,6 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Enviar Documentos</title>
-    <link rel="stylesheet" href="../style/cadastrar_cidade.css">
 </head>
 
 <body>
@@ -40,9 +39,9 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                 $novo_nome_arquivo = uniqid();
                 $extensao = strtolower(pathinfo($nome_arquivo_escapado, PATHINFO_EXTENSION));
 
-                //Id da propriedade selecionada
+                //Id do contrato selecionado
                 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-                    $id = $_POST['idpropriedade'];
+                    $id = $_POST['id_contrato'];
                 }
 
                 if ($extensao != "pdf") {
@@ -55,7 +54,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                 if ($deu_certo) {
                     echo "<p>Arquivo enviado com sucesso! Para acessá-lo, clique aqui: <a target='_blank' href='" . $caminho_completo . "'>Download do arquivo</a></p>";
 
-                    $sql = "INSERT INTO documentacao_propriedade (nome_doc, path, data_upload, id_propriedade) VALUES('$nome_arquivo_escapado', '$caminho_completo', NOW(), '$id')";
+                    $sql = "INSERT INTO documentacao_contrato (nome_doc, path, data_upload, id_contrato) VALUES('$nome_arquivo_escapado', '$caminho_completo', NOW(), '$id')";
 
                     // Executa a consulta para inserir os dados no banco de dados
                     if (mysqli_query($conn, $sql)) {
@@ -84,12 +83,12 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
 
                 // Obtém o ID da propriedade selecionada para redirecionar página para detalhes
                 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-                    $id = $_POST['idpropriedade'];
+                    $id = $_POST['id_contrato'];
                 }
 
                 if ($tudo_certo) {
                     echo "<p>Todos os arquivos foram enviados!</p>";
-                    header('Location: detalhes_propriedade.php?id=' . $id);
+                    header('Location: detalhes_contrato_aluguel.php?id=' . $id);
                 } else {
                     echo "<p>Falha ao enviar 1 ou mais arquivos! Verifique o formato e tamanho (Max: 2MB)</p>";
                 }
@@ -97,7 +96,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
             ?>
         </section>
 
-        <a href="listar_propriedades.php" class="button">Voltar</a>
+        <a href="listar_contratos.php" class="button">Voltar</a>
     </main>
 
     <footer>
