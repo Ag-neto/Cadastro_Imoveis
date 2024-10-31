@@ -66,7 +66,7 @@ if (isset($_GET['id'])) {
             <p><strong>Data de Término:</strong> <?php echo date('d/m/Y', strtotime($contrato['data_final_residencia'])); ?></p>
             <p><strong>Período de Residência:</strong> <?php echo $contrato['periodo_residencia']; ?> dias</p>
         </div>
-        <h2>Documentos Associados</h2>
+        <h2>Contrato Anexado</h2>
         <div class="documentos-info">
             <?php
 
