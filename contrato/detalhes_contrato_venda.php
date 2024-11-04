@@ -43,6 +43,7 @@ if (isset($_GET['id'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Detalhes do Contrato</title>
     <link rel="stylesheet" href="../style/style_detalhes.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 </head>
 
 <body>
@@ -62,6 +63,48 @@ if (isset($_GET['id'])) {
             <p><strong>Data da compra:</strong> <?php echo date('d/m/Y', strtotime($contrato['data_compra'])); ?></p>
         </div>
 
+        <h2>Contrato Anexado</h2>
+        <div class="documentos-info">
+            <?php
+
+            $idDoContrato = $contrato['id_contratos'];
+
+            // Obtém os documentos associados à propriedade
+            $sql_document = "SELECT * FROM documentacao_contrato WHERE id_contrato = $idDoContrato";
+            $dados_document = mysqli_query($conn, $sql_document);
+
+            // Armazena todos os documentos em um array
+            $documentos = [];
+            while ($documento = mysqli_fetch_assoc($dados_document)) {
+                $documentos[] = $documento; // Armazena cada documento no array
+            }
+
+            // Contar documentos
+            $total_documentos = count($documentos);
+            echo "Total de documentos encontrados: $total_documentos<br>";
+
+            // Exibir documentos
+            if ($total_documentos > 0): ?>
+                <ul>
+                    <?php foreach ($documentos as $documento): ?>
+                        <li>
+                            <a href="<?php echo $documento['path']; ?>" target="_blank">
+                                <?php echo htmlspecialchars($documento['nome_doc']); ?><i class="bi bi-link-45deg"></i>
+                            </a>
+                            - Contrato anexado em: <?php echo date('d/m/Y', strtotime($documento['data_upload'])); ?>
+                            <a href="deletar_documento.php?id=<?php echo $documento['iddocumentacao_contrato']; ?>&id_contrato=<?php echo $idDoContrato; ?>" onclick="return confirmarDeletar();">Deletar</a>
+                        </li>
+                    <?php endforeach; ?>
+                    <a href="add_doc_venda_existente.php?id_contrato=<?php echo $idDoContrato; ?>">Adicionar contrato (PDF)</a>
+                    </ul>
+            <?php else: ?>
+                <p>Nenhum documento encontrado para este contrato.</p>
+                <p>Para vincular um documento ao contrato clique <a href="add_doc_venda_existente.php?id_contrato=<?php echo $idDoContrato; ?>">Aqui (PDF)<i class="bi bi-link-45deg"></i></a>
+            <?php endif; ?>
+
+
+        </div>
+
         <div class="acoes">
             <a href="listar_contratos.php">Voltar</a>
             <a href="editar_contrato_venda.php?id=<?php echo $contrato['id_contratos']; ?>">Editar Contrato</a>
@@ -71,7 +114,7 @@ if (isset($_GET['id'])) {
             <?php elseif ($contrato['tipo_contrato'] == 'VENDA'): ?>
                 <!--DISPONÍVEL EM PRÓXIMAS ATUALIZAÇõES <a href="abrir_contrato_venda.php?id=<?php echo $contrato['id_contratos']; ?>">Abrir Contrato</a> -->
             <?php else: ?>
-                <a href="abrir_contrato_aluguel.php?id=<?php echo $contrato['id_contratos']; ?>">Abrir Contrato</a>
+                <a href="abrir_contrato_venda.php?id=<?php echo $contrato['id_contratos']; ?>">Abrir Contrato</a>
             <?php endif; ?>
 
             <!-- Formulário para Deletar Contrato -->
