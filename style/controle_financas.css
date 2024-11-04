@@ -26,6 +26,11 @@ body {
     font-weight: bold;
 }
 
+.status-pago_vencido{
+    color: rgb(168, 168, 0);
+    font-weight: bold;
+}
+
 
 .back-button {
     background-color: #28a745;
@@ -118,6 +123,22 @@ button[type="submit"] {
 
 button[type="submit"]:hover {
     background-color: #0056b3; /* Azul escuro quando hover */
+}
+
+.ver_comprovante {
+    background-color: #278fff; /* Azul padrão */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    margin: 5px 0; /* Pequeno espaço entre os botões */
+    text-decoration: none;
+}
+
+.ver_comprovante:hover {
+    background-color: #2278d3; /* Azul escuro quando hover */
 }
 
 /* Estilos para o input file */

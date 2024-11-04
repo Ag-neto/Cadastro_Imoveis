@@ -10,10 +10,10 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $idpropriedade = $_POST['idpropriedade'];
     $idcliente = $_POST['idcliente'];
-    $valor_aluguel = $_POST['valor']; // Corrigido para 'valor'
-    $data_inicio = $_POST['data_inicio']; // Corrigido para 'data_inicio'
-    $data_final = $_POST['data_fim']; // Corrigido para 'data_fim'
-    $vencimento = $_POST['cobranca']; // Corrigido para 'cobranca'
+    $valor_aluguel = $_POST['valor']; 
+    $data_inicio = $_POST['data_inicio']; 
+    $data_final = $_POST['data_fim']; 
+    $vencimento = $_POST['cobranca']; 
 
     // Calcular o período de residência em dias
     $inicio = new DateTime($data_inicio);
@@ -25,12 +25,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             echo "<p class='error'>O dia de vencimento deve estar entre 1 e 31!</p>";
         } else {
             $tipo_contrato = "ALUGUEL";
-            $sql = "INSERT INTO contratos (id_propriedade, id_cliente, valor_aluguel, data_inicio_residencia, data_final_residencia, tipo_contrato, vencimento, periodo_residencia) 
+            $sql = "INSERT INTO contratos (id_propriedade, id_cliente, valor, data_inicio_residencia, data_final_residencia, tipo_contrato, vencimento, periodo_residencia) 
                     VALUES ('$idpropriedade', '$idcliente', '$valor_aluguel', '$data_inicio', '$data_final', '$tipo_contrato', '$vencimento', '$periodo_residencia')";
 
             if (mysqli_query($conn, $sql)) {
                 $id_contrato = mysqli_insert_id($conn);
-                $data_vencimento = new DateTime($data_inicio);
+                $data_vencimento = new DateTime($vencimento);
 
                 while ($data_vencimento <= $fim) {
                     $sql_pagamento = "INSERT INTO pagamentos (id_contrato, valor, data_vencimento, status, comprovante) 
