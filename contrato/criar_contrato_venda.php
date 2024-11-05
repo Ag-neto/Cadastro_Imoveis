@@ -35,10 +35,11 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                         <option value="" disabled selected>Selecione a Propriedade</option>
                         <?php
                         // Consultar propriedades disponíveis para venda
-                        $sql = "SELECT idpropriedade, nome_propriedade 
-                                FROM propriedade 
-                                JOIN situacao ON propriedade.id_situacao = situacao.id_situacao 
-                                WHERE situacao.nome_situacao = 'À Venda'";
+                        $sql = "SELECT p.idpropriedade, p.nome_propriedade
+                                FROM propriedade p
+                                JOIN situacao s ON p.id_situacao = s.id_situacao
+                                WHERE s.nome_situacao = 'À Venda' 
+                                AND p.idpropriedade NOT IN (SELECT c.id_propriedade FROM contratos c)";
                         $result = $conn->query($sql);
 
                         if ($result->num_rows > 0) {

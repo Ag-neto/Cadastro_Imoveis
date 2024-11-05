@@ -40,7 +40,8 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                         $sql = "SELECT p.idpropriedade, p.nome_propriedade 
                                 FROM propriedade p 
                                 JOIN situacao s ON p.id_situacao = s.id_situacao
-                                WHERE s.nome_situacao = 'ARRENDAMENTO'";
+                                WHERE s.nome_situacao = 'ARRENDAMENTO' 
+                                AND p.idpropriedade NOT IN (SELECT c.id_propriedade FROM contratos c)";
                         $result = $conn->query($sql);
 
                         if ($result->num_rows > 0) {

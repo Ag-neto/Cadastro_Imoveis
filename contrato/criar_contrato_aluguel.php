@@ -25,7 +25,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
 
     <section class="form-section">
         <h2>Informações do Contrato</h2>
-        <form id="contrato-form" method="POST" action="contrato_aluguel_script.php"> 
+        <form id="contrato-form" method="POST" action="contrato_aluguel_script.php">
 
             <!-- Escolha da propriedade -->
             <div class="form-group">
@@ -36,11 +36,12 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                         <?php
                         require_once "../conexao/conexao.php";
 
-                        // Consulta apenas propriedades com situação 'Para Alugar'
-                        $sql = "SELECT p.idpropriedade, p.nome_propriedade 
-                                FROM propriedade p 
-                                JOIN situacao s ON p.id_situacao = s.id_situacao 
-                                WHERE s.nome_situacao = 'Para Alugar'";
+                        // Consulta apenas propriedades com situação 'Para Alugar' que não estão vinculadas a contratos
+                        $sql = "SELECT p.idpropriedade, p.nome_propriedade
+                                FROM propriedade p
+                                JOIN situacao s ON p.id_situacao = s.id_situacao
+                                WHERE s.nome_situacao = 'Para Alugar' 
+                                AND p.idpropriedade NOT IN (SELECT c.id_propriedade FROM contratos c)";
                         $result = $conn->query($sql);
 
                         if ($result->num_rows > 0) {
@@ -54,6 +55,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                     </select>
                 </div>
             </div>
+
 
             <!-- Escolha do cliente -->
             <div class="form-group">

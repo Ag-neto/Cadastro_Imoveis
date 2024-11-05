@@ -48,7 +48,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                         // Ajuste para formatar o valor de vencimento como data
                         $vencimento_data = date("Y-m-d", strtotime("$data_ini +$dia_cobranca days"));
 
-                        $sql = "INSERT INTO contratos (id_propriedade, id_cliente, valor_aluguel, data_inicio_residencia, data_final_residencia, tipo_contrato, vencimento, periodo_residencia) 
+                        $sql = "INSERT INTO contratos (id_propriedade, id_cliente, valor, data_inicio_residencia, data_final_residencia, tipo_contrato, vencimento, periodo_residencia) 
                                 VALUES ('$idpropriedade', '$idarrendatario', '$valor', '$data_ini', '$data_fim', '$tipo_contrato', '$vencimento_data', '$periodo_residencia')";
 
                         if (mysqli_query($conn, $sql)) {
