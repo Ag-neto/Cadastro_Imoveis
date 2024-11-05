@@ -68,7 +68,7 @@ CREATE TABLE `conta_corrente_propriedade` (
   PRIMARY KEY (`id_movimento`),
   KEY `id_propriedade` (`id_propriedade`),
   CONSTRAINT `conta_corrente_propriedade_ibfk_1` FOREIGN KEY (`id_propriedade`) REFERENCES `propriedade` (`idpropriedade`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -77,7 +77,7 @@ CREATE TABLE `conta_corrente_propriedade` (
 
 LOCK TABLES `conta_corrente_propriedade` WRITE;
 /*!40000 ALTER TABLE `conta_corrente_propriedade` DISABLE KEYS */;
-INSERT INTO `conta_corrente_propriedade` VALUES (9,8,'LIMPESA',500.00,'2024-10-21','despesa',-500.00),(10,8,'LIMPESA 2',500.00,'2024-10-21','despesa',-1000.00),(12,8,'LIMPESA 3',500.00,'2024-10-21','despesa',-1500.00),(13,8,'ALUGUEL PAGO',2000.00,'2024-10-21','receita',500.00),(14,11,'TESTE',100.00,'2024-10-22','despesa',-100100.00),(15,11,'TESTE',100.00,'2024-10-22','receita',-100000.00),(16,11,'ALUGUEL PAGO',5000.00,'2024-10-23','receita',-95000.00);
+INSERT INTO `conta_corrente_propriedade` VALUES (9,8,'LIMPESA',500.00,'2024-10-21','despesa',-500.00),(10,8,'LIMPESA 2',500.00,'2024-10-21','despesa',-1000.00),(12,8,'LIMPESA 3',500.00,'2024-10-21','despesa',-1500.00),(13,8,'ALUGUEL PAGO',2000.00,'2024-10-21','receita',500.00),(14,11,'TESTE',100.00,'2024-10-22','despesa',-100100.00),(15,11,'TESTE',100.00,'2024-10-22','receita',-100000.00),(16,11,'ALUGUEL PAGO',5000.00,'2024-10-23','receita',-95000.00),(29,12,'Pagamento de aluguel',1500.00,'2024-11-04','receita',1500.00),(30,12,'Pagamento de aluguel',1000.00,'2024-11-05','receita',2500.00);
 /*!40000 ALTER TABLE `conta_corrente_propriedade` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -104,7 +104,7 @@ CREATE TABLE `contratos` (
   KEY `id_cliente_idx` (`id_cliente`),
   CONSTRAINT `fk_cliente_contrato` FOREIGN KEY (`id_cliente`) REFERENCES `cliente` (`idcliente`),
   CONSTRAINT `fk_propriedade_contrato` FOREIGN KEY (`id_propriedade`) REFERENCES `propriedade` (`idpropriedade`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -113,7 +113,7 @@ CREATE TABLE `contratos` (
 
 LOCK TABLES `contratos` WRITE;
 /*!40000 ALTER TABLE `contratos` DISABLE KEYS */;
-INSERT INTO `contratos` VALUES (9,12,3,1200,'2024-11-05',NULL,'2024-10-30','2024-12-30',61,'ALUGUEL'),(10,8,3,300000,NULL,'2024-10-30','2024-10-30',NULL,NULL,'VENDA'),(11,21,3,650,'2024-11-05',NULL,'2024-10-30','2024-11-30',31,'ARRENDAMENTO');
+INSERT INTO `contratos` VALUES (11,21,3,650,'2024-11-05',NULL,'2024-10-30','2024-11-30',31,'ARRENDAMENTO'),(29,8,3,200000,NULL,'2024-11-04',NULL,NULL,NULL,'VENDA'),(30,12,3,1500,'2024-11-05',NULL,'2024-11-04','2024-11-30',26,'ALUGUEL'),(31,12,5,1000,'2024-11-06',NULL,'2024-11-05','2024-11-30',25,'ALUGUEL');
 /*!40000 ALTER TABLE `contratos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -162,7 +162,7 @@ CREATE TABLE `documentacao_contrato` (
   PRIMARY KEY (`iddocumentacao_contrato`),
   KEY `id_contrato_idx` (`id_contrato`),
   CONSTRAINT `id_contrato` FOREIGN KEY (`id_contrato`) REFERENCES `contratos` (`id_contratos`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -171,7 +171,7 @@ CREATE TABLE `documentacao_contrato` (
 
 LOCK TABLES `documentacao_contrato` WRITE;
 /*!40000 ALTER TABLE `documentacao_contrato` DISABLE KEYS */;
-INSERT INTO `documentacao_contrato` VALUES (4,'teste.pdf','arquivos/6723dccd15ea5.pdf','2024-10-31',9);
+INSERT INTO `documentacao_contrato` VALUES (6,'teste.pdf','arquivos/6728bababd9c2.pdf','2024-11-04',11),(7,'teste.pdf','arquivos/672991630996f.pdf','2024-11-05',30);
 /*!40000 ALTER TABLE `documentacao_contrato` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -351,12 +351,12 @@ CREATE TABLE `pagamentos` (
   `id_contrato` int DEFAULT NULL,
   `valor` decimal(10,2) DEFAULT NULL,
   `data_vencimento` date DEFAULT NULL,
-  `status` enum('pendente','pago','confirmando','vencido') DEFAULT 'pendente',
+  `status` enum('pendente','pago','confirmando','vencido','pago_vencido') DEFAULT 'pendente',
   `comprovante` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id_pagamento`),
   KEY `id_contrato` (`id_contrato`),
   CONSTRAINT `pagamentos_ibfk_1` FOREIGN KEY (`id_contrato`) REFERENCES `contratos` (`id_contratos`)
-) ENGINE=InnoDB AUTO_INCREMENT=34104 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=34138 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -365,7 +365,7 @@ CREATE TABLE `pagamentos` (
 
 LOCK TABLES `pagamentos` WRITE;
 /*!40000 ALTER TABLE `pagamentos` DISABLE KEYS */;
-INSERT INTO `pagamentos` VALUES (34101,9,1200.00,'2024-10-30','pago','672277b93f387_Contrato de Locação de Imóvel.pdf'),(34102,9,1200.00,'2024-11-30','pago','672277da6c182_Contrato de Locação de Imóvel.pdf'),(34103,9,1200.00,'2024-12-30','pago','6722793d4217b_Contrato de Locação de Imóvel.pdf');
+INSERT INTO `pagamentos` VALUES (34136,30,1500.00,'2024-11-05','pago','67292340859c8_teste.pdf'),(34137,31,1000.00,'2024-11-06','pago','6729946d22bb3_teste.pdf');
 /*!40000 ALTER TABLE `pagamentos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -490,4 +490,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-11-03 11:59:33
+-- Dump completed on 2024-11-05 12:07:09
