@@ -6,12 +6,10 @@ function hasAccessLevel($levels)
 {
     global $conn;
 
-    // Assegura que $levels é um array (É om esse vetor que a gente separa quem enxerga determinadas funções na tela)
     if (!is_array($levels)) {
         $levels = [$levels];
     }
 
-    // Verifica se o usuário logado possui um dos níveis de acesso fornecidos
     if (isset($_SESSION["idnivel_acesso"]) && in_array($_SESSION["idnivel_acesso"], $levels)) {
         return true;
     }
@@ -57,7 +55,6 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
         <h3>Notificações</h3>
 
         <?php
-        // Marcar todas as notificações como lidas se o botão for pressionado
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['marcar_lida'])) {
             $sqlMarcarLida = "UPDATE logs SET lida = 1 WHERE id_usuario = ? OR nivel_acesso <= ?";
             if ($stmtLida = $conn->prepare($sqlMarcarLida)) {
@@ -70,11 +67,9 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
             }
         }
 
-        // Marcar notificação individual se o botão for pressionado
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['marcar_como_lida'])) {
             $notificacaoId = $_POST['notificacao_id'];
 
-            // Atualiza o campo `lida` para 1 apenas para a notificação selecionada
             $sqlMarcarComoLida = "UPDATE logs SET lida = 1 WHERE id = ?";
 
             if ($stmtMarcarComoLida = $conn->prepare($sqlMarcarComoLida)) {
@@ -94,7 +89,6 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
 
         $nivelDeAcesso = $_SESSION["idnivel_acesso"];
 
-        // Consulta para obter notificações não lidas
         $sqlNotificacoes = "SELECT id, acao, descricao, data, id_usuario, nivel_acesso 
         FROM logs 
         WHERE ($nivelDeAcesso = 1 OR id_usuario = ?) AND lida = 0 
@@ -102,14 +96,12 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
         LIMIT 5";
 
         if ($stmt = $conn->prepare($sqlNotificacoes)) {
-            // Bind para o id do usuário logado e nivel_acesso da sessão
             $stmt->bind_param("i", $_SESSION['idusuario']);
 
             if ($stmt->execute()) {
                 $result1 = $stmt->get_result();
 
                 if ($result1->num_rows > 0) {
-                    // Exibir notificações
                     while ($log = $result1->fetch_assoc()) {
                         echo '<div class="notificacao-item">';
                         echo '<p><strong>Ação:</strong> ' . htmlspecialchars($log['acao']) . '</p>';
@@ -133,7 +125,6 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
         }
         ?>
 
-        <!-- Botão para Marcar Todas como Lida -->
         <form method="POST">
             <button type="submit" name="marcar_lida">Marcar todas como lidas</button>
         </form>
@@ -206,19 +197,17 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                 </li>
             <?php endif; ?>
 
-            <!-- Botões de Backup -->
+            <!-- Botão de Backup com submenu -->
             <?php if (hasAccessLevel([1])): ?>
                 <li class="item-menu">
-                    <a href="backup/banco_de_dados/gerar_backup.php">
-                        <span class="icon"><i class="bi bi-cloud-arrow-down-fill"></i></span>
-                        <span class="txt-link">Fazer Backup</span>
+                    <a href="#">
+                        <span class="icon"><i class="bi bi-cloud-download-fill"></i></span>
+                        <span class="txt-link">Backup</span>
                     </a>
-                </li>
-                <li class="item-menu">
-                    <a href="backup/banco_de_dados/restaurar.php">
-                        <span class="icon"><i class="bi bi-cloud-upload-fill"></i></span>
-                        <span class="txt-link">Restaurar Backup</span>
-                    </a>
+                    <ul class="submenu">
+                        <li><a href="backup/banco_de_dados/gerar_backup.php">Fazer Backup</a></li>
+                        <li><a href="backup/banco_de_dados/restaurar.php">Restaurar Backup</a></li>
+                    </ul>
                 </li>
             <?php endif; ?>
 
@@ -254,7 +243,6 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                 <div class="propriedades-container">
                     <?php
                     $limite = 6;
-                    // Consulta para obter as últimas propriedades cadastradas
                     $sql = "SELECT p.*, t.nome_tipo, l.nome_cidade, s.nome_situacao, e.sigla 
                             FROM propriedade p 
                             JOIN tipo_prop t ON p.id_tipo_prop = t.id_tipo_prop
@@ -284,7 +272,6 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                 </div>
             <?php endif; ?>
 
-            <!-- Exibir propriedades para nível de acesso 2 -->
             <?php if (hasAccessLevel([2])): ?>
                 <div class="propriedades-container">
                     <?php
@@ -320,15 +307,8 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
 
     <script>
         const nav = document.querySelector('nav.menu-lateral');
-
-        nav.addEventListener('mouseleave', () => {
-            nav.classList.add('recolhido');
-        });
-
-        nav.addEventListener('mouseenter', () => {
-            nav.classList.remove('recolhido');
-        });
-
+        nav.addEventListener('mouseleave', () => nav.classList.add('recolhido'));
+        nav.addEventListener('mouseenter', () => nav.classList.remove('recolhido'));
 
         const notificationBtn = document.getElementById('notification-btn');
         const notificationPopup = document.getElementById('notification-popup');
@@ -337,16 +317,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
         notificationBtn.addEventListener('click', () => {
             notificationPopup.style.display = notificationPopup.style.display === 'block' ? 'none' : 'block';
         });
-
-        closeBtn.addEventListener('click', () => {
-            notificationPopup.style.display = 'none';
-        });
-
-        window.addEventListener('click', (event) => {
-            if (event.target !== notificationBtn && !notificationPopup.contains(event.target)) {
-                notificationPopup.style.display = 'none';
-            }
-        });
+        closeBtn.addEventListener('click', () => notificationPopup.style.display = 'none');
     </script>
 </body>
 

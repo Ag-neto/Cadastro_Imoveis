@@ -1,9 +1,9 @@
 <?php
 session_start();
-require_once "../../conexao/conexao.php"; // Caminho ajustado para sair das pastas backup/banco_de_dados
+require_once "../../conexao/conexao.php";
 
 if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
-    header("Location: ../../usuario/login.php"); // Caminho ajustado para redirecionamento
+    header("Location: ../../usuario/login.php");
     exit;
 }
 
@@ -13,7 +13,6 @@ if (isset($_POST['restore'])) {
     $password = $password;
     $host = $server;
     $backupFile = $_POST['backup_file'];
-
     $command = "mysql --user=$user --password=$password --host=$host $database < ../../backups/$backupFile";
     system($command, $output);
 
@@ -37,7 +36,7 @@ if (isset($_POST['restore'])) {
         <label for="backup_file">Selecione o arquivo de backup:</label>
         <select name="backup_file">
             <?php
-            $files = scandir('../../backups'); // Caminho ajustado para listar arquivos de backup
+            $files = scandir('../../backups');
             foreach ($files as $file) {
                 if (strpos($file, '.sql') !== false) {
                     echo "<option value=\"$file\">$file</option>";

@@ -1,48 +1,48 @@
 <?php
 session_start();
-require_once "../../conexao/conexao.php"; // Caminho ajustado para sair das pastas backup/banco_de_dados
+require_once "../../conexao/conexao.php";
 
 if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
     header("Location: ../../usuario/login.php");
     exit;
 }
 
-// Dados de conexão para o comando mysqldump
+// Dados de conexão
 $database = 'controledepropriedade';
 $user = 'root';
 $password = '';
 $host = 'localhost';
-
-// Caminho completo para o mysqldump no XAMPP
 $mysqldumpPath = "C:\\xampp\\mysql\\bin\\mysqldump.exe";
 
-// Verifica se o arquivo mysqldump.exe existe no caminho especificado
 if (!file_exists($mysqldumpPath)) {
-    die("Erro: O caminho para o mysqldump está incorreto. Verifique a configuração.");
+    die("Erro: Caminho do mysqldump incorreto.");
 }
 
-// Define o caminho completo do arquivo de backup
 $backupDir = "../../backups";
-$backupFile = "$backupDir/backup_" . date('Y-m-d_H-i-s') . ".sql";
+$backupFile = "backup_" . date('Y-m-d_H-i-s') . ".sql";
+$backupFilePath = "$backupDir/$backupFile";
+$batFilePath = "$backupDir/fazer_backup.bat";
 
-// Verifica se a pasta de backup existe e tenta criá-la se não existir
 if (!is_dir($backupDir)) {
-    if (!mkdir($backupDir, 0777, true)) {
-        die("Erro: Não foi possível criar a pasta de backups.");
-    }
+    mkdir($backupDir, 0777, true);
 }
 
-// Comando para gerar o backup e redirecionar erros
-$command = "\"$mysqldumpPath\" --user=$user --password=$password --host=$host $database > \"$backupFile\" 2>&1";
+$batContent = <<<EOD
+@echo off
+"$mysqldumpPath" --user=$user --password=$password --host=$host $database > "$backupFilePath"
+exit
+EOD;
 
-// Executa o comando com shell_exec e captura a saída
-$output = shell_exec($command);
+file_put_contents($batFilePath, $batContent);
 
-// Verifica se o arquivo foi criado
-if (file_exists($backupFile)) {
-    echo "Backup realizado com sucesso! Arquivo gerado: $backupFile";
-} else {
-    echo "Erro ao gerar backup.<br>";
-    echo "Saída do comando: <pre>" . htmlspecialchars($output) . "</pre>";
-}
+header('Content-Description: File Transfer');
+header('Content-Type: application/octet-stream');
+header('Content-Disposition: attachment; filename="fazer_backup.bat"');
+header('Expires: 0');
+header('Cache-Control: must-revalidate');
+header('Pragma: public');
+header('Content-Length: ' . filesize($batFilePath));
+readfile($batFilePath);
+unlink($batFilePath);
+exit;
 ?>
