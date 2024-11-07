@@ -6,7 +6,7 @@ function hasAccessLevel($levels)
 {
     global $conn;
 
-    // Assegura que $levels é um array (É om esse vetor que a gente separa quem enxerga determinadas funçÕes na tela)
+    // Assegura que $levels é um array (É om esse vetor que a gente separa quem enxerga determinadas funções na tela)
     if (!is_array($levels)) {
         $levels = [$levels];
     }
@@ -31,7 +31,6 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
     header("Location: usuario/login.php");
     exit;
 }
-
 ?>
 
 <!DOCTYPE html>
@@ -42,14 +41,13 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Painel de Controle - Gestão de Propriedades</title>
     <link rel="stylesheet" href="style/style_index.css">
-
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 </head>
 
 <body>
     <header>
         <h1>Painel de Controle - Gestão de Propriedades</h1>
-        <h3 href=""><?php echo "Bem Vindo, " . $_SESSION['nome_usuario'] . " ! "; ?></h3>
+        <h3><?php echo "Bem Vindo, " . $_SESSION['nome_usuario'] . " ! "; ?></h3>
         <button id="notification-btn">🔔 Notificações</button>
     </header>
 
@@ -119,7 +117,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                         echo '<p><strong>Data:</strong> ' . date('d/m/Y H:i:s', strtotime($log['data'])) . '</p>';
                         echo '<form method="POST">';
                         echo '<input type="hidden" name="notificacao_id" value="' . $log['id'] . '">';
-                        echo '<button class = "teste" type="submit" name="marcar_como_lida">Marcar como lida</button>';
+                        echo '<button class="teste" type="submit" name="marcar_como_lida">Marcar como lida</button>';
                         echo '</form>';
                         echo '</div>';
                     }
@@ -187,7 +185,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                 <li class="item-menu">
                     <a href="pagamentos/controle_financas.php">
                         <span class="icon"><i class="bi bi-currency-dollar"></i></span>
-                        <span class="txt-link">Finanças </span>
+                        <span class="txt-link">Finanças</span>
                     </a>
                 </li>
             <?php endif; ?>
@@ -204,6 +202,22 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                     <a href="localidade/cadastro_cidade.php">
                         <span class="icon"><i class="bi bi-geo-alt-fill"></i></span>
                         <span class="txt-link">Localidades</span>
+                    </a>
+                </li>
+            <?php endif; ?>
+
+            <!-- Botões de Backup -->
+            <?php if (hasAccessLevel([1])): ?>
+                <li class="item-menu">
+                    <a href="backup/banco_de_dados/gerar_backup.php">
+                        <span class="icon"><i class="bi bi-cloud-arrow-down-fill"></i></span>
+                        <span class="txt-link">Fazer Backup</span>
+                    </a>
+                </li>
+                <li class="item-menu">
+                    <a href="backup/banco_de_dados/restaurar.php">
+                        <span class="icon"><i class="bi bi-cloud-upload-fill"></i></span>
+                        <span class="txt-link">Restaurar Backup</span>
                     </a>
                 </li>
             <?php endif; ?>
@@ -229,9 +243,8 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
             <h2>Bem-vindo ao Sistema de Gestão de Propriedades</h2>
             <p>Escolha uma das opções no menu lateral para gerenciar suas propriedades e locações.</p>
         </section>
-    </main>
 
-    <main>
+        <!-- Seção de Propriedades Disponíveis -->
         <section>
             <h2>Suas Propriedades</h2>
             <p>Escolha uma das propriedades para realizar alguma operação</p>
@@ -240,26 +253,22 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
             <?php if (hasAccessLevel([1])): ?>
                 <div class="propriedades-container">
                     <?php
-
                     $limite = 6;
-
                     // Consulta para obter as últimas propriedades cadastradas
                     $sql = "SELECT p.*, t.nome_tipo, l.nome_cidade, s.nome_situacao, e.sigla 
                             FROM propriedade p 
                             JOIN tipo_prop t ON p.id_tipo_prop = t.id_tipo_prop
                             JOIN localizacao l ON p.id_localizacao = l.idlocalizacao
                             JOIN situacao s ON p.id_situacao = s.id_situacao
-                            JOIN estados e ON l.id_estado = e.id_estado ORDER BY idpropriedade DESC LIMIT $limite";
+                            JOIN estados e ON l.id_estado = e.id_estado 
+                            ORDER BY idpropriedade DESC 
+                            LIMIT $limite";
 
                     $result = $conn->query($sql);
 
-                    // Verifica se há resultados
                     if ($result && $result->num_rows > 0) {
-                        // Loop para exibir cada propriedade
                         while ($row = $result->fetch_assoc()) {
-                            // Gera o link para a página de detalhes da propriedade
                             $detalhesUrl = 'propriedade/detalhes_propriedade.php?id=' . $row['idpropriedade'];
-
                             echo '<a href="' . $detalhesUrl . '" class="propriedade-link">';
                             echo '<div class="propriedade-item">';
                             echo '<h4>' . htmlspecialchars($row['nome_propriedade']) . '</h4>';
@@ -275,27 +284,21 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                 </div>
             <?php endif; ?>
 
+            <!-- Exibir propriedades para nível de acesso 2 -->
             <?php if (hasAccessLevel([2])): ?>
                 <div class="propriedades-container">
                     <?php
-
                     $id_cliente = $_SESSION["id_cliente"];
-
-                    // Consulta para obter as últimas propriedades cadastradas
                     $sql = "SELECT contratos.*, propriedade.nome_propriedade, contratos.vencimento 
-                    FROM contratos 
-                    JOIN propriedade ON contratos.id_propriedade = propriedade.idpropriedade WHERE id_cliente = $id_cliente";
+                            FROM contratos 
+                            JOIN propriedade ON contratos.id_propriedade = propriedade.idpropriedade 
+                            WHERE id_cliente = $id_cliente";
 
                     $result = $conn->query($sql);
 
-
-                    // Verifica se há resultados
                     if ($result && $result->num_rows > 0) {
-                        // Loop para exibir cada propriedade
                         while ($row = $result->fetch_assoc()) {
-                            // Gera o link para a página de detalhes da propriedade
                             $detalhesUrl = 'propriedade/detalhes_propriedade_cliente.php?id=' . $row['id_propriedade'];
-
                             echo '<a href="' . $detalhesUrl . '" class="propriedade-link">';
                             echo '<div class="propriedade-item">';
                             echo '<h4>' . htmlspecialchars($row['nome_propriedade']) . '</h4>';
@@ -307,61 +310,6 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                     }
                     ?>
                 </div>
-                <?php if (hasAccessLevel([2])): ?>
-                    <div class="propriedades-container">
-                        <!-- Código anterior para exibir propriedades -->
-                    </div>
-
-                    <?php if (hasAccessLevel([2])): ?>
-                        <div class="propriedades-container">
-                            <!-- Código anterior para exibir propriedades -->
-                        </div>
-
-                        <div class="calendario-container">
-                            <h3>Calendário - Mês Atual</h3>
-                            <div id="calendario">
-                                <div class="calendario-header">
-                                    <div>Dom</div>
-                                    <div>Seg</div>
-                                    <div>Ter</div>
-                                    <div>Qua</div>
-                                    <div>Qui</div>
-                                    <div>Sex</div>
-                                    <div>Sab</div>
-                                </div>
-                                <div class="calendario-body">
-                                    <?php
-                                    // Obter o mês e o ano atual
-                                    $mes = date('m');
-                                    $ano = date('Y');
-
-                                    // Calcular o primeiro dia do mês e o número total de dias
-                                    $primeiroDia = strtotime("first day of $ano-$mes");
-                                    $numDias = date('t', $primeiroDia);
-                                    $diaInicio = date('w', $primeiroDia);
-
-                                    // Obter o dia atual
-                                    $diaAtual = date('j');
-
-                                    // Adicionar espaços vazios para os dias antes do primeiro dia do mês
-                                    for ($i = 0; $i < $diaInicio; $i++) {
-                                        echo '<div class="calendario-dia vazio"></div>';
-                                    }
-
-                                    // Exibir os dias do mês
-                                    for ($dia = 1; $dia <= $numDias; $dia++) {
-                                        // Verifica se o dia é o dia atual
-                                        $classeDia = ($dia == $diaAtual) ? 'calendario-dia ativo' : 'calendario-dia';
-                                        echo '<div class="' . $classeDia . '">' . $dia . '</div>';
-                                    }
-                                    ?>
-                                </div>
-                            </div>
-                        </div>
-                    <?php endif; ?>
-
-                <?php endif; ?>
-
             <?php endif; ?>
         </section>
     </main>
@@ -371,22 +319,18 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
     </footer>
 
     <script>
-        // JavaScript para abrir e fechar o popup de notificações
         const notificationBtn = document.getElementById('notification-btn');
         const notificationPopup = document.getElementById('notification-popup');
         const closeBtn = document.getElementById('close-btn');
 
         notificationBtn.addEventListener('click', () => {
-            // Alterna a exibição do popup
             notificationPopup.style.display = notificationPopup.style.display === 'block' ? 'none' : 'block';
         });
 
         closeBtn.addEventListener('click', () => {
-            // Oculta o popup
             notificationPopup.style.display = 'none';
         });
 
-        // Fechar o popup ao clicar fora dele
         window.addEventListener('click', (event) => {
             if (event.target !== notificationBtn && !notificationPopup.contains(event.target)) {
                 notificationPopup.style.display = 'none';
