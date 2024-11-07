@@ -11,9 +11,9 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
 $mesAtual = date('m');
 $anoAtual = date('Y');
 
-// Consulta SQL para obter pagamentos com status "pago" no mês e ano atuais
-$sql = "SELECT valor FROM pagamentos WHERE (status = 'pago' OR status = 'pago_vencido') AND MONTH(data_vencimento) = ? AND YEAR(data_vencimento) = ?";
-$stmt = $conn->prepare($sql);
+// Consultas SQL para obter os totais de cada status no mês atual
+$sqlPago = "SELECT valor FROM pagamentos WHERE (status = 'pago' OR status = 'pago_vencido') AND MONTH(data_vencimento) = ? AND YEAR(data_vencimento) = ?";
+$stmt = $conn->prepare($sqlPago);
 $stmt->bind_param("ii", $mesAtual, $anoAtual);
 $stmt->execute();
 $result = $stmt->get_result();
@@ -22,9 +22,8 @@ while ($pagamento = $result->fetch_assoc()) {
     $totalRecebidoMes += $pagamento['valor'];
 }
 
-// Consultar pagamentos com status "pendente"
-$sql = "SELECT valor FROM pagamentos WHERE status = 'pendente' AND MONTH(data_vencimento) = ? AND YEAR(data_vencimento) = ?";
-$stmt = $conn->prepare($sql);
+$sqlPendente = "SELECT valor FROM pagamentos WHERE status = 'pendente' AND MONTH(data_vencimento) = ? AND YEAR(data_vencimento) = ?";
+$stmt = $conn->prepare($sqlPendente);
 $stmt->bind_param("ii", $mesAtual, $anoAtual);
 $stmt->execute();
 $result = $stmt->get_result();
@@ -33,9 +32,8 @@ while ($pagamento = $result->fetch_assoc()) {
     $totalAEntrarMes += $pagamento['valor'];
 }
 
-// Consultar pagamentos com status "vencido"
-$sql = "SELECT valor FROM pagamentos WHERE status = 'vencido'";
-$stmt = $conn->prepare($sql);
+$sqlVencido = "SELECT valor FROM pagamentos WHERE status = 'vencido'";
+$stmt = $conn->prepare($sqlVencido);
 $stmt->execute();
 $result = $stmt->get_result();
 $totalFaltandoEntrarMes = 0;
@@ -43,18 +41,18 @@ while ($pagamento = $result->fetch_assoc()) {
     $totalFaltandoEntrarMes += $pagamento['valor'];
 }
 
-// Consultar pagamentos com status "confirmando"
-$sql = "SELECT valor FROM pagamentos WHERE status = 'confirmando'";
-$stmt = $conn->prepare($sql);
+$sqlConfirmando = "SELECT valor FROM pagamentos WHERE status = 'confirmando'";
+$stmt = $conn->prepare($sqlConfirmando);
 $stmt->execute();
 $result = $stmt->get_result();
-$totalFaltandoEntrarMes = 0;
+$totalFaltandoEntrarMes += 0;
 while ($pagamento = $result->fetch_assoc()) {
     $totalFaltandoEntrarMes += $pagamento['valor'];
 }
 
 $stmt->close();
 
+// Processamento do anexo de comprovante
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['comprovante'])) {
     $id_pagamento = $_POST['id_pagamento'];
     $arquivo = $_FILES['comprovante'];
@@ -65,11 +63,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['comprovante'])) {
         $caminhoCompleto = $pasta . $nomeArquivo;
 
         if (move_uploaded_file($arquivo['tmp_name'], $caminhoCompleto)) {
-            // Atualiza o status para "Confirmando Pagamento" e alimenta a data_pagamento
-            $dataAtual = date('Y-m-d H:i:s'); // Data e hora atuais
-            $sql = "UPDATE pagamentos SET comprovante = '$nomeArquivo', status = 'confirmando', data_pagamento = ? WHERE id_pagamento = ?";
+            // Atualiza o status para "confirmando" e insere a data de pagamento
+            $dataAtual = date('Y-m-d H:i:s');
+            $sql = "UPDATE pagamentos SET comprovante = ?, status = 'confirmando', data_pagamento = ? WHERE id_pagamento = ?";
             $stmt = $conn->prepare($sql);
-            $stmt->bind_param("si", $dataAtual, $id_pagamento);
+            $stmt->bind_param("ssi", $nomeArquivo, $dataAtual, $id_pagamento);
             if ($stmt->execute() === TRUE) {
                 echo "Comprovante anexado com sucesso!";
             } else {
@@ -82,27 +80,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['comprovante'])) {
         echo "Erro ao enviar o arquivo.";
     }
 }
-
-
-// Ajuste na consulta SQL para listar "pago_vencido" apenas no mês atual
-$sql = "SELECT cliente.nome_cliente, propriedade.nome_propriedade, p.id_pagamento, p.valor, p.data_vencimento, p.status, p.comprovante
-        FROM pagamentos AS p
-        JOIN contratos ON p.id_contrato = contratos.id_contratos
-        JOIN cliente ON contratos.id_cliente = cliente.idcliente
-        JOIN propriedade ON contratos.id_propriedade = propriedade.idpropriedade
-        WHERE 
-            (p.status = 'pendente' AND MONTH(p.data_vencimento) = ? AND YEAR(p.data_vencimento) = ?) 
-            OR p.status = 'vencido'
-            OR p.status = 'confirmando'
-            OR (p.status = 'pago_vencido' AND MONTH(p.data_pagamento) = ? AND YEAR(p.data_pagamento) = ?)
-        ORDER BY p.data_vencimento ASC";
-
-$stmt = $conn->prepare($sql);
-$stmt->bind_param("iiii", $mesAtual, $anoAtual, $mesAtual, $anoAtual);
-$stmt->execute();
-$result = $stmt->get_result();
-
-
 ?>
 
 <!DOCTYPE html>
@@ -121,20 +98,40 @@ $result = $stmt->get_result();
             <h1>Painel de Gestão de Aluguéis</h1>
         </div>
     </header>
-    <div class="btn-largura"><button class="back-button" onclick="window.location.href='../index.php'">← Voltar</button></div>
-    <div class="container">
-        <div class="totals">
-            <div class="total-item">
-                <strong>Total Recebido no Mês:</strong> R$ <?php echo number_format($totalRecebidoMes, 2, ',', '.'); ?>
-            </div>
-            <div class="total-item">
-                <strong>Total a Entrar no Mês:</strong> R$ <?php echo number_format($totalAEntrarMes, 2, ',', '.'); ?>
-            </div>
-            <div class="total-item">
-                <strong>Faltando Entrar no Mês:</strong> R$ <?php echo number_format($totalFaltandoEntrarMes, 2, ',', '.'); ?>
-            </div>
-        </div>
 
+    <!-- Filtro de Período -->
+    <div class="filtro_data">
+        <a href="../index.php">Voltar</a>
+        <form method="GET" action="">
+            <label for="data_inicio">Data Início:</label>
+            <input type="date" name="data_inicio" id="data_inicio" value="<?php echo $_GET['data_inicio'] ?? ''; ?>">
+            <label for="data_fim">Data Fim:</label>
+            <input type="date" name="data_fim" id="data_fim" value="<?php echo $_GET['data_fim'] ?? ''; ?>">
+            <button type="submit">Filtrar</button>
+        </form>
+    </div>
+
+    <?php
+    // Definir a data padrão como o mês atual caso nenhuma data seja fornecida
+    $dataInicio = $_GET['data_inicio'] ?? date('Y-m-01');
+    $dataFim = $_GET['data_fim'] ?? date('Y-m-t');
+
+    // Consulta SQL para buscar pagamentos entre as datas selecionadas ou do mês atual
+    $sql = "SELECT cliente.nome_cliente, propriedade.nome_propriedade, p.id_pagamento, p.valor, p.data_vencimento, p.status, p.comprovante
+            FROM pagamentos AS p
+            JOIN contratos ON p.id_contrato = contratos.id_contratos
+            JOIN cliente ON contratos.id_cliente = cliente.idcliente
+            JOIN propriedade ON contratos.id_propriedade = propriedade.idpropriedade
+            WHERE p.data_vencimento BETWEEN ? AND ?
+            ORDER BY p.data_vencimento ASC";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("ss", $dataInicio, $dataFim);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    ?>
+
+    <!-- Exibição da Tabela de Pagamentos -->
+    <div class="container">
         <table class="rental-table">
             <thead>
                 <tr>
@@ -176,9 +173,9 @@ $result = $stmt->get_result();
                             $logExistente = $resultadoVerificacao->fetch_assoc()['total'];
                             $stmtVerificarLog->close();
 
-                            //Se não houver uma notificação de vencimento existente, insere a nova notificação
+                            // Se não houver uma notificação de vencimento existente, insere a nova notificação
                             if ($logExistente == 0) {
-                                registrarLogVencimento('Notificação de Vencimento', 'Propriedade: ' . " " . $pagamento['nome_propriedade'] . " "  . 'Pagamento vencido para confirmação', 'controle_financas.php', $pagamento['id_pagamento']);
+                                registrarLogVencimento('Notificação de Vencimento', 'Propriedade: ' . " " . $pagamento['nome_propriedade'] . " " . 'Pagamento vencido para confirmação', 'controle_financas.php', $pagamento['id_pagamento']);
                             }
 
                             $stmt->close();
@@ -215,31 +212,22 @@ $result = $stmt->get_result();
                             <td><?php echo date('d/m/Y', strtotime($pagamento['data_vencimento'])); ?></td>
                             <td class="<?php echo $statusClass; ?>"><?php echo $statusTexto; ?></td>
                             <td>
-                                <?php if ($pagamento['status'] == 'pendente') : ?>
+                                <?php if ($pagamento['status'] == 'pendente' || $pagamento['status'] == 'vencido') : ?>
                                     <form method="POST" enctype="multipart/form-data">
                                         <input type="hidden" name="id_pagamento" value="<?php echo $pagamento['id_pagamento']; ?>">
-                                        <input type="hidden" name="valor" value="<?php echo $pagamento['valor']; ?>">
                                         <input type="file" name="comprovante" required>
                                         <button type="submit">Enviar Comprovante</button>
                                     </form>
                                 <?php elseif ($pagamento['status'] == 'confirmando') : ?>
                                     <form method="POST" action="confirmar_pagamento.php">
-                                        <input type="hidden" name="id_pagamento" value="<?php echo $pagamento['id_pagamento']; ?>">
                                         <input type="hidden" name="valor" value="<?php echo $pagamento['valor']; ?>">
+                                        <input type="hidden" name="id_pagamento" value="<?php echo $pagamento['id_pagamento']; ?>">
                                         <button type="submit">Confirmar Pagamento</button>
                                     </form>
-                                <?php elseif ($pagamento['status'] == 'vencido') : ?>
-                                    <form method="POST" enctype="multipart/form-data">
-                                        <input type="hidden" name="id_pagamento" value="<?php echo $pagamento['id_pagamento']; ?>">
-                                        <input type="hidden" name="valor" value="<?php echo $pagamento['valor']; ?>">
-                                        <input type="file" name="comprovante" required>
-                                        <button type="submit">Enviar Comprovante</button>
-                                    </form>
                                 <?php elseif (!empty($pagamento['comprovante'])) : ?>
-                                    <a class="ver_comprovante" href="uploads/<?php echo $pagamento['comprovante']; ?>" target="_blank">Comprovante</a>
+                                    <a class="ver_comprovante" href="uploads/<?php echo $pagamento['comprovante']; ?>" target="_blank">Ver Comprovante</a>
                                 <?php endif; ?>
                             </td>
-
                         </tr>
                 <?php
                     }
@@ -248,6 +236,7 @@ $result = $stmt->get_result();
                 }
                 ?>
             </tbody>
+
         </table>
     </div>
 </body>

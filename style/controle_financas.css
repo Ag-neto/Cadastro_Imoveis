@@ -62,7 +62,7 @@ header {
 }
 
 .container {
-    max-width: 1200px;
+    max-width: 1400px;
     margin: 0 auto;
     background-color: #fff;
     padding: 20px;
@@ -140,6 +140,65 @@ button[type="submit"]:hover {
 .ver_comprovante:hover {
     background-color: #2278d3; /* Azul escuro quando hover */
 }
+
+.filtro_data {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px auto;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    max-width: 500px;
+    background-color: #ffffff;
+}
+
+.filtro_data a {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 8px 17px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-right: 10px;
+    text-decoration: none;
+}
+
+.filtro_data a:hover{
+    background-color: #1b722f;
+}
+
+.filtro_data form {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.filtro_data label {
+    font-size: 14px;
+    color: #333;
+}
+
+.filtro_data input[type="date"] {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.filtro_data button {
+    padding: 8px 15px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.filtro_data button:hover {
+    background-color: #0056b3;
+}
+
 
 /* Estilos para o input file */
 input[type="file"] {
