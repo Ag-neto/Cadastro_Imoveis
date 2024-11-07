@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once "../../conexao/conexao.php"; // Caminho ajustado para sair das pastas backup/banco_de_dados
+require_once "../../conexao/conexao.php";
 
 if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
     header("Location: ../../usuario/login.php");
@@ -23,7 +23,7 @@ if (!file_exists($mysqldumpPath)) {
 
 // Define o caminho completo do arquivo de backup
 $backupDir = "../../backups";
-$backupFile = "$backupDir/backup_" . date('Y-m-d_H-i-s') . ".sql";
+$backupFilePath = "$backupDir/backup.bat"; // Define o nome do arquivo como "backup.bat"
 
 // Verifica se a pasta de backup existe e tenta criá-la se não existir
 if (!is_dir($backupDir)) {
@@ -32,17 +32,27 @@ if (!is_dir($backupDir)) {
     }
 }
 
-// Comando para gerar o backup e redirecionar erros
-$command = "\"$mysqldumpPath\" --user=$user --password=$password --host=$host $database > \"$backupFile\" 2>&1";
+// Conteúdo do arquivo .bat para fazer o backup
+$batContent = <<<EOD
+@echo off
+"$mysqldumpPath" --user=$user --password=$password --host=$host $database > "$backupDir/backup_" . date('Y-m-d_H-i-s') . ".sql"
+exit
+EOD;
 
-// Executa o comando com shell_exec e captura a saída
-$output = shell_exec($command);
+// Cria o arquivo .bat com o conteúdo definido
+file_put_contents($backupFilePath, $batContent);
 
-// Verifica se o arquivo foi criado
-if (file_exists($backupFile)) {
-    echo "Backup realizado com sucesso! Arquivo gerado: $backupFile";
-} else {
-    echo "Erro ao gerar backup.<br>";
-    echo "Saída do comando: <pre>" . htmlspecialchars($output) . "</pre>";
-}
+// Define os cabeçalhos para download do arquivo .bat
+header('Content-Description: File Transfer');
+header('Content-Type: application/octet-stream');
+header('Content-Disposition: attachment; filename="backup.bat"');
+header('Expires: 0');
+header('Cache-Control: must-revalidate');
+header('Pragma: public');
+header('Content-Length: ' . filesize($backupFilePath));
+readfile($backupFilePath);
+
+// Remove o arquivo temporário após o download
+unlink($backupFilePath);
+exit;
 ?>
