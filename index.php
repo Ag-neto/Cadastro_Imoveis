@@ -319,6 +319,17 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
     </footer>
 
     <script>
+        const nav = document.querySelector('nav.menu-lateral');
+
+        nav.addEventListener('mouseleave', () => {
+            nav.classList.add('recolhido');
+        });
+
+        nav.addEventListener('mouseenter', () => {
+            nav.classList.remove('recolhido');
+        });
+
+
         const notificationBtn = document.getElementById('notification-btn');
         const notificationPopup = document.getElementById('notification-popup');
         const closeBtn = document.getElementById('close-btn');
