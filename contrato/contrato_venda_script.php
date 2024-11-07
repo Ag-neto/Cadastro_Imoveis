@@ -21,6 +21,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $sql = "INSERT INTO contratos (id_propriedade, id_cliente, valor, data_compra, tipo_contrato) 
                 VALUES ('$idpropriedade', '$idcliente', '$valor_venda', '$data_conclusao', '$tipo_contrato')";
 
+        // Atualizar a situação da propriedade para "Alugado"
+        $id_situacao_venda = 6;
+        $sql_update_situacao = "UPDATE propriedade SET id_situacao = '$id_situacao_venda' WHERE idpropriedade = '$idpropriedade'";
+        mysqli_query($conn, $sql_update_situacao);
+
         if (mysqli_query($conn, $sql)) {
             header('Location: listar_contratos.php');
             exit();

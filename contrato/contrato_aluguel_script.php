@@ -32,6 +32,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $id_contrato = mysqli_insert_id($conn);
                 $data_vencimento = new DateTime($vencimento);
 
+                // Atualizar a situação da propriedade para "Alugado"
+                $id_situacao_alugado = 7; // Supondo que "Alugado" tem o id_situacao = 7
+                $sql_update_situacao = "UPDATE propriedade SET id_situacao = '$id_situacao_alugado' WHERE idpropriedade = '$idpropriedade'";
+                mysqli_query($conn, $sql_update_situacao);
+
                 while ($data_vencimento <= $fim) {
                     $sql_pagamento = "INSERT INTO pagamentos (id_contrato, valor, data_vencimento, status, comprovante) 
                                       VALUES ('$id_contrato', '$valor_aluguel', '{$data_vencimento->format('Y-m-d')}', 'pendente', '')";
