@@ -121,7 +121,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['comprovante'])) {
 
         <!-- Filtro de Período -->
         <div class="filtro_data">
-            <a href="../index.php">Voltar</a>
             <form method="GET" action="">
                 <label for="data_inicio">Data Início:</label>
                 <input type="date" name="data_inicio" id="data_inicio" value="<?php echo $_GET['data_inicio'] ?? ''; ?>">
