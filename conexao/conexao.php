@@ -70,7 +70,7 @@ function mostra_data($data){
     return $escreve;
 }
 
-function registrarLogVencimento($usuarioId, $nivelAcesso, $acao, $descricao = null, $urlDestino = null, $idpagamento)
+function registrarLogVencimento($acao, $descricao = null, $urlDestino = null, $idpagamento)
 {
     global $conn;
 
@@ -87,8 +87,8 @@ function registrarLogVencimento($usuarioId, $nivelAcesso, $acao, $descricao = nu
     // Se não houver log existente, insere o novo log
     if ($logExistente == 0) {
         // Preparando a consulta SQL para inserir o log
-        $sql = "INSERT INTO logs (id_usuario, nivel_acesso, acao, descricao, url_destino, id_pagamento) 
-                VALUES (?, ?, ?, ?, ?, ?)";
+        $sql = "INSERT INTO logs (acao, descricao, url_destino, id_pagamento) 
+                VALUES (?, ?, ?, ?)";
 
         if ($stmt = $conn->prepare($sql)) {
             // Associando os parâmetros

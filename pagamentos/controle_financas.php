@@ -147,6 +147,21 @@ $result = $stmt->get_result();
                             if ($stmt->execute()) {
                                 $pagamento['status'] = 'vencido';
                             }
+
+                            // Verifica se já existe uma notificação para este pagamento
+                            //$sqlVerificarLog = "SELECT COUNT(*) AS total FROM logs WHERE id_usuario = ? AND acao = 'Notificação de Vencimento' AND descricao = 'Pagamento vencido para confirmação' AND id_pagamento = ?";
+                            //$stmtVerificarLog = $conn->prepare($sqlVerificarLog);
+                            //$stmtVerificarLog->bind_param("ii", $_SESSION['idusuario'], $pagamento['id_pagamento']);
+                            //$stmtVerificarLog->execute();
+                            //$resultadoVerificacao = $stmtVerificarLog->get_result();
+                            //$logExistente = $resultadoVerificacao->fetch_assoc()['total'];
+                            //$stmtVerificarLog->close(); 
+
+                            // Se não houver uma notificação de vencimento existente, insere a nova notificação
+                            //if ($logExistente == 0) {
+                                //registrarLogVencimento('Notificação de Vencimento', 'Propriedade: ' . " " . $pagamento['nome_propriedade'] . " "  . 'Pagamento vencido para confirmação', 'pag_cliente.php', $pagamento['id_pagamento']);
+                            //}
+
                             $stmt->close();
                         } elseif ($timestampServidor < $timestampVencimento && $pagamento['status'] === 'vencido') {
                             $id_pagamento = $pagamento['id_pagamento'];
@@ -194,8 +209,15 @@ $result = $stmt->get_result();
                                         <input type="hidden" name="valor" value="<?php echo $pagamento['valor']; ?>">
                                         <button type="submit">Confirmar Pagamento</button>
                                     </form>
+                                    <?php elseif ($pagamento['status'] == 'vencido') : ?>
+                                        <form method="POST" enctype="multipart/form-data">
+                                        <input type="hidden" name="id_pagamento" value="<?php echo $pagamento['id_pagamento']; ?>">
+                                        <input type="hidden" name="valor" value="<?php echo $pagamento['valor']; ?>">
+                                        <input type="file" name="comprovante" required>
+                                        <button type="submit">Enviar Comprovante</button>
+                                    </form>
                                 <?php elseif (!empty($pagamento['comprovante'])) : ?>
-                                    <a class="ver_comprovante" href="uploads/<?php echo $pagamento['comprovante']; ?>" target="_blank">Visualizar Comprovante</a>
+                                    <a class="ver_comprovante" href="uploads/<?php echo $pagamento['comprovante']; ?>" target="_blank">Comprovante</a>
                                 <?php endif; ?>
                             </td>
 
