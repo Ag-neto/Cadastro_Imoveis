@@ -123,7 +123,7 @@ if (isset($_POST['restore'])) {
         <label for="backup_file">Selecione o arquivo de backup (.bat):</label>
         <input type="file" name="backup_file" accept=".bat">
         <button type="submit" name="restore">Restaurar Backup</button>
+        <a href="../../index.php">Voltar</a>
     </form>
-    <a href="../../index.php">Voltar</a>
 </body>
 </html>
