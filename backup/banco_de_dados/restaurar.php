@@ -43,6 +43,79 @@ if (isset($_POST['restore'])) {
 <head>
     <meta charset="UTF-8">
     <title>Restaurar Backup</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        h2 {
+            color: #333;
+            text-align: center;
+        }
+
+        .container {
+            background-color: #fff;
+            padding: 20px 30px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            width: 400px;
+            text-align: center;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+            color: #555;
+        }
+
+        input[type="file"] {
+            margin: 10px 0 20px;
+            padding: 8px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        a{
+            background-color: #4CAF50;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+            text-decoration: none;
+        }
+
+        a:hover {
+            background-color: #45a049;
+        }
+    </style>
+
 </head>
 <body>
     <h2>Restaurar Backup</h2>
@@ -51,5 +124,6 @@ if (isset($_POST['restore'])) {
         <input type="file" name="backup_file" accept=".bat">
         <button type="submit" name="restore">Restaurar Backup</button>
     </form>
+    <a href="../../index.php">Voltar</a>
 </body>
 </html>
