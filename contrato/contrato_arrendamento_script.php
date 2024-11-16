@@ -44,13 +44,17 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                         echo "<p class='error'>O dia de cobrança deve estar entre 1 e 31!</p>";
                     } else {
                         $tipo_contrato = "ARRENDAMENTO";
-                        
+
                         // Ajuste para formatar o valor de vencimento como data
                         $vencimento_data = date("Y-m-d", strtotime("$data_ini +$dia_cobranca days"));
 
                         $sql = "INSERT INTO contratos (id_propriedade, id_cliente, valor, data_inicio_residencia, data_final_residencia, tipo_contrato, vencimento, periodo_residencia) 
                                 VALUES ('$idpropriedade', '$idarrendatario', '$valor', '$data_ini', '$data_fim', '$tipo_contrato', '$vencimento_data', '$periodo_residencia')";
 
+                        // Atualizar a situação da propriedade para "Alugado"
+                        $id_situacao_arrendado = 9; 
+                        $sql_update_situacao = "UPDATE propriedade SET id_situacao = '$id_situacao_arrendado' WHERE idpropriedade = '$idpropriedade'";
+                        mysqli_query($conn, $sql_update_situacao);
                         if (mysqli_query($conn, $sql)) {
                             header('Location: listar_contratos.php');
                             exit();

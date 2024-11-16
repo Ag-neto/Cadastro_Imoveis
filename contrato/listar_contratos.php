@@ -6,15 +6,14 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
     header("Location: ../usuario/login.php");
     exit;
 }
-?>
 
-<?php
+$id_situacao_para_alugar = 2;
+$id_situacao_arrendamento = 3;
 
 // Inicializar a variável para armazenar a consulta
-$sql = "SELECT c.*, p.nome_propriedade, i.nome_cliente FROM contratos c 
+$sql = "SELECT c.*, p.nome_propriedade, p.id_situacao, p.id_tipo_prop, i.nome_cliente FROM contratos c 
 JOIN propriedade p ON c.id_propriedade = p.idpropriedade 
 JOIN cliente i ON c.id_cliente = i.idcliente";
-
 
 // Verifica se há uma busca
 if (isset($_GET['busca']) && $_GET['busca'] != '') {
@@ -36,6 +35,23 @@ $contratos = [];
 if ($result) {
     while ($linha = mysqli_fetch_assoc($result)) {
         $contratos[] = $linha;
+
+        // Verificar se o contrato terminou
+        $data_final = new DateTime($linha['data_final_residencia']);
+        $data_atual = new DateTime();
+
+        // Se o contrato terminou e a propriedade é de "Aluguel" e não está com a situação "Para Alugar", atualize a situação
+        if ($data_final < $data_atual && $linha['id_situacao'] != $id_situacao_para_alugar && $linha['id_tipo_prop'] == 2) {
+            $id_propriedade = $linha['id_propriedade'];
+            $sql_update_situacao = "UPDATE propriedade SET id_situacao = '$id_situacao_para_alugar' WHERE idpropriedade = '$id_propriedade'";
+            mysqli_query($conn, $sql_update_situacao);
+        }
+        // Se o contrato terminou e a propriedade é de "Arrendamento" e não está com a situação "Arrendamento", atualize a situação
+        elseif ($data_final < $data_atual && $linha['id_situacao'] != $id_situacao_arrendamento && $linha['id_tipo_prop'] ==    3) {
+            $id_propriedade = $linha['id_propriedade'];
+            $sql_update_situacao = "UPDATE propriedade SET id_situacao = '$id_situacao_arrendamento' WHERE idpropriedade = '$id_propriedade'";
+            mysqli_query($conn, $sql_update_situacao);
+        }
     }
 }
 ?>
@@ -112,7 +128,6 @@ if ($result) {
                                 echo "<td><a href='detalhes_contrato_arrendamento.php?id=$idContrato'>Ver Detalhes</a></td>";
                             }
                             ?>
-
 
                         </tr>
                     <?php endforeach; ?>
