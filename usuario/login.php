@@ -61,7 +61,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <button type="submit">Entrar</button>
         </form>
         <div class="forgot-password">
-            <a href="#">Esqueceu a senha?</a>
+            <!--<a href="#">Esqueceu a senha?</a> Será habilitado quando haver a atualização onde usuários clientes acessarão o sistema!-->
         </div>
     </div>
 </body>

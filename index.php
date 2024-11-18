@@ -5,18 +5,10 @@ require_once "conexao/conexao.php";
 function hasAccessLevel($levels)
 {
     global $conn;
-
-    // Assegura que $levels é um array (É com esse vetor que a gente separa quem enxerga determinadas funções na tela)
     if (!is_array($levels)) {
         $levels = [$levels];
     }
-
-    // Verifica se o usuário logado possui um dos níveis de acesso fornecidos
-    if (isset($_SESSION["idnivel_acesso"]) && in_array($_SESSION["idnivel_acesso"], $levels)) {
-        return true;
-    }
-
-    return false;
+    return isset($_SESSION["idnivel_acesso"]) && in_array($_SESSION["idnivel_acesso"], $levels);
 }
 
 function logout()
@@ -27,11 +19,17 @@ function logout()
     exit;
 }
 
+// Processar logout antes de qualquer saída HTML
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST["logout"])) {
+    logout();
+}
+
 if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
     header("Location: usuario/login.php");
     exit;
 }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="pt-br">
