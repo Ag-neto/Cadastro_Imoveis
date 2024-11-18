@@ -1,7 +1,7 @@
 <?php
 $server = "localhost";
 $user = "root";
-$password = "gui13579";
+$password = "root";
 $bd = "controledepropriedade";
 
 // Tentativa de conexão com o banco de dados
@@ -70,7 +70,7 @@ function mostra_data($data){
     return $escreve;
 }
 
-function registrarLogVencimento($acao, $descricao = null, $urlDestino = null, $idpagamento)
+function registrarLogVencimento($idpagamento, $acao, $descricao = null, $urlDestino = null)
 {
     global $conn;
 
