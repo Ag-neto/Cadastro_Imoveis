@@ -14,7 +14,7 @@ $password = '';
 $host = 'localhost';
 
 // Caminho completo para o mysqldump no XAMPP
-$mysqldumpPath = "C:\\xampp\\mysql\\bin\\mysqldump.exe";
+$mysqldumpPath = "C:\\Program Files\\MySQL\\MySQL Server 8.0\bin\\mysqldump.exe";
 
 // Verifica se o arquivo mysqldump.exe existe no caminho especificado
 if (!file_exists($mysqldumpPath)) {
