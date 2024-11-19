@@ -62,7 +62,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
 
                 <div class="form-item">
                     <label for="valor_adquirido">Valor - Adquirido (R$):</label>
-                    <input type="number" id="valor_adquirido" name="valor_adquirido" placeholder="Ex: 250000" required>
+                    <input type="text" id="valor_adquirido" name="valor_adquirido" placeholder="Ex: 250000" required>
                 </div>
 
                 <div class="form-item">
@@ -77,7 +77,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
 
                 <div class="form-item">
                     <label for="valor_imposto">Valor do imposto:</label>
-                    <input type="number" name="valor_imposto" id="valor_imposto">
+                    <input type="text" name="valor_imposto" id="valor_imposto">
                 </div>
 
                 <div class="form-item">
@@ -144,6 +144,29 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
     <footer>
         <p>&copy; 2024 - Sistema de Gestão de Propriedade</p>
     </footer>
+
+    <script>
+        // Função para formatar valores como moeda
+        function formatCurrency(input) {
+            // Remove todos os caracteres que não sejam números
+            let value = input.value.replace(/\D/g, "");
+
+            // Converte para número inteiro e formata para duas casas decimais
+            value = (value / 100).toFixed(2);
+
+            // Substitui ponto por vírgula
+            input.value = value.toString().replace(".", ",");
+        }
+
+        // Eventos para aplicar a formatação
+        document.getElementById("valor_adquirido").addEventListener("input", function () {
+            formatCurrency(this);
+        });
+
+        document.getElementById("valor_imposto").addEventListener("input", function () {
+            formatCurrency(this);
+        });
+    </script>
 </body>
 
 </html>

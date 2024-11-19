@@ -28,26 +28,39 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
             <?php
 
             if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-                $nome = $_POST['nome_propriedade'];
-                $localidade = $_POST['id_localizacao'];
-                $tipo = $_POST['id_tipo_prop'];
-                $tamanho = $_POST['tamanho'];
-                $valor_adquirido = $_POST['valor_adquirido'];
-                $endereco = $_POST['endereco'];
-                $situacao = $_POST['id_situacao'];
-                $data = $_POST['data'];
-                $tipo_imposto = $_POST['tipo_imposto'];
-                $valor_imposto = $_POST['valor_imposto'];
-                $periodo_imposto = $_POST['periodo_imposto'];
+                // Sanitização dos dados de entrada
+                $nome = mysqli_real_escape_string($conn, $_POST['nome_propriedade']);
+                $localidade = mysqli_real_escape_string($conn, $_POST['id_localizacao']);
+                $tipo = mysqli_real_escape_string($conn, $_POST['id_tipo_prop']);
+                $tamanho = mysqli_real_escape_string($conn, $_POST['tamanho']);
+                $endereco = mysqli_real_escape_string($conn, $_POST['endereco']);
+                $situacao = mysqli_real_escape_string($conn, $_POST['id_situacao']);
+                $data = mysqli_real_escape_string($conn, $_POST['data']);
+                $tipo_imposto = mysqli_real_escape_string($conn, $_POST['tipo_imposto']);
+                $periodo_imposto = mysqli_real_escape_string($conn, $_POST['periodo_imposto']);
 
+                // Convertendo valores para formato numérico adequado
+                $valor_adquirido = str_replace(['.', ','], ['', '.'], $_POST['valor_adquirido']);
+                $valor_imposto = str_replace(['.', ','], ['', '.'], $_POST['valor_imposto']);
 
-                $sql = "INSERT INTO propriedade (nome_propriedade, id_localizacao, id_tipo_prop, tamanho, valor_adquirido, endereco, id_situacao, data_registro, tipo_imposto, valor_imposto, periodo_imposto) VALUES ('$nome', '$localidade', '$tipo', '$tamanho', '$valor_adquirido', '$endereco', '$situacao', '$data', '$tipo_imposto', '$valor_imposto', '$periodo_imposto')";
+                // Verificação se os valores foram convertidos corretamente
+                if (!is_numeric($valor_adquirido) || (!empty($valor_imposto) && !is_numeric($valor_imposto))) {
+                    echo "<p class='error'>Erro ao processar os valores monetários. Por favor, revise os campos de valor.</p>";
+                    exit;
+                }
 
+                // SQL para inserir os dados
+                $sql = "INSERT INTO propriedade 
+                    (nome_propriedade, id_localizacao, id_tipo_prop, tamanho, valor_adquirido, endereco, id_situacao, data_registro, tipo_imposto, valor_imposto, periodo_imposto) 
+                    VALUES 
+                    ('$nome', '$localidade', '$tipo', '$tamanho', '$valor_adquirido', '$endereco', '$situacao', '$data', '$tipo_imposto', '$valor_imposto', '$periodo_imposto')";
+
+                // Executa o comando e verifica sucesso
                 if (mysqli_query($conn, $sql)) {
                     echo "<p class='success'>$nome cadastrado(a) com sucesso!</p>";
                     header('Location: add_documento.php');
                 } else {
-                    echo "<p class='error'>$nome não foi cadastrado(a)!</p>";
+                    echo "<p class='error'>Erro: " . mysqli_error($conn) . "</p>";
                 }
             }
             ?>
