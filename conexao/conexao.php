@@ -1,7 +1,7 @@
 <?php
 $server = "localhost";
 $user = "root";
-$password = "gui13579";
+$password = "root";
 $bd = "controledepropriedade";
 
 // Tentativa de conexão com o banco de dados
@@ -70,44 +70,46 @@ function mostra_data($data){
     return $escreve;
 }
 
-function registrarLogVencimento($idpagamento, $acao, $descricao = null, $urlDestino = null)
-{
-    global $conn;
+//function registrarLogVencimento($idpagamento, $acao, $descricao = null, $urlDestino = null)
+//{
+    //global $conn;
 
-    // Verifica se já existe um log para o mesmo pagamento e ação hoje
-    $sqlVerificarLog = "SELECT COUNT(*) AS total FROM logs 
-                        WHERE acao = ? AND id_pagamento = ?"; // Supondo que você tenha uma coluna 'data_registro' no formato DATE ou DATETIME
-    $stmtVerificarLog = $conn->prepare($sqlVerificarLog);
-    $stmtVerificarLog->bind_param("si", $acao, $idpagamento);
-    $stmtVerificarLog->execute();
-    $resultado = $stmtVerificarLog->get_result();
-    $logExistente = $resultado->fetch_assoc()['total'];
-    $stmtVerificarLog->close();
+    // Verifica se o pagamento existe
+    //$sqlVerificarPagamento = "SELECT id_pagamento FROM pagamentos WHERE id_pagamento = ?";
+    //$stmtVerificarPagamento = $conn->prepare($sqlVerificarPagamento);
+    //$stmtVerificarPagamento->bind_param("i", $idpagamento);
+    //$stmtVerificarPagamento->execute();
+    //$resultadoPagamento = $stmtVerificarPagamento->get_result();
 
-    // Se não houver log existente, insere o novo log
-    if ($logExistente == 0) {
-        // Preparando a consulta SQL para inserir o log
-        $sql = "INSERT INTO logs (acao, descricao, url_destino, id_pagamento) 
-                VALUES (?, ?, ?, ?)";
+    //if ($resultadoPagamento->num_rows == 0) {
+        //error_log("Erro: ID de pagamento ($idpagamento) não encontrado. Log não será registrado.");
+        //return; // Interrompe a execução se o pagamento não existe
+    //}
 
-        if ($stmt = $conn->prepare($sql)) {
-            // Associando os parâmetros
-            $stmt->bind_param("sssi", $acao, $descricao, $urlDestino, $idpagamento);
+    //$stmtVerificarPagamento->close();
 
-            // Executando a consulta
-            if (!$stmt->execute()) {
-                error_log("Erro ao registrar log: " . $stmt->error);
-            }
+    // Continuação da lógica para registrar o log
+    //$id_usuario = $_SESSION['id_usuario'] ?? 1;
+    //$id_nivel_acesso = $_SESSION['idnivel_acesso'] ?? 1;
+    //$data_pagamento = date("Y-m-d");
 
-            // Fechar o statement
-            $stmt->close();
-        } else {
-            error_log("Erro na preparação da consulta SQL para o log: " . $conn->error);
-        }
-    } else {
-        error_log("Log já existe para o pagamento ID: $idpagamento e ação: $acao hoje.");
-    }
-}
+    //$sql = "INSERT INTO logs (acao, descricao, url_destino, id_pagamento, id_usuario, nivel_acesso, data) 
+            //VALUES (?, ?, ?, ?, ?, ?, ?)";
+
+    //if ($stmt = $conn->prepare($sql)) {
+        //$stmt->bind_param("sssiiis", $acao, $descricao, $urlDestino, $idpagamento, $id_usuario, $id_nivel_acesso, $data_pagamento);
+
+        //if (!$stmt->execute()) {
+            //error_log("Erro ao registrar log: " . $stmt->error);
+        //}
+
+        //$stmt->close();
+    //} else {
+        //error_log("Erro na preparação da consulta SQL para o log: " . $conn->error);
+    //}
+//}
+
+
 
 
 ?>
