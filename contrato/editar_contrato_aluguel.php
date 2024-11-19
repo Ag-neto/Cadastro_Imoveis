@@ -123,7 +123,7 @@ $vencimento = isset($linha['vencimento']) ? date('Y-m-d', strtotime($linha['venc
             <!-- Botão para atualizar contrato -->
             <button type="submit">Salvar</button>
 
-            <a href="detalhes_contrato.php?id=<?php echo $linha['id_contratos']; ?>">Voltar</a>
+            <a href="detalhes_contrato_aluguel.php?id=<?php echo $linha['id_contratos']; ?>">Voltar</a>
 
         </form>
     </section>
