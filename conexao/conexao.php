@@ -70,44 +70,26 @@ function mostra_data($data){
     return $escreve;
 }
 
-//function registrarLogVencimento($idpagamento, $acao, $descricao = null, $urlDestino = null)
-//{
-    //global $conn;
+function registrarLogVencimento($idPagamento, $descricao, $urlDestino, $conn)
+{
+    $acao = "Notificação de Vencimento";
+    $idUsuario = $_SESSION['id_usuario'] ?? 1; // Usuário logado ou usuário padrão
+    $nivelAcesso = $_SESSION['idnivel_acesso'] ?? 1; // Nível de acesso padrão
+    $dataAtual = date("Y-m-d H:i:s");
 
-    // Verifica se o pagamento existe
-    //$sqlVerificarPagamento = "SELECT id_pagamento FROM pagamentos WHERE id_pagamento = ?";
-    //$stmtVerificarPagamento = $conn->prepare($sqlVerificarPagamento);
-    //$stmtVerificarPagamento->bind_param("i", $idpagamento);
-    //$stmtVerificarPagamento->execute();
-    //$resultadoPagamento = $stmtVerificarPagamento->get_result();
+    // Insere o log na tabela
+    $sql = "INSERT INTO logs (acao, descricao, url_destino, id_pagamento, id_usuario, nivel_acesso, data) 
+            VALUES (?, ?, ?, ?, ?, ?, ?)";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("sssiiis", $acao, $descricao, $urlDestino, $idPagamento, $idUsuario, $nivelAcesso, $dataAtual);
 
-    //if ($resultadoPagamento->num_rows == 0) {
-        //error_log("Erro: ID de pagamento ($idpagamento) não encontrado. Log não será registrado.");
-        //return; // Interrompe a execução se o pagamento não existe
-    //}
+    if (!$stmt->execute()) {
+        error_log("Erro ao registrar log: " . $stmt->error);
+    }
 
-    //$stmtVerificarPagamento->close();
+    $stmt->close();
+}
 
-    // Continuação da lógica para registrar o log
-    //$id_usuario = $_SESSION['id_usuario'] ?? 1;
-    //$id_nivel_acesso = $_SESSION['idnivel_acesso'] ?? 1;
-    //$data_pagamento = date("Y-m-d");
-
-    //$sql = "INSERT INTO logs (acao, descricao, url_destino, id_pagamento, id_usuario, nivel_acesso, data) 
-            //VALUES (?, ?, ?, ?, ?, ?, ?)";
-
-    //if ($stmt = $conn->prepare($sql)) {
-        //$stmt->bind_param("sssiiis", $acao, $descricao, $urlDestino, $idpagamento, $id_usuario, $id_nivel_acesso, $data_pagamento);
-
-        //if (!$stmt->execute()) {
-            //error_log("Erro ao registrar log: " . $stmt->error);
-        //}
-
-        //$stmt->close();
-    //} else {
-        //error_log("Erro na preparação da consulta SQL para o log: " . $conn->error);
-    //}
-//}
 
 
 

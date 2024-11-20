@@ -171,32 +171,37 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['comprovante'])) {
 
                             // Atualizando o status se necessário
                             if ($timestampServidor > $timestampVencimento && !$pagamento['comprovante'] && $pagamento['status'] !== 'pago') {
-                                $id_pagamento = $pagamento['id_pagamento']; // Pegue o ID do pagamento
+                                $id_pagamento = $pagamento['id_pagamento'];
+                            
+                                // Atualiza o status para "vencido"
                                 $update_sql = "UPDATE pagamentos SET status = 'vencido' WHERE id_pagamento = ?";
                                 $stmt = $conn->prepare($update_sql);
                                 $stmt->bind_param("i", $id_pagamento);
                                 if ($stmt->execute()) {
                                     $pagamento['status'] = 'vencido';
                                 }
-
+                            
                                 // Verifica se já existe uma notificação para este pagamento
-                                $sqlVerificarLog = "SELECT COUNT(*) AS total FROM logs WHERE acao = 'Notificação de Vencimento' AND descricao = 'Pagamento vencido para confirmação' AND id_pagamento = ?";
+                                $sqlVerificarLog = "SELECT COUNT(*) AS total FROM logs 
+                                                    WHERE acao = 'Notificação de Vencimento' 
+                                                    AND descricao = 'Pagamento vencido para confirmação' 
+                                                    AND id_pagamento = ?";
                                 $stmtVerificarLog = $conn->prepare($sqlVerificarLog);
-                                $stmtVerificarLog->bind_param("i", $pagamento['id_pagamento']);
+                                $stmtVerificarLog->bind_param("i", $id_pagamento);
                                 $stmtVerificarLog->execute();
                                 $resultadoVerificacao = $stmtVerificarLog->get_result();
                                 $logExistente = $resultadoVerificacao->fetch_assoc()['total'];
                                 $stmtVerificarLog->close();
-
-
-
-                                // Se não houver uma notificação de vencimento existente, insere a nova notificação
-                                //if ($logExistente == 0) {
-                                    //registrarLogVencimento('Notificação de Vencimento', 'Propriedade: ' . " " . $pagamento['nome_propriedade'] . " " . 'Pagamento vencido //para confirmação', 'controle_financas.php', $pagamento['id_pagamento']);
-                                //}
-
+                            
+                                // Registra a notificação se não existir
+                                if ($logExistente == 0) {
+                                    $descricao = "Propriedade: {$pagamento['nome_propriedade']} - Pagamento vencido para confirmação";
+                                    registrarLogVencimento($id_pagamento, $descricao, 'controle_financas.php', $conn);
+                                }
+                            
                                 $stmt->close();
-                            } elseif ($timestampServidor < $timestampVencimento && $pagamento['status'] === 'vencido') {
+                            }
+                             elseif ($timestampServidor < $timestampVencimento && $pagamento['status'] === 'vencido') {
                                 $id_pagamento = $pagamento['id_pagamento'];
                                 $update_sql = "UPDATE pagamentos SET status = 'pendente' WHERE id_pagamento = ?";
                                 $stmt = $conn->prepare($update_sql);
