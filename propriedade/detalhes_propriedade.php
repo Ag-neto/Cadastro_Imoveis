@@ -100,7 +100,7 @@ if (isset($_GET['id'])) {
             </div>
             <div class="info-item">
                 <strong>Valor do Imposto:</strong>
-                <span><?php echo $propriedade['valor_imposto']; ?></span>
+                <span>R$ <?php echo number_format($propriedade['valor_imposto'], 2, ',', '.'); ?></span>
             </div>
             <div class="info-item">
                 <strong>Periodicidade do Imposto:</strong>

@@ -146,25 +146,50 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
     </footer>
 
     <script>
-        // Função para formatar valores como moeda
+        // Função para formatar valores como moeda com separador de milhar
         function formatCurrency(input) {
-            // Remove todos os caracteres que não sejam números
+            // Remove todos os caracteres que não sejam números e vírgula
             let value = input.value.replace(/\D/g, "");
 
             // Converte para número inteiro e formata para duas casas decimais
             value = (value / 100).toFixed(2);
 
             // Substitui ponto por vírgula
-            input.value = value.toString().replace(".", ",");
+            value = value.replace(".", ",");
+
+            // Formata com separador de milhar
+            let parts = value.split(",");
+
+            // Formata a parte inteira com separadores de milhar
+            parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+
+            // Junta novamente a parte inteira com a parte decimal
+            input.value = parts.join(",");
+        }
+
+        // Limpa a formatação de moeda antes de enviar o valor para o banco de dados
+        function limparFormatacaoMoeda(input) {
+            let valor = input.value;
+
+            // Remove pontos de milhar e a vírgula decimal, convertendo para um número correto
+            valor = valor.replace(/\./g, ""); // Remove os pontos
+            valor = valor.replace(",", "."); // Substitui vírgula por ponto
+
+            input.value = parseFloat(valor); // Altera o valor para um número
         }
 
         // Eventos para aplicar a formatação
-        document.getElementById("valor_adquirido").addEventListener("input", function () {
+        document.getElementById("valor_adquirido").addEventListener("input", function() {
+            formatCurrency(this);
+        });
+        document.getElementById("valor_imposto").addEventListener("input", function() {
             formatCurrency(this);
         });
 
-        document.getElementById("valor_imposto").addEventListener("input", function () {
-            formatCurrency(this);
+        // Limpar formatação antes de enviar
+        document.querySelector("form").addEventListener("submit", function() {
+            limparFormatacaoMoeda(document.getElementById("valor_adquirido"));
+            limparFormatacaoMoeda(document.getElementById("valor_imposto"));
         });
     </script>
 </body>
