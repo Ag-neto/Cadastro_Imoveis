@@ -14,6 +14,7 @@ if (isset($_GET['id'])) {
     $sql = "SELECT 
             contratos.*,
             propriedade.nome_propriedade,
+            propriedade.idpropriedade,
             cliente.nome_cliente
             FROM contratos
             JOIN propriedade ON contratos.id_propriedade = propriedade.idpropriedade
@@ -122,11 +123,13 @@ if (isset($_GET['id'])) {
 
             <!-- Formulário para Deletar Contrato -->
             <form method="POST" action="deletar_contrato.php" style="display:inline;">
-                <input type="hidden" name="id_contrato" value="<?php echo $contrato['id_contratos']; ?>">
-                <button type="submit" class="form_deletar">
-                    Deletar Contrato
-                </button>
+            <input type="hidden" name="id_contrato" value="<?php echo $contrato['id_contratos']; ?>">
+            <input type="hidden" name="id_propriedade" value="<?php echo $contrato['idpropriedade']; ?>">
+            <button type="submit" class="form_deletar">
+                 Deletar Contrato
+            </button>
             </form>
+
         </div>
     </section>
 
