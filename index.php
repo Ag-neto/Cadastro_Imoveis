@@ -19,6 +19,11 @@ function logout()
     exit;
 }
 
+// Verificar se a sessão 'nome_usuario' está definida
+if (!isset($_SESSION['nome_usuario']) || empty($_SESSION['nome_usuario'])) {
+    logout();
+}
+
 // Processar logout antes de qualquer saída HTML
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST["logout"])) {
     logout();
