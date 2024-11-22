@@ -1,8 +1,8 @@
 <?php
 $server = "localhost";
 $user = "root";
-$password = "root";
-$bd = "controledepropriedade";
+$password = "gui13579";
+$bd = "controledepropriedade2";
 
 // Tentativa de conexão com o banco de dados
 $conn = new mysqli($server, $user, $password);
@@ -16,9 +16,15 @@ if ($conn->connect_error) {
 $result = $conn->query("SELECT SCHEMA_NAME FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME = '$bd'");
 
 if ($result->num_rows == 0) {
-    // O banco de dados não existe, redireciona para restaurar_backup.php
-    header("Location: erro_banco.php");
-    exit;
+    // Verifica se a página atual já é "restaurar.php"
+    if (basename($_SERVER['PHP_SELF']) !== 'restaurar.php') {
+        header("Location: /CADASTRO_IMOVEIS/backup/banco_de_dados/restaurar.php");
+        exit;
+    } else {
+        // Apenas carrega a página restaurar.php sem nenhuma interrupção
+        include 'restaurar.php';
+        exit;
+    }
 }
 
 // Conecta ao banco de dados
@@ -43,7 +49,6 @@ function get_ip_address() {
     
     return $ip_address;
 }
-
 
 // Função para registrar LOG's
 function log_action($action) {
@@ -89,9 +94,4 @@ function registrarLogVencimento($idPagamento, $descricao, $urlDestino, $conn)
 
     $stmt->close();
 }
-
-
-
-
-
 ?>

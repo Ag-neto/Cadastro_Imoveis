@@ -1,5 +1,8 @@
 <?php
-session_start();
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
 require_once "../../conexao/conexao.php";
 
 if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
@@ -99,7 +102,7 @@ if (isset($_POST['restore'])) {
             background-color: #45a049;
         }
 
-        a{
+        a {
             background-color: #4CAF50;
             color: #fff;
             padding: 10px 20px;
