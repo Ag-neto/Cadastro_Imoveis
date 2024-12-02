@@ -70,28 +70,44 @@ function mostra_data($data){
     return $escreve;
 }
 
-function registrarLog($usuarioId, $nivelAcesso, $acao, $descricao = null, $urlDestino = null)
+function registrarLogVencimento($usuarioId, $nivelAcesso, $acao, $descricao = null, $urlDestino = null, $idpagamento)
 {
     global $conn;
 
-    // Preparando a consulta SQL para inserir o log
-    $sql = "INSERT INTO logs (id_usuario, nivel_acesso, acao, descricao, url_destino) 
-            VALUES (?, ?, ?, ?, ?)";
+    // Verifica se já existe um log para o mesmo pagamento e ação hoje
+    $sqlVerificarLog = "SELECT COUNT(*) AS total FROM logs 
+                        WHERE id_usuario = ? AND acao = ? AND id_pagamento = ?"; // Supondo que você tenha uma coluna 'data_registro' no formato DATE ou DATETIME
+    $stmtVerificarLog = $conn->prepare($sqlVerificarLog);
+    $stmtVerificarLog->bind_param("isi", $usuarioId, $acao, $idpagamento);
+    $stmtVerificarLog->execute();
+    $resultado = $stmtVerificarLog->get_result();
+    $logExistente = $resultado->fetch_assoc()['total'];
+    $stmtVerificarLog->close();
 
-    if ($stmt = $conn->prepare($sql)) {
-        // Associando os parâmetros
-        $stmt->bind_param("issss", $usuarioId, $nivelAcesso, $acao, $descricao, $urlDestino);
+    // Se não houver log existente, insere o novo log
+    if ($logExistente == 0) {
+        // Preparando a consulta SQL para inserir o log
+        $sql = "INSERT INTO logs (id_usuario, nivel_acesso, acao, descricao, url_destino, id_pagamento) 
+                VALUES (?, ?, ?, ?, ?, ?)";
 
-        // Executando a consulta
-        if (!$stmt->execute()) {
-            error_log("Erro ao registrar log: " . $stmt->error);
+        if ($stmt = $conn->prepare($sql)) {
+            // Associando os parâmetros
+            $stmt->bind_param("issssi", $usuarioId, $nivelAcesso, $acao, $descricao, $urlDestino, $idpagamento);
+
+            // Executando a consulta
+            if (!$stmt->execute()) {
+                error_log("Erro ao registrar log: " . $stmt->error);
+            }
+
+            // Fechar o statement
+            $stmt->close();
+        } else {
+            error_log("Erro na preparação da consulta SQL para o log: " . $conn->error);
         }
-
-        // Fechar o statement
-        $stmt->close();
     } else {
-        error_log("Erro na preparação da consulta SQL para o log: " . $conn->error);
+        error_log("Log já existe para o pagamento ID: $idpagamento e ação: $acao hoje.");
     }
 }
+
 
 ?>

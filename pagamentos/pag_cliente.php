@@ -37,12 +37,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['comprovante'])) {
 
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gestão de Pagamentos</title>
     <link rel="stylesheet" href="../style/pag_cliente.css">
 </head>
+
 <body>
     <header>
         <h1>Gestão de Pagamentos</h1>
@@ -85,8 +87,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['comprovante'])) {
                             <td><?php echo date('d/m/Y', strtotime($pagamento['data_vencimento'])); ?></td>
                             <td><?php echo ucfirst($pagamento['status']); ?></td>
                             <td>
-                            <?php if ($pagamento['status'] == 'vencido') : ?>
-                                <?php  registrarLog($_SESSION['idusuario'], $_SESSION['idnivel_acesso'], 'Notificação de Vencimento', 'Pagamento vencido para confirmação', 'pag_cliente.php');?>
+                                <?php if ($pagamento['status'] == 'vencido') : ?>
+                                    <?php
+                                    // Verifica se já existe uma notificação para este pagamento
+                                    $sqlVerificarLog = "SELECT COUNT(*) AS total FROM logs WHERE id_usuario = ? AND acao = 'Notificação de Vencimento' AND descricao = 'Pagamento vencido para confirmação' AND id_pagamento = ?";
+                                    $stmtVerificarLog = $conn->prepare($sqlVerificarLog);
+                                    $stmtVerificarLog->bind_param("ii", $_SESSION['idusuario'], $pagamento['id_pagamento']);
+                                    $stmtVerificarLog->execute();
+                                    $resultadoVerificacao = $stmtVerificarLog->get_result();
+                                    $logExistente = $resultadoVerificacao->fetch_assoc()['total'];
+                                    $stmtVerificarLog->close();
+
+                                    // Se não houver uma notificação de vencimento existente, insere a nova notificação
+                                    if ($logExistente == 0) {
+                                        registrarLogVencimento($_SESSION['idusuario'], $_SESSION['idnivel_acesso'], 'Notificação de Vencimento', 'Pagamento vencido para confirmação', 'pag_cliente.php', $pagamento['id_pagamento']);
+                                    }
+                                    ?>
                                 <?php elseif ($pagamento['status'] == 'pendente') : ?>
                                     <form method="POST" enctype="multipart/form-data">
                                         <input type="hidden" name="id_pagamento" value="<?php echo $pagamento['id_pagamento']; ?>">
@@ -119,4 +135,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['comprovante'])) {
         <p>&copy; 2024 - Sistema de Gestão de Propriedade</p>
     </footer>
 </body>
+
 </html>
