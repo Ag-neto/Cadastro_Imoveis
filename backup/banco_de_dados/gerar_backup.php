@@ -1,59 +1,52 @@
 <?php
-session_start();
+// Inclui o arquivo de configuração do banco de dados
 require_once "../../conexao/conexao.php";
 
-if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
-    header("Location: ../../usuario/login.php");
-    exit;
+// Defina o fuso horário
+date_default_timezone_set('America/Sao_Paulo');
+
+// Caminho para o executável mysqldump
+$mysqlDumpPath = '"C:\\xampp\\mysql\\bin\\mysqldump.exe"';
+
+// Caminho para o mysql
+$mysqlPath = '"C:\\xampp\\mysql\\bin\\mysql.exe"';
+
+// Validação do caminho do mysqldump
+if (!file_exists(str_replace('"', '', $mysqlDumpPath))) {
+    die("Erro: Caminho para mysqldump está incorreto.");
 }
 
-// Dados de conexão para o comando mysqldump
-$database = 'controledepropriedade';
-$user = 'root';
-$password = '';
-$host = 'localhost';
+// Parâmetros para o mysqldump
+$dbUser = 'root';
+$dbPass = 'gui13579';
+$dbHost = 'localhost';
+$dbName = 'controledepropriedade2';
 
-// Caminho completo para o mysqldump no XAMPP
-//$mysqldumpPath = "C:\\xampp\\mysql\\bin\\mysqldump.exe";
-$mysqldumpPath = "C:\\Program Files\\MySQL\\MySQL Server 8.0\bin\\mysqldump.exe";
-
-// Verifica se o arquivo mysqldump.exe existe no caminho especificado
-if (!file_exists($mysqldumpPath)) {
-    die("Erro: O caminho para o mysqldump está incorreto. Verifique a configuração.");
-}
-
-// Define o caminho completo do arquivo de backup
+// Diretório e nome do backup
 $backupDir = "../../backups";
-$backupFilePath = "$backupDir/backup.bat"; // Define o nome do arquivo como "backup.bat"
+$backupFile = "$backupDir/backup.bat";
 
-// Verifica se a pasta de backup existe e tenta criá-la se não existir
+// Criação do diretório de backup, se necessário
 if (!is_dir($backupDir)) {
-    if (!mkdir($backupDir, 0777, true)) {
-        die("Erro: Não foi possível criar a pasta de backups.");
-    }
+    mkdir($backupDir, 0777, true);
 }
 
-// Conteúdo do arquivo .bat para fazer o backup
-$batContent = <<<EOD
+// Conteúdo do arquivo .bat
+$batContent = <<<BAT
 @echo off
-"$mysqldumpPath" --user=$user --password=$password --host=$host $database > "$backupDir/backup_" . date('Y-m-d_H-i-s') . ".sql"
-exit
-EOD;
+$mysqlPath --user=$dbUser --password=$dbPass --host=$dbHost -e "CREATE DATABASE IF NOT EXISTS $dbName;"
+$mysqlDumpPath --user=$dbUser --password=$dbPass --host=$dbHost $dbName > "$backupDir/backup.sql"
+BAT;
 
-// Cria o arquivo .bat com o conteúdo definido
-file_put_contents($backupFilePath, $batContent);
+// Salva o arquivo .bat
+file_put_contents($backupFile, $batContent);
 
-// Define os cabeçalhos para download do arquivo .bat
-header('Content-Description: File Transfer');
+// Envia o arquivo para download
 header('Content-Type: application/octet-stream');
 header('Content-Disposition: attachment; filename="backup.bat"');
-header('Expires: 0');
-header('Cache-Control: must-revalidate');
-header('Pragma: public');
-header('Content-Length: ' . filesize($backupFilePath));
-readfile($backupFilePath);
+readfile($backupFile);
 
-// Remove o arquivo temporário após o download
-unlink($backupFilePath);
+// Remove o arquivo temporário após envio
+unlink($backupFile);
 exit;
 ?>
