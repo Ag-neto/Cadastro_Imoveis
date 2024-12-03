@@ -1,4 +1,9 @@
 <?php
+// Exibir erros para debug
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
@@ -11,39 +16,87 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
 }
 
 if (isset($_POST['restore'])) {
-    if (!empty($_FILES['backup_file']['tmp_name']) && is_uploaded_file($_FILES['backup_file']['tmp_name'])) {
-        $backupPath = __DIR__ . "/backup_restaurado.bat";
+    $uploadedFile = $_FILES['backup_file']['tmp_name'];
 
-        if (move_uploaded_file($_FILES['backup_file']['tmp_name'], $backupPath)) {
-            $conn = new mysqli($server, $user, $password);
+    if (!empty($uploadedFile) && is_uploaded_file($uploadedFile)) {
+        // Define o caminho para salvar o arquivo enviado
+        $targetDir = __DIR__ . "/uploads/";
+        if (!is_dir($targetDir)) {
+            mkdir($targetDir, 0777, true);
+        }
 
-            if ($conn->connect_error) {
-                die("Erro ao conectar ao MySQL: " . $conn->connect_error);
-            }
+        $backupPath = $targetDir . "backup_restaurado.bat";
 
-            $sql = "CREATE DATABASE IF NOT EXISTS `$bd`";
-            if ($conn->query($sql) === TRUE) {
-                $conn->close();
+        if (move_uploaded_file($uploadedFile, $backupPath)) {
+            chmod($backupPath, 0755);
 
-                chmod($backupPath, 0755);
-                $command = "cmd /c " . escapeshellarg($backupPath);
-                exec($command, $output, $returnVar);
+            // Executa o comando para criar e restaurar o banco de dados
+            $command = "cmd /c " . escapeshellarg($backupPath);
+            exec($command . " 2>&1", $output, $returnCode);
 
-                if ($returnVar === 0) {
-                    echo "Banco de dados criado e backup restaurado com sucesso!";
-                } else {
-                    echo "Erro ao restaurar o backup. Código de retorno: $returnVar<br>Saída:<br>" . implode("<br>", $output);
-                }
+            echo "<h3>Resultado do comando:</h3>";
+            echo "Comando executado: $command<br>";
+            echo "Código de retorno: $returnCode<br>";
+            echo "Saída do comando:<br>" . implode("<br>", $output);
+
+            if ($returnCode === 0) {
+                echo "<p style='color: green;'>Banco de dados criado/restaurado com sucesso!</p>";
             } else {
-                echo "Erro ao criar o banco de dados: " . $conn->error;
+                echo "<p style='color: red;'>Erro ao criar/restaurar o banco de dados. Verifique os detalhes acima.</p>";
             }
         } else {
-            echo "Erro ao mover o arquivo de backup.";
+            echo "<p style='color: red;'>Erro ao mover o arquivo de backup.</p>";
         }
     } else {
-        echo "Nenhum arquivo de backup foi selecionado.";
+        echo "<p style='color: red;'>Nenhum arquivo de backup foi selecionado.</p>";
     }
 
-    exit; // Remove o redirecionamento temporário para debug
+    exit;
 }
 ?>
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Criar e Restaurar Banco</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+        .container {
+            background-color: #fff;
+            padding: 20px 30px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            width: 400px;
+            text-align: center;
+        }
+        .error {
+            color: red;
+        }
+        .success {
+            color: green;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Criar e Restaurar Banco</h2>
+        <form method="post" action="criar_e_restaurar.php" enctype="multipart/form-data">
+            <label for="backup_file">Selecione o arquivo de backup (.bat):</label>
+            <input type="file" name="backup_file" accept=".bat" required>
+            <button type="submit" name="restore">Criar e Restaurar</button>
+            <a href="../../index.php">Voltar</a>
+        </form>
+    </div>
+</body>
+</html>

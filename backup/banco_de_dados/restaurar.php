@@ -30,7 +30,7 @@ if (isset($_POST['restore'])) {
         if (move_uploaded_file($uploadedFile, $backupPath)) {
             chmod($backupPath, 0755);
 
-            // Testa o caminho para o MySQL antes de executar
+            // Verifica o comando MySQL antes de executar
             $testCommand = "mysql --version";
             exec($testCommand, $mysqlOutput, $mysqlReturnCode);
 
@@ -40,9 +40,9 @@ if (isset($_POST['restore'])) {
                 exit;
             }
 
-            // Executa o comando para restaurar o backup
+            // Executa o arquivo BAT para restaurar o backup
             $command = "cmd /c " . escapeshellarg($backupPath);
-            exec($command, $output, $returnCode);
+            exec($command . " 2>&1", $output, $returnCode);
 
             echo "<h3>Resultado do comando:</h3>";
             echo "Comando executado: $command<br>";
@@ -61,7 +61,7 @@ if (isset($_POST['restore'])) {
         echo "<p style='color: red;'>Nenhum arquivo de backup foi selecionado.</p>";
     }
 
-    exit; // Remove o redirecionamento temporário para debug
+    exit; // Evita redirecionamento durante debug
 }
 ?>
 
