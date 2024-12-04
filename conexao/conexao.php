@@ -1,7 +1,7 @@
 <?php
 $server = "localhost";
 $user = "root";
-$password = "gui13579";
+$password = "root";
 $bd = "controledepropriedade2";
 
 // Tentativa de conexão com o banco de dados
@@ -22,7 +22,7 @@ if ($result->num_rows == 0) {
         exit;
     } else {
         // Apenas carrega a página restaurar.php sem nenhuma interrupção
-        include 'restaurar.php';
+        include '../Backup/restaurar.php';
         exit;
     }
 }

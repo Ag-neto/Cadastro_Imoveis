@@ -7,7 +7,6 @@
     <title>KARGO</title>
     <link rel="stylesheet" href="style/style_index.css">
     <link rel="shortcut icon" href="../imagens/balanca.ico" type="image/x-icon">
-    <link rel="stylesheet" href="../style/style_restaurar.css">
 </head>
 
 <body>
@@ -18,7 +17,7 @@
             <label for="file">Selecione o arquivo:</label>
             <input type="file" name="file" id="file"><br>
             <label for="nomeBanco">Nome do novo banco de dados:</label>
-            <input type="text" name="nomeBanco" id="nomeBanco" value="kargo" Readonly ><br><br>
+            <input type="text" name="nomeBanco" id="nomeBanco" value="controledepropriedade2" Readonly ><br><br>
             <button type="submit" name="submit">Restaurar</button>
         </form>
         
