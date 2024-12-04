@@ -1,1 +1,0 @@
-mysqldump.exe: Got error: 1045: "Plugin caching_sha2_password could not be loaded: Não foi possível encontrar o módulo especificado. Library path is 'caching_sha2_password.dll'" when trying to connect
