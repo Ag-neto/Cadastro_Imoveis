@@ -31,7 +31,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                 if ($error) {
                     return false; // Indica falha no envio
                 }
-                if ($size > 2097152) {
+                if ($size > 10485760) {
                     return false; // Arquivo muito grande
                 }
 
@@ -91,7 +91,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                     echo "<p>Todos os arquivos foram enviados!</p>";
                     header('Location: detalhes_cliente.php?id=' . $id_cliente);
                 } else {
-                    echo "<p>Falha ao enviar 1 ou mais arquivos! Verifique o formato e tamanho (Max: 2MB)</p>";
+                    echo "<p>Falha ao enviar 1 ou mais arquivos! Verifique o formato e tamanho (Max: 10MB)</p>";
                 }
             }
             ?>
