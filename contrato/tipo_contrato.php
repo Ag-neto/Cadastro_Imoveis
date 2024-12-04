@@ -1,3 +1,13 @@
+<?php
+session_start();
+require_once "../conexao/conexao.php";
+
+if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
+    header("Location: ../usuario/login.php");
+    exit;
+}
+?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -22,9 +32,13 @@
             <a href="criar_contrato_aluguel.php" class="selection-option">
                 <h2>Contrato de Aluguel</h2>
             </a>
+            
+            <a href="criar_contrato_arrendamento.php" class="selection-option"> <!-- Adicionado arrendamento -->
+                <h2>Contrato de Arrendamento</h2>
+            </a>
         </div>
     </section>
-    <a href="../index.php">Voltar para o menu</a>   
+    <a href="listar_contratos.php">Voltar</a>   
 
     <footer>
         <p>&copy; 2024 - Sistema de Gestão de Propriedade</p>

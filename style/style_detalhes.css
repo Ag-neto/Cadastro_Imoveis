@@ -39,6 +39,19 @@ h1 {
     font-size: 1.2rem;
 }
 
+.form_deletar{
+    background-color: red; 
+    color: white; 
+    border: none; 
+    padding: 10px 15px; 
+    cursor: pointer;
+    font-size: 1em;
+}
+
+.form_deletar:hover{
+    background-color: rgb(172, 3, 3);
+}
+
 .acoes {
     display: flex;
     gap: 10px;
@@ -55,6 +68,51 @@ button {
 
 button:hover {
     background-color: #218838;
+}
+
+a{
+    padding: 10px 20px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+}
+a:hover {
+    background-color: #218838;
+}
+
+.documentos-info {
+    max-height: 300px; /* Ajuste a altura conforme necessário */
+    overflow-y: auto;  /* Adiciona rolagem vertical */
+    border: 1px solid #ccc; /* Adiciona uma borda para destacar a área */
+    padding: 10px; /* Espaçamento interno */
+    background-color: #f9f9f9; /* Cor de fundo */
+}
+
+
+.documentos-info ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.documentos-info li {
+    margin-bottom: 10px;
+}
+
+.documentos-info a{
+    background-color: white;
+    color: blue;
+    padding: 0;
+}
+
+.documentos-info a:hover{
+    text-decoration: underline;
+}
+
+.documentos-info{
+    margin-bottom: 10px;
 }
 
 footer {

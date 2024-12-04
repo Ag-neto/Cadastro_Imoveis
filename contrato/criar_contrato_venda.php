@@ -1,3 +1,13 @@
+<?php
+session_start();
+require_once "../conexao/conexao.php";
+
+if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
+    header("Location: ../usuario/login.php");
+    exit;
+}
+?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -15,17 +25,31 @@
 
     <section class="form-section">
         <h2>Informações do Contrato</h2>
-        <form id="contrato-venda-form">
+        <form id="contrato-venda-form" method="POST" action="contrato_venda_script.php">
 
             <!-- Escolha da propriedade -->
             <div class="form-group">
                 <div class="form-item">
                     <label for="propriedade">Propriedade:</label>
-                    <select id="propriedade" name="propriedade" required>
-                        <option value="">Selecione a Propriedade</option>
-                        <option value="1">Apartamento Central</option>
-                        <option value="2">Casa Verde</option>
-                        <option value="3">Loja Comercial</option>
+                    <select id="propriedade" name="idpropriedade" required>
+                        <option value="" disabled selected>Selecione a Propriedade</option>
+                        <?php
+                        // Consultar propriedades disponíveis para venda
+                        $sql = "SELECT p.idpropriedade, p.nome_propriedade
+                                FROM propriedade p
+                                JOIN situacao s ON p.id_situacao = s.id_situacao
+                                WHERE s.nome_situacao = 'À Venda' 
+                                AND p.idpropriedade NOT IN (SELECT c.id_propriedade FROM contratos c)";
+                        $result = $conn->query($sql);
+
+                        if ($result->num_rows > 0) {
+                            while ($row = $result->fetch_assoc()) {
+                                echo '<option value="' . $row['idpropriedade'] . '">' . $row['nome_propriedade'] . '</option>';
+                            }
+                        } else {
+                            echo '<option value="">Nenhuma propriedade disponível para venda</option>';
+                        }
+                        ?>
                     </select>
                 </div>
             </div>
@@ -34,11 +58,21 @@
             <div class="form-group">
                 <div class="form-item">
                     <label for="comprador">Comprador:</label>
-                    <select id="comprador" name="comprador" required>
-                        <option value="">Selecione o Comprador</option>
-                        <option value="1">João da Silva</option>
-                        <option value="2">Maria Oliveira</option>
-                        <option value="3">Carlos Pereira</option>
+                    <select id="comprador" name="idcliente" required>
+                        <option value="" disabled selected>Selecione o Comprador</option>
+                        <?php
+                        // Consultar clientes disponíveis
+                        $sql = "SELECT idcliente, nome_cliente FROM cliente";
+                        $result = $conn->query($sql);
+
+                        if ($result->num_rows > 0) {
+                            while ($row = $result->fetch_assoc()) {
+                                echo '<option value="' . $row['idcliente'] . '">' . $row['nome_cliente'] . '</option>';
+                            }
+                        } else {
+                            echo '<option value="">Nenhum cliente cadastrado</option>';
+                        }
+                        ?>
                     </select>
                 </div>
             </div>
@@ -56,7 +90,7 @@
                 </div>
 
                 <div class="form-item">
-                    <label for="data_conclusao">Data de Conclusão:</label>
+                    <label for="data_conclusao">Data da compra:</label>
                     <input type="date" id="data_conclusao" name="data_conclusao" required>
                 </div>
             </div>
@@ -64,7 +98,8 @@
             <!-- Botão para criar contrato -->
             <button type="submit">Criar Contrato</button>
 
-            <a href="../index.php">Voltar para o menu</a>
+            <!-- Botão para voltar à página anterior -->
+            <a href="tipo_contrato.php">Voltar</a>
         </form>
     </section>
 

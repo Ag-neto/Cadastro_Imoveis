@@ -1,3 +1,13 @@
+<?php
+session_start();
+require_once "../conexao/conexao.php";
+
+if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
+    header("Location: ../usuario/login.php");
+    exit;
+}
+?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -15,30 +25,54 @@
 
     <section class="form-section">
         <h2>Informações do Contrato</h2>
-        <form id="contrato-form">
+        <form id="contrato-form" method="POST" action="contrato_aluguel_script.php">
 
             <!-- Escolha da propriedade -->
             <div class="form-group">
                 <div class="form-item">
                     <label for="propriedade">Propriedade:</label>
-                    <select id="propriedade" name="propriedade" required>
-                        <option value="">Selecione a Propriedade</option>
-                        <option value="1">Apartamento Central</option>
-                        <option value="2">Casa Verde</option>
-                        <option value="3">Loja Comercial</option>
+                    <select name="idpropriedade" id="idpropriedade" required>
+                        <option value="" disabled selected>Selecione</option>
+                        <?php
+                        require_once "../conexao/conexao.php";
+
+                        // Consulta apenas propriedades com situação 'Para Alugar' que não estão vinculadas a contratos
+                        $sql = "SELECT p.idpropriedade, p.nome_propriedade
+                                FROM propriedade p
+                                JOIN situacao s ON p.id_situacao = s.id_situacao
+                                WHERE s.nome_situacao = 'Para Alugar' 
+                                AND p.idpropriedade NOT IN (SELECT c.id_propriedade FROM contratos c)";
+                        $result = $conn->query($sql);
+
+                        if ($result->num_rows > 0) {
+                            while ($row = $result->fetch_assoc()) {
+                                echo '<option value="' . $row['idpropriedade'] . '">' . $row['nome_propriedade'] . '</option>';
+                            }
+                        } else {
+                            echo '<option value="">Nenhuma propriedade disponível para aluguel</option>';
+                        }
+                        ?>
                     </select>
                 </div>
             </div>
 
-            <!-- Escolha do inquilino -->
+
+            <!-- Escolha do cliente -->
             <div class="form-group">
                 <div class="form-item">
-                    <label for="inquilino">Inquilino:</label>
-                    <select id="inquilino" name="inquilino" required>
-                        <option value="">Selecione o Inquilino</option>
-                        <option value="1">João da Silva</option>
-                        <option value="2">Maria Oliveira</option>
-                        <option value="3">Carlos Pereira</option>
+                    <label for="cliente">Cliente:</label>
+                    <select name="idcliente" id="idcliente" required>
+                        <option value="" disabled selected>Selecione</option>
+                        <?php
+                        $sql = "SELECT * FROM cliente";
+                        $result = $conn->query($sql);
+
+                        if ($result->num_rows > 0) {
+                            while ($row = $result->fetch_assoc()) {
+                                echo '<option value="' . $row['idcliente'] . '">' . $row['nome_cliente'] . '</option>';
+                            }
+                        }
+                        ?>
                     </select>
                 </div>
             </div>
@@ -59,12 +93,17 @@
                     <label for="data_fim">Data de Término:</label>
                     <input type="date" id="data_fim" name="data_fim" required>
                 </div>
+
+                <div class="form-item">
+                    <label for="cobranca">Cobrança:</label>
+                    <input type="date" id="cobranca" name="cobranca" required>
+                </div>
             </div>
 
             <!-- Botão para criar contrato -->
             <button type="submit">Criar Contrato</button>
 
-            <a href="../index.php">Voltar para o menu</a>
+            <a href="tipo_contrato.php">Voltar</a>
         </form>
     </section>
 
