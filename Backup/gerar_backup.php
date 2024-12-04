@@ -11,7 +11,7 @@ $mysqlDumpPath = '"C:\\Program Files\\MySQL\\MySQL Server 8.0\\bin\\mysqldump.ex
 // Parâmetros para o mysqldump
 $dbUser = 'root'; // Usuário do banco de dados
 $dbPass = 'root'; // Senha do banco de dados
-$dbName = 'kargo'; // Nome do banco de dados
+$dbName = 'controledepropriedade2'; // Nome do banco de dados
 $backupFile = 'backup_' . date('d-m-Y_H-i-s') . '.sql'; // Nome do arquivo de backup
 $errorLog = 'error_log.txt'; // Arquivo de log de erro
 

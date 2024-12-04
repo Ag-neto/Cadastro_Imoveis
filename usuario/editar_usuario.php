@@ -75,8 +75,7 @@ $result_clientes = $conn->query($sql_clientes);
             <?php endwhile; ?>
         </select>
 
-        <!-- Campo para alterar a senha -->
-        <label for="senha">Nova Senha:</label>
+        <label for="senha">Senha:</label>
         <input type="password" id="senha" name="senha" placeholder="Deixe em branco para não alterar">
 
         <div class="usuario-acoes">

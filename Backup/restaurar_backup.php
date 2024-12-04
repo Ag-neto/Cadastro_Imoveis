@@ -4,18 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Restaurar Banco</title>
-    <link rel="stylesheet" href="../style/style_listagem.css">
 </head>
 <body>
-<div class="menu2">
-        <div class="menu">
-            <a href="../index.php">Voltar</a>
 <?php
 // Configurações do banco de dados
 $server = "localhost";
 $user = "root";
 $password = "root";
-$bd = "kargo";
+$bd = "controledepropriedade2";
 
 // Tentativa de conexão com o banco de dados
 $conn = new mysqli($server, $user, $password);

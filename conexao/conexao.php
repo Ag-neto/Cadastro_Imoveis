@@ -18,7 +18,7 @@ $result = $conn->query("SELECT SCHEMA_NAME FROM INFORMATION_SCHEMA.SCHEMATA WHER
 if ($result->num_rows == 0) {
     // Verifica se a página atual já é "restaurar.php"
     if (basename($_SERVER['PHP_SELF']) !== 'restaurar.php') {
-        header("Location: /CADASTRO_IMOVEIS/backup/banco_de_dados/restaurar.php");
+        header("Location: Backup/restaurar.php");
         exit;
     } else {
         // Apenas carrega a página restaurar.php sem nenhuma interrupção

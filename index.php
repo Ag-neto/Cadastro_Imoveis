@@ -217,8 +217,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                         <span class="txt-link">Backup</span>
                     </a>
                     <ul class="submenu" id="backupSubmenu">
-                        <li><a href="backup/banco_de_dados/gerar_backup.php">Gerar Backup</a></li>
-                        <li><a href="backup/banco_de_dados/restaurar.php">Restaurar Backup</a></li>
+                        <li><a href="Backup/gerar_backup.php">Gerar Backup</a></li>
                     </ul>
                 </li>
             <?php endif; ?>
