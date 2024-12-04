@@ -125,7 +125,8 @@ if (isset($_GET['id'])) {
         </div>
 
         <div class="acoes">
-        <button onclick="history.back()">Voltar</button>
+        <!--<button onclick="history.back()">Voltar</button> -->
+            <a href="listar_clientes.php">Voltar</a>
             <a href="editar_cliente.php?id=<?= $id_cliente; ?>">Editar Cliente</a>
             <a id="deletar" href="deletar_cliente.php?id=<?= $id_cliente; ?>" 
                onclick="return confirmarDeletar();">Deletar Cliente</a>
