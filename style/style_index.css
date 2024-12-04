@@ -8,6 +8,7 @@ body {
     font-family: Arial, sans-serif;
     background-color: #f0f0f0;
     padding: 20px;
+    height: 100vh;
 }
 
 header {
@@ -19,6 +20,7 @@ header {
     padding: 15px;
     border-radius: 8px;
     margin-bottom: 20px;
+    margin-left: 60px;
 }
 
 header h1 {
@@ -37,36 +39,91 @@ header h1 {
     color: #ffc107;
 }
 
-nav {
-    margin-bottom: 40px;
-}
-
-nav ul {
-    list-style: none;
-    display: flex;
-    justify-content: space-around;
+nav.menu-lateral {
+    width: 58px;
+    height: 100%;
     background-color: #343a40;
-    padding: 10px;
-    border-radius: 8px;
+    padding: 40px 0px 1%;
+    transition: .3s;
+    position: fixed;
+    top: 0;
+    left: 0;
+    overflow: hidden;
 }
 
-nav ul li {
-    margin: 0 10px;
+nav.menu-lateral.recolhido .txt-link {
+    display: none;
 }
 
-nav ul li a {
+nav.menu-lateral:hover .txt-link {
+    display: inline;
+}
+
+nav.menu-lateral:hover {
+    width: 300px;
+    transition: .3s;
+}
+
+.btn-expandir {
+    padding-top: 10px;
+    width: 100%;
+    padding-left: 10px;
+}
+
+.btn-expandir > i {
+    color: white;
+    font-size: 35px;
+    cursor: pointer;
+}
+
+ul {
+    height: 100%;
+    list-style-type: none;
+}
+
+ul li.item-menu a {
     color: white;
     text-decoration: none;
-    font-size: 1.2rem;
-    font-weight: bold;
-    padding: 10px 20px;
-    background-color: #28a745;
-    border-radius: 4px;
-    transition: background-color 0.3s ease;
+    font-size: 20px;
+    padding: 10px 4px;
+    display: flex;
+    line-height: 40px;
 }
 
-nav ul li a:hover {
-    background-color: #218838;
+ul li.item-menu a .txt-link {
+    margin-left: 20px;
+}
+
+ul li.item-menu a .icon > i {
+    padding-left: 10px;
+    font-size: 25px;
+}
+
+ul li.item-menu a:hover {
+    background-color: #28a745;
+    transition: .2s;
+}
+
+ul li.item-menu ul.submenu {
+    display: none;
+    list-style-type: none;
+    padding-left: 20px;
+}
+
+ul li.item-menu ul.submenu li a {
+    font-size: 18px;
+    color: white;
+    text-decoration: none;
+    display: block;
+    padding: 8px 0;
+}
+
+ul li.item-menu ul.submenu li a:hover {
+    background-color: #28a745;
+}
+
+ul li.item-menu:hover ul.submenu {
+    display: block;
 }
 
 main {
@@ -74,6 +131,8 @@ main {
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    margin-left: 60px;
 }
 
 main section h2 {
@@ -85,4 +144,201 @@ footer {
     margin-top: 40px;
     text-align: center;
     color: #555;
+}
+
+/* Estilo para o contêiner das propriedades */
+.propriedades-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+/* Estilo para os links da propriedade */
+.propriedade-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+    flex: 1 1 calc(33.333% - 20px);
+    max-width: calc(33.333% - 20px);
+    transition: transform 0.3s ease;
+}
+
+/* Estilo para a div "propriedade-item" */
+.propriedade-item {
+    padding: 15px;
+    background-color: #f9f9f9;
+    border-radius: 5px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: 0.3s;
+}
+
+.propriedade-link:hover .propriedade-item {
+    background-color: #e0e0e0;
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+    transform: translateY(-5px);
+    transition: 0.3s;
+}
+
+/* Estilo para o título da propriedade */
+.propriedade-item h4 {
+    font-size: 1.2em;
+    margin-bottom: 5px;
+}
+
+.propriedade-item p {
+    margin: 5px 0;
+    color: #555;
+}
+
+h3 {
+    margin-top: 10px;
+    margin-bottom: 15px;
+}
+
+/* Estilo do popup de notificações */
+.notification-popup {
+    display: none;
+    position: fixed;
+    right: 20px;
+    top: 60px;
+    width: 300px;
+    background-color: #ffffff;
+    border: 1px solid #ccc;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    padding: 15px;
+    border-radius: 8px;
+}
+
+.notification-popup h3 {
+    margin: 0 0 10px;
+    font-size: 18px;
+}
+
+.notification-popup p {
+    margin: 5px 0;
+}
+
+.close-btn {
+    cursor: pointer;
+    float: right;
+    font-size: 16px;
+}
+
+.logout-form button {
+    background-color: #343a40;
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    transition: background-color 0.3s ease;
+}
+
+.notification-popup button {
+    background-color: #007bff;
+    border: none;
+    color: white;
+    padding: 8px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.notification-popup button:hover {
+    background-color: #0056b3;
+}
+
+button.teste {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    text-align: center;
+    display: inline-block;
+    font-size: 16px;
+    margin: 10px 0;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s;
+}
+
+button.teste:hover {
+    background-color: #45a049;
+}
+
+button.teste:active {
+    transform: scale(0.98);
+}
+
+.notification-popup p {
+    margin: 5px 0;
+    color: #28a745;
+}
+
+.calendario-container {
+    width: 50%;
+    margin-top: 20px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+}
+
+.calendario-header {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 5px;
+}
+
+.calendario-body {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+}
+
+.calendario-dia {
+    border: 1px solid #ccc;
+    padding: 10px;
+    text-align: center;
+}
+
+.calendario-dia.ativo {
+    background-color: #4CAF50;
+    color: white;
+    font-weight: bold;
+}
+
+.vazio {
+    background-color: #f9f9f9;
+}
+
+.logout-form button:hover {
+    background-color: #ff3333;
+}
+
+.logout-form .icon {
+    font-size: 25px;
+}
+
+.logout-form .txt-link {
+    font-weight: bold;
+    font-size: 1.5em;
+    margin-left: 15px;
+    color: white;
+}
+
+.logout-form button:focus {
+    outline: none;
+}
+
+@media (max-width: 768px) {
+    .propriedade-item {
+        flex: 1 1 100%;
+        max-width: 100%;
+    }
 }

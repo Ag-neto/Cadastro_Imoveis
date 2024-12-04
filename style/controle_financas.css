@@ -1,0 +1,221 @@
+/* Estilos básicos para a tela de gestão de aluguéis */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+    margin: 0;
+    padding: 20px;
+}
+
+.btn-largura{
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.status-pendente {
+    color: blue;
+    font-weight: bold;
+}
+
+.status-pago {
+    color: green;
+    font-weight: bold;
+}
+
+.status-vencido {
+    color: red;
+    font-weight: bold;
+}
+
+.status-pago_vencido{
+    color: rgb(168, 168, 0);
+    font-weight: bold;
+}
+
+
+.back-button {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    display: block;
+    margin: auto;
+}
+
+.back-button:hover {
+    background-color: #1d7531;
+}
+
+header {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.header-container {
+    background-color: #343a40;
+    color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.totals {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.total-item {
+    font-size: 18px;
+    background-color: #e3e3e3;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.rental-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.rental-table th, .rental-table td {
+    border: 1px solid #ddd;
+    padding: 12px;
+    text-align: left;
+}
+
+.rental-table th {
+    background-color: #f2f2f2;
+}
+
+.overdue {
+    color: red;
+    font-weight: bold;
+}
+
+.paid {
+    color: green;
+    font-weight: bold;
+}
+
+/* Estilos para os botões de submit */
+button[type="submit"] {
+    background-color: #007bff; /* Azul padrão */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    margin: 5px 0; /* Pequeno espaço entre os botões */
+}
+
+button[type="submit"]:hover {
+    background-color: #0056b3; /* Azul escuro quando hover */
+}
+
+.ver_comprovante {
+    background-color: #278fff; /* Azul padrão */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    margin: 5px 0; /* Pequeno espaço entre os botões */
+    text-decoration: none;
+}
+
+.ver_comprovante:hover {
+    background-color: #2278d3; /* Azul escuro quando hover */
+}
+
+.filtro_data {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px auto;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    max-width: 500px;
+    background-color: #ffffff;
+}
+
+.filtro_data a {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 8px 17px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-right: 10px;
+    text-decoration: none;
+}
+
+.filtro_data a:hover{
+    background-color: #1b722f;
+}
+
+.filtro_data form {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.filtro_data label {
+    font-size: 14px;
+    color: #333;
+}
+
+.filtro_data input[type="date"] {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.filtro_data button {
+    padding: 8px 15px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.filtro_data button:hover {
+    background-color: #0056b3;
+}
+
+
+/* Estilos para o input file */
+input[type="file"] {
+    display: block;
+    margin: 10px 0;
+}
+
+input[type="file"]::file-selector-button {
+    background-color: #28a745; /* Verde para o botão do file */
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+input[type="file"]::file-selector-button:hover {
+    background-color: #1d7531; /* Verde escuro quando hover */
+}
