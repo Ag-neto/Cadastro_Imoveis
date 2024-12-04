@@ -82,8 +82,82 @@ button:hover, a:hover {
     background-color: #218838;
 }
 
+.deletar{
+    background-color: red;
+    width: 100px;
+    margin: 0;
+}
+
+.deletar a{
+    padding: 6px;
+}
+
+.deletar a:hover {
+    background-color: rgb(194, 0, 0);
+}
+
 footer {
     margin-top: 40px;
     text-align: center;
     color: #555;
+}
+/* Campo de busca */
+#campoBusca {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1rem;
+}
+
+/* Estilo da tabela */
+#tabelaCidades {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background-color: #fff;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    overflow: hidden; /* Para arredondar bordas da tabela */
+}
+
+/* Cabeçalho da tabela */
+#tabelaCidades th {
+    background-color: #28a745;
+    color: white;
+    padding: 6px;
+    text-align: left;
+    font-size: 1rem;
+}
+
+/* Células da tabela */
+#tabelaCidades td {
+    padding: 6px;
+    border: 1px solid #ddd;
+    text-align: left;
+    font-size: 0.9rem;
+}
+
+/* Linhas alternadas */
+#tabelaCidades tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+#tabelaCidades tr:nth-child(odd) {
+    background-color: #fff;
+}
+
+/* Efeito de hover nas linhas */
+#tabelaCidades tr:hover {
+    background-color: #f1f1f1;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    #tabelaCidades th, 
+    #tabelaCidades td {
+        font-size: 0.8rem;
+        padding: 8px;
+    }
 }

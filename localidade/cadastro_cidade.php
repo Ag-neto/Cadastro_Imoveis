@@ -16,6 +16,27 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastro de Cidade</title>
     <link rel="stylesheet" href="../style/cadastro_cidade.css">
+    <script>
+        // Função para filtrar as cidades na tabela
+        function filtrarCidades() {
+            const input = document.getElementById('campoBusca');
+            const filtro = input.value.toUpperCase();
+            const tabela = document.getElementById('tabelaCidades');
+            const linhas = tabela.getElementsByTagName('tr');
+
+            for (let i = 1; i < linhas.length; i++) { // Começa na linha 1 para ignorar o cabeçalho
+                const colunas = linhas[i].getElementsByTagName('td');
+                const nomeCidade = colunas[0].innerText.toUpperCase();
+                const estado = colunas[1].innerText.toUpperCase();
+
+                if (nomeCidade.includes(filtro) || estado.includes(filtro)) {
+                    linhas[i].style.display = '';
+                } else {
+                    linhas[i].style.display = 'none';
+                }
+            }
+        }
+    </script>
 </head>
 
 <body>
@@ -61,6 +82,46 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
             <button type="submit">Cadastrar Cidade</button>
             <a href="../index.php">Voltar para o menu</a>
         </form>
+    </section>
+
+    <!-- Seção de cidades cadastradas -->
+    <section class="list-section">
+        <h2>Cidades Cadastradas</h2>
+        <input type="text" id="campoBusca" placeholder="Buscar cidade pelo nome..." onkeyup="filtrarCidades()">
+        <table id="tabelaCidades">
+            <thead>
+                <tr>
+                    <th>Nome da Cidade</th>
+                    <th>Estado</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php
+                $sql = "SELECT c.idlocalizacao, c.nome_cidade, e.nome_estado 
+                FROM localizacao c 
+                INNER JOIN estados e ON c.id_estado = e.id_estado";
+                $result = $conn->query($sql);
+
+                if ($result->num_rows > 0) {
+                    while ($row = $result->fetch_assoc()) {
+                        $idlocalizacao = $row['idlocalizacao'];
+                        echo "<tr>
+                                <td>" . $row['nome_cidade'] . "</td>
+                                <td>" . $row['nome_estado'] . "</td>
+                                <td>
+                                    <div class='deletar'>
+                                        <a class='deletar' href='deletar_cidade.php?id=$idlocalizacao' 
+                                           onclick=\"return confirm('Deseja realmente excluir esta cidade?');\">Deletar</a>
+                                    </div>
+                                </td>
+                              </tr>";
+                    }
+                } else {
+                    echo "<tr><td colspan='2'>Nenhuma cidade cadastrada</td></tr>";
+                }
+                ?>
+            </tbody>
+        </table>
     </section>
 
     <footer>

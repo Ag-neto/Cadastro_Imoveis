@@ -42,7 +42,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
             ?>
         </section>
 
-        <a href="../index.php" class="button">Voltar para o menu</a>
+        <a href="cadastro_cidade.php" class="button">Voltar</a>
     </main>
 
     <footer>
