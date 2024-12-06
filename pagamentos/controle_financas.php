@@ -65,20 +65,32 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['comprovante'])) {
 
     if ($arquivo['error'] == 0) {
         $pasta = 'uploads/';
+        
+        // Verificar se a pasta existe e criar se não existir
+        if (!is_dir($pasta)) {
+            mkdir($pasta, 0777, true);
+        }
+
         $nomeArquivo = uniqid() . "_" . basename($arquivo['name']);
         $caminhoCompleto = $pasta . $nomeArquivo;
 
         if (move_uploaded_file($arquivo['tmp_name'], $caminhoCompleto)) {
-            // Atualiza o status para "confirmando" e insere a data de pagamento
-            $dataAtual = date('Y-m-d H:i:s');
-            $sql = "UPDATE pagamentos SET comprovante = ?, status = 'confirmando', data_pagamento = ? WHERE id_pagamento = ?";
+            // Atualiza o status para "confirmando" e salva no banco de dados
+            $sql = "UPDATE pagamentos SET comprovante = ?, status = 'confirmando' WHERE id_pagamento = ?";
             $stmt = $conn->prepare($sql);
-            $stmt->bind_param("ssi", $nomeArquivo, $dataAtual, $id_pagamento);
-            if ($stmt->execute() === TRUE) {
-                echo "Comprovante anexado com sucesso!";
+
+            if ($stmt) {
+                $stmt->bind_param("si", $nomeArquivo, $id_pagamento);
+                if ($stmt->execute()) {
+                    echo "Comprovante anexado com sucesso!";
+                } else {
+                    echo "Erro ao executar a query: " . $conn->error;
+                }
             } else {
-                echo "Erro ao atualizar o status do pagamento: " . $conn->error;
+                echo "Erro ao preparar a consulta SQL.";
             }
+
+            $stmt->close();
         } else {
             echo "Erro ao mover o arquivo para o diretório de uploads.";
         }
@@ -86,6 +98,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['comprovante'])) {
         echo "Erro ao enviar o arquivo.";
     }
 }
+
 ?>
 
 <!DOCTYPE html>
