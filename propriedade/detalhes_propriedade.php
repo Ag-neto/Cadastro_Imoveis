@@ -106,6 +106,11 @@ if (isset($_GET['id'])) {
                 <strong>Periodicidade do Imposto:</strong>
                 <span><?php echo $propriedade['periodo_imposto']; ?></span>
             </div>
+            <div class="info-item">
+                <strong>N° INCRA:</strong>
+                <span><?php echo $propriedade['incra']; ?></span>
+            </div>
+            
         </div>
 
         <h2>Documentos Associados</h2>

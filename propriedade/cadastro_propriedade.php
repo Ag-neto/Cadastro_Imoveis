@@ -135,6 +135,10 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                         ?>
                     </select><br>
                 </div>
+                <div class="form-item">
+                    <label for="incra">N° INCRA</label>
+                    <input type="text" name="incra" id="incra" maxlength="18" oninput="applyMask(this)">
+                </div>
             </div>
 
             <button type="submit">Vincular Documentos</button>
@@ -144,6 +148,17 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
     <footer>
         <p>&copy; 2024 - Sistema de Gestão de Propriedade</p>
     </footer>
+
+    <script>
+        function applyMask(input) {
+            let value = input.value.replace(/\D/g, ""); // Remove tudo que não é número
+            value = value.replace(/(\d{3})(\d)/, "$1.$2"); // Coloca o primeiro ponto
+            value = value.replace(/(\d{3})(\d)/, "$1.$2"); // Coloca o segundo ponto
+            value = value.replace(/(\d{3})(\d)/, "$1.$2"); // Coloca o terceiro ponto
+            value = value.replace(/(\d{3})(\d{1,2})$/, "$1-$2"); // Coloca o hífen
+            input.value = value;
+        }
+    </script>
 
     <script>
         // Função para formatar valores como moeda com separador de milhar

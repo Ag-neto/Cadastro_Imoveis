@@ -38,6 +38,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                 $data = mysqli_real_escape_string($conn, $_POST['data']);
                 $tipo_imposto = mysqli_real_escape_string($conn, $_POST['tipo_imposto']);
                 $periodo_imposto = mysqli_real_escape_string($conn, $_POST['periodo_imposto']);
+                $incra = mysqli_real_escape_string($conn, $_POST['incra']);
 
                 // Convertendo valores para formato numérico adequado
                 $valor_adquirido = str_replace(['.', ','], ['', '.'], $_POST['valor_adquirido']);
@@ -51,9 +52,9 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
 
                 // SQL para inserir os dados
                 $sql = "INSERT INTO propriedade 
-                    (nome_propriedade, id_localizacao, id_tipo_prop, tamanho, valor_adquirido, endereco, id_situacao, data_registro, tipo_imposto, valor_imposto, periodo_imposto) 
+                    (nome_propriedade, id_localizacao, id_tipo_prop, tamanho, valor_adquirido, endereco, id_situacao, data_registro, tipo_imposto, valor_imposto, periodo_imposto, incra) 
                     VALUES 
-                    ('$nome', '$localidade', '$tipo', '$tamanho', '$valor_adquirido', '$endereco', '$situacao', '$data', '$tipo_imposto', '$valor_imposto', '$periodo_imposto')";
+                    ('$nome', '$localidade', '$tipo', '$tamanho', '$valor_adquirido', '$endereco', '$situacao', '$data', '$tipo_imposto', '$valor_imposto', '$periodo_imposto', '$incra')";
 
                 // Executa o comando e verifica sucesso
                 if (mysqli_query($conn, $sql)) {
