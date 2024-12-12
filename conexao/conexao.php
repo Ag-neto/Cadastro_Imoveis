@@ -1,8 +1,8 @@
 <?php
 $server = "localhost";
 $user = "root";
-$password = "gui13579";
-$bd = "controledepropriedade2";
+$password = "root";
+$bd = "controledepropriedade";
 
 // Tentativa de conexão com o banco de dados
 $conn = new mysqli($server, $user, $password);
