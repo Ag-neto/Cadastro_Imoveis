@@ -33,6 +33,11 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                 </div>
 
                 <div class="form-item">
+                    <label for="nome_fantasia">Nome Fantasia:</label>
+                    <input type="text" id="nome_fantasia" name="nome_fantasia" placeholder="Ex: Apartamento do Marcelo" oninput="this.value = this.value.toUpperCase()">
+                </div>
+
+                <div class="form-item">
                     <label for="endereco">Endereço:</label>
                     <input type="text" id="endereco" name="endereco" placeholder="Ex: Rua ABC, 123" required oninput="this.value = this.value.toUpperCase()">
                 </div>

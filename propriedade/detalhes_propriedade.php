@@ -67,6 +67,10 @@ if (isset($_GET['id'])) {
                 <span><?php echo $propriedade['nome_propriedade']; ?></span>
             </div>
             <div class="info-item">
+                <strong>Nome Fantasia:</strong>
+                <span><?php echo $propriedade['nome_fantasia']; ?></span>
+            </div>
+            <div class="info-item">
                 <strong>Tipo:</strong>
                 <span><?php echo $propriedade['nome_tipo']; ?></span>
             </div>

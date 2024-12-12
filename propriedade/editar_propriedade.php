@@ -49,6 +49,11 @@ $data_registro = isset($linha['data_registro']) ? date('Y-m-d', strtotime($linha
                 </div>
 
                 <div class="form-item">
+                    <label for="nome_fantasia">Nome Fantasia:</label>
+                    <input type="text" id="nome_fantasia" name="nome_fantasia" value="<?php echo $linha['nome_fantasia']; ?>" required oninput="this.value = this.value.toUpperCase()">
+                </div>
+
+                <div class="form-item">
                     <label for="endereco">Endereço:</label>
                     <input type="text" id="endereco" name="endereco" value="<?php echo $linha['endereco']; ?>" required oninput="this.value = this.value.toUpperCase()">
                 </div>

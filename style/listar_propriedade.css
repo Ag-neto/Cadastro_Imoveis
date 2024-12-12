@@ -107,6 +107,10 @@ select {
     border: 1px solid #ccc;
 }
 
+#tipo_pesquisa{
+    width: 150px;
+}
+
 button {
     padding: 10px 20px;
     background-color: #28a745;

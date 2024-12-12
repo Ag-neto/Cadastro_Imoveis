@@ -30,6 +30,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
             if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 // Sanitização dos dados de entrada
                 $nome = mysqli_real_escape_string($conn, $_POST['nome_propriedade']);
+                $nome_fantasia = mysqli_real_escape_string($conn, $_POST['nome_fantasia']);
                 $localidade = mysqli_real_escape_string($conn, $_POST['id_localizacao']);
                 $tipo = mysqli_real_escape_string($conn, $_POST['id_tipo_prop']);
                 $tamanho = mysqli_real_escape_string($conn, $_POST['tamanho']);
@@ -54,7 +55,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                 $sql = "INSERT INTO propriedade 
                     (nome_propriedade, id_localizacao, id_tipo_prop, tamanho, valor_adquirido, endereco, id_situacao, data_registro, tipo_imposto, valor_imposto, periodo_imposto, incra) 
                     VALUES 
-                    ('$nome', '$localidade', '$tipo', '$tamanho', '$valor_adquirido', '$endereco', '$situacao', '$data', '$tipo_imposto', '$valor_imposto', '$periodo_imposto', '$incra')";
+                    ('$nome', '$localidade', '$tipo', '$tamanho', '$valor_adquirido', '$endereco', '$situacao', '$data', '$tipo_imposto', '$valor_imposto', '$periodo_imposto', '$incra', '$nome_fantasia')";
 
                 // Executa o comando e verifica sucesso
                 if (mysqli_query($conn, $sql)) {

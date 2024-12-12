@@ -30,8 +30,15 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
         <form id="buscar-propriedade-form" method="GET" action="listar_propriedades.php">
             <div class="filtro-container">
                 <div class="filtro-item">
-                    <label for="nome">Buscar</label>
-                    <input type="text" name="nome" id="nome" placeholder="Insira o nome">
+                    <label for="tipo_pesquisa">Pesquisar por</label>
+                    <select id="tipo_pesquisa" name="tipo_pesquisa">
+                        <option value="nome">Nome</option>
+                        <option value="nome_fantasia">Nome Fantasia</option>
+                    </select>
+                </div>
+                <div class="filtro-item">
+                    <label for="termo_busca">Buscar</label>
+                    <input type="text" name="termo_busca" id="termo_busca" placeholder="Insira o termo">
                 </div>
                 <div class="filtro-item">
                     <label for="cidade_checkbox">Cidade</label>
@@ -81,81 +88,86 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
         </form>
     </section>
 
-<section class="propriedades-lista">
-    <h2>Propriedades Cadastradas</h2>
-    <div class="table-container">
-        <table>
-            <thead>
-                <tr>
-                    <th>Nome</th>
-                    <th>Tipo</th>
-                    <th>Cidade</th>
-                    <th>Valor (R$)</th>
-                    <th>Situação</th>
-                    <th>Detalhes</th>
-                    <th>Conta Corrente</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php
+    <section class="propriedades-lista">
+        <h2>Propriedades Cadastradas</h2>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nome</th>
+                        <th>Tipo</th>
+                        <th>Cidade</th>
+                        <th>Valor (R$)</th>
+                        <th>Situação</th>
+                        <th>Detalhes</th>
+                        <th>Conta Corrente</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
 
-                $condicoes = [];
+                    $condicoes = [];
 
-                // Adiciona as condições de filtro
-                if (!empty($_GET['nome'])) {
-                    $nome = $conn->real_escape_string($_GET['nome']);
-                    $condicoes[] = "p.nome_propriedade LIKE '%$nome%'";
-                }
-                if (!empty($_GET['cidade'])) {
-                    $cidade = $conn->real_escape_string($_GET['cidade']);
-                    $condicoes[] = "l.nome_cidade = '$cidade'";
-                }
-                if (!empty($_GET['situacao'])) {
-                    $situacao = $conn->real_escape_string($_GET['situacao']);
-                    $condicoes[] = "s.nome_situacao = '$situacao'";
-                }
-                if (!empty($_GET['tipo_propriedade'])) {
-                    $tipoPropriedade = $conn->real_escape_string($_GET['tipo_propriedade']);
-                    $condicoes[] = "t.nome_tipo = '$tipoPropriedade'";
-                }
+                    // Adiciona as condições de filtro
+                    if (!empty($_GET['termo_busca'])) {
+                        $nome = $conn->real_escape_string($_GET['termo_busca']);
 
-                // Prepara a consulta SQL
-                $sql = "SELECT p.*, t.nome_tipo, l.nome_cidade, s.nome_situacao, e.sigla 
+                        if (!empty($_GET['tipo_pesquisa']) && $_GET['tipo_pesquisa'] === 'nome_fantasia') {
+                            $condicoes[] = "p.nome_fantasia LIKE '%$nome%'";
+                        } else {
+                            $condicoes[] = "p.nome_propriedade LIKE '%$nome%'";
+                        }
+                    }
+                    if (!empty($_GET['cidade'])) {
+                        $cidade = $conn->real_escape_string($_GET['cidade']);
+                        $condicoes[] = "l.nome_cidade = '$cidade'";
+                    }
+                    if (!empty($_GET['situacao'])) {
+                        $situacao = $conn->real_escape_string($_GET['situacao']);
+                        $condicoes[] = "s.nome_situacao = '$situacao'";
+                    }
+                    if (!empty($_GET['tipo_propriedade'])) {
+                        $tipoPropriedade = $conn->real_escape_string($_GET['tipo_propriedade']);
+                        $condicoes[] = "t.nome_tipo = '$tipoPropriedade'";
+                    }
+
+                    // Prepara a consulta SQL
+                    $sql = "SELECT p.*, t.nome_tipo, l.nome_cidade, s.nome_situacao, e.sigla 
                 FROM propriedade p 
                 JOIN tipo_prop t ON p.id_tipo_prop = t.id_tipo_prop
                 JOIN localizacao l ON p.id_localizacao = l.idlocalizacao
                 JOIN estados e ON l.id_estado = e.id_estado
                 JOIN situacao s ON p.id_situacao = s.id_situacao";
 
-                // Adiciona as condições de busca
-                if (!empty($condicoes)) {
-                    $sql .= " WHERE " . implode(" AND ", $condicoes);
-                }
-
-                // Executa a consulta
-                $result = $conn->query($sql);
-
-                if ($result->num_rows > 0) {
-                    // Loop para listar as propriedades
-                    while ($row = $result->fetch_assoc()) {
-                        echo '<tr>';
-                        echo '<td>' . $row['nome_propriedade'] . '</td>';
-                        echo '<td>' . $row['nome_tipo'] . '</td>';
-                        echo '<td>' . $row['nome_cidade'] . " - " . $row['sigla'] . '</td>';
-                        echo '<td>' . number_format($row['valor_adquirido'], 2, ',', '.') . '</td>';
-                        echo '<td>' . $row['nome_situacao'] . '</td>';
-                        echo '<td><a href="detalhes_propriedade.php?id=' . $row['idpropriedade'] . '">Ver Detalhes</a></td>';
-                        echo '<td><a href="contas_correntes.php?id_propriedade=' . $row['idpropriedade'] . '"class="btn-conta">Conta <i class="bi bi-bank"></i></a></td>';
-                        echo '</tr>';
+                    // Adiciona as condições de busca
+                    if (!empty($condicoes)) {
+                        $sql .= " WHERE " . implode(" AND ", $condicoes);
                     }
-                } else {
-                    echo '<tr><td colspan="7">Nenhuma propriedade encontrada.</td></tr>'; // Ajusta o colspan para 7
-                }
-                ?>
-            </tbody>
-        </table>
-    </div>
-</section>
+
+                    // Executa a consulta
+                    $result = $conn->query($sql);
+
+                    if ($result->num_rows > 0) {
+                        // Loop para listar as propriedades
+                        while ($row = $result->fetch_assoc()) {
+                            echo '<tr>';
+                            echo '<td>' . $row['nome_propriedade'] . '</td>';
+                            echo '<td>' . $row['nome_tipo'] . '</td>';
+                            echo '<td>' . $row['nome_cidade'] . " - " . $row['sigla'] . '</td>';
+                            echo '<td>' . number_format($row['valor_adquirido'], 2, ',', '.') . '</td>';
+                            echo '<td>' . $row['nome_situacao'] . '</td>';
+                            echo '<td><a href="detalhes_propriedade.php?id=' . $row['idpropriedade'] . '">Ver Detalhes</a></td>';
+                            echo '<td><a href="contas_correntes.php?id_propriedade=' . $row['idpropriedade'] . '"class="btn-conta">Conta <i class="bi bi-bank"></i></a></td>';
+                            echo '</tr>';
+                        }
+                    } else {
+                        echo '<tr><td colspan="7">Nenhuma propriedade encontrada.</td></tr>'; // Ajusta o colspan para 7
+                    }
+                    ?>
+                </tbody>
+            </table>
+        </div>
+    </section>
 
 
     <footer>

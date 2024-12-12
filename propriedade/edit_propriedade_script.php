@@ -23,6 +23,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
     <?php
     $id = $_POST['id'];
     $nome_propriedade = $_POST['nome_propriedade'];
+    $nome_fantasia = $_POST['nome_fantasia'];
     $endereco = $_POST['endereco'];
     $id_localizacao = $_POST['id_localizacao'];
     $valor_adquirido = $_POST['valor_adquirido'];
@@ -35,7 +36,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
     $periodo_imposto = $_POST['periodo_imposto'];
     $incra = $_POST['incra'];
 
-    $sql = "UPDATE propriedade SET nome_propriedade = '$nome_propriedade', endereco = '$endereco', id_localizacao = '$id_localizacao', valor_adquirido = '$valor_adquirido', tamanho = '$tamanho', id_situacao = '$id_situacao', data_registro = '$data', id_tipo_prop = '$id_tipo_prop', tipo_imposto = '$tipo_imposto', valor_imposto = '$valor_imposto', periodo_imposto = '$periodo_imposto', incra = '$incra' WHERE idpropriedade = '$id'";
+    $sql = "UPDATE propriedade SET nome_propriedade = '$nome_propriedade', nome_fantasia = '$nome_fantasia', endereco = '$endereco', id_localizacao = '$id_localizacao', valor_adquirido = '$valor_adquirido', tamanho = '$tamanho', id_situacao = '$id_situacao', data_registro = '$data', id_tipo_prop = '$id_tipo_prop', tipo_imposto = '$tipo_imposto', valor_imposto = '$valor_imposto', periodo_imposto = '$periodo_imposto', incra = '$incra' WHERE idpropriedade = '$id'";
     
     if (mysqli_query($conn, $sql)) {
         echo "$nome alterado com sucesso!";
