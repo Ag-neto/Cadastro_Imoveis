@@ -1,0 +1,89 @@
+/* Estilos globais */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f9f9f9;
+    color: #333;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+/* Contêiner centralizado */
+.container {
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 400px;
+    padding: 30px;
+    text-align: center;
+}
+
+/* Título */
+.container h1 {
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+    color: #4CAF50;
+}
+
+/* Parágrafos e mensagens */
+.container p {
+    font-size: 1rem;
+    margin-bottom: 15px;
+    line-height: 1.6;
+    color: #555;
+}
+
+/* Inputs de texto */
+.container input[type="text"],
+.container input[type="file"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+    font-size: 1rem;
+}
+
+/* Botões */
+.container button,
+.container input[type="submit"] {
+    background-color: #4CAF50;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 15px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.container button:hover,
+.container input[type="submit"]:hover {
+    background-color: #45a049;
+}
+
+/* Mensagem de erro */
+.container .error {
+    color: #ff4d4d;
+    font-size: 0.9rem;
+    margin-top: 10px;
+}
+
+/* Mensagem de sucesso */
+.container .success {
+    color: #4CAF50;
+    font-size: 0.9rem;
+    margin-top: 10px;
+}
+
+/* Alinhamento responsivo */
+@media (max-width: 480px) {
+    .container {
+        width: 90%;
+        padding: 20px;
+    }
+}

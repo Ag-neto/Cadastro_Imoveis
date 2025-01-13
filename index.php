@@ -218,6 +218,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                     </a>
                     <ul class="submenu" id="backupSubmenu">
                         <li><a href="Backup/gerar_backup.php">Gerar Backup</a></li>
+                        <li><a href="Backup/excluir_banco.php">Deletar Banco</a></li>
                     </ul>
                 </li>
             <?php endif; ?>

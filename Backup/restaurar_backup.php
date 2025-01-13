@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Restaurar Banco</title>
+    <link rel="stylesheet" href="../style/restaurar_backup.css">
 </head>
 <body>
 <?php
@@ -77,6 +78,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submit"])) {
                 $sql = file_get_contents($diretorio_destino . $nome_arquivo);
                 if ($conexao_novo_banco->multi_query($sql) === TRUE) {
                     echo "Backup restaurado com sucesso!";
+                    header("Location: ../usuario/login.php");
                 } else {
                     echo "Erro ao restaurar o backup: " . $conexao_novo_banco->error;
                 }
@@ -94,6 +96,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submit"])) {
 
     } else {
         echo "Erro ao enviar o arquivo de backup.";
+        
     }
 }
 ?>
