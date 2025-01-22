@@ -53,7 +53,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
 
                 // SQL para inserir os dados
                 $sql = "INSERT INTO propriedade 
-                    (nome_propriedade, id_localizacao, id_tipo_prop, tamanho, valor_adquirido, endereco, id_situacao, data_registro, tipo_imposto, valor_imposto, periodo_imposto, incra) 
+                    (nome_propriedade, id_localizacao, id_tipo_prop, tamanho, valor_adquirido, endereco, id_situacao, data_registro, tipo_imposto, valor_imposto, periodo_imposto, incra, nome_fantasia) 
                     VALUES 
                     ('$nome', '$localidade', '$tipo', '$tamanho', '$valor_adquirido', '$endereco', '$situacao', '$data', '$tipo_imposto', '$valor_imposto', '$periodo_imposto', '$incra', '$nome_fantasia')";
 
